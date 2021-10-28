@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>졸아요</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "root">
+        <div v-if="liked">좋아요 누름</div>
+        <!--v가 붙은 곳에서는 vue가 통제를 시작하는 것-->
+        <button v-else v-on:click="onClickButton"> like </button>
+
+        <!--각각 조건 맞춰서 비즈니스 로직을 작성하면 된다.
+        추가적으로 형제들은 인접해야한다. -->
+
+        <!--
+            vue에서는 하나의 페이지에서 모든 것을 다해야하기 때문에 바뀌는 부분을 먼저 찾아야함 > like 부분이 데이터가 된다.
+
+        -->
+    </div>
+</body>
+    <script>
+        const app = new Vue({
+            // id root를 vue가 통제하고 있다.
+            el : '#root',
+            data:{
+                liked : false,
+
+                //데이터 중심으로 사고해야한다.
+                // 데이터를 잘 만들고 메소드 잘 만들고 
+            },methods:{
+                onClickButton(){
+                    this.liked = true;
+
+                    //데이터만 바꿔도 vue가 알아서 화면을 바꿔준다. > data만 관리하면 화면은 알아서 바꿔준다.
+                    /*
+                       단, 꼭 지켜줘야하는 것 el, data, methods
+                     */
+
+                }
+            }
+        });
+    </script>
+
+</html>
