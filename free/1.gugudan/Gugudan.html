@@ -1,1 +1,74 @@
-!
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gugudan</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "root">
+        <div>{{first.toString()}}곱하기 {{second.toString()}}는?</div>
+<!--  텍스트는 중괄호 두 번으로 가능하다. -->
+        <form v-on:submit="onSubmitForm">
+
+            <input type="number" v-model="value" ref="answer"><!--vue가 부르는 이름이 answer가 된다. -->
+
+<!--            react와는 다른 점인데 v-model이 input과 vue의 value를 연결해준다. -->
+
+            <button type="submit">입력</button>
+
+
+<!--            <div>{{value}}</div>-->
+            <!--이런 부분이 양방향 바인딩이라고 한다. input을 치면 데이터도 자동으로 바뀐다. -->
+
+            <div>{{result}}</div>
+
+        </form>
+    </div>
+</body>
+<script>
+    const app = new Vue({
+        el: "#root",
+        data:{
+            first : Math.ceil(Math.random()*9),
+            second : Math.ceil(Math.random()*9),
+            value : '',
+            result : '',
+
+        },
+        methods: {
+            onSubmitForm(e){
+                e.preventDefault();
+                //form이 넘어가는 것 방지
+                if((this.first*this.second) === parseInt(this.value)){
+
+                    console.log(this)
+                    //this는 Vue를 가리킨다 .
+                    this.result = "정답";
+
+
+                    //화면은 하나, 데이터만 수정한다고 생각하면서 가야한다.
+                    this.first = Math.ceil(Math.random()*9)
+                    this.second = Math.ceil(Math.random()*9)
+                    this.value='';
+                    this.$refs.answer.focus();
+
+                } else {
+                    this.result = "땡";
+                    this.value='';
+                    this.$refs.answer.focus();
+                    //도저히 데이터로 포커싱할 수 없을 때 ref를 사용, 남용하지 않는 것이 좋다.
+                    /*
+                        특히 화면과 데이터가 불일치할 수도 있기 때문에 어쩔 수 없는 경우가 아니면 바꾸지 않는 것이 좋다.
+                     */
+                }
+
+
+            }
+        }
+    })
+</script>
+</html>
