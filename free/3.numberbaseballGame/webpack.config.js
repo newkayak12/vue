@@ -2,6 +2,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path');
 //node 환경에서는 require를 쓴다고 그냥 일단 생각
 
+//이건 node의 모듈 시스템 >> import/export 대신에 require
+
 
 module.exports = {
     mode:'development',//'production'

@@ -32,6 +32,8 @@
 
   }
 
+
+  //export default >  이걸로 import로 가져올 수 있게 한다.  export default와 import from 은 세트이다.
   export default {
     data(){
       return{
@@ -57,8 +59,17 @@
           this.result = '홈런';
           this.value='';
           this.tries=[];
+          this.answer = getNumber();
 
         } else {
+          if(this.tries.length >=9){
+            //10번째 시도
+            this.result = `10번 넘게 틀려서 실패! 답은 ${this.answer.join('')}입니다.`
+            alert("게임을 다시 시작합니다.");
+            this.value='';
+            this.answer = getNumber();
+            this.tries=[];
+          }
 
           let strike = 0;
           let ball = 0;

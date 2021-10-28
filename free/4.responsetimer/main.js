@@ -1,4 +1,4 @@
 import Vue from 'vue';
-import NumberBaseBall from './NumberBaseBall';
-new Vue(NumberBaseBall).$mount("#root");
+import ResponseCheck from './ResponseCheck';
+new Vue(ResponseCheck).$mount("#root");
 // el:~~ 의 역할

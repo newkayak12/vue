@@ -26,12 +26,21 @@ module.exports = {
             test:/\.vue$/,
             loader:'vue-loader',
 
+        },{
+            test:/\.css$/,
+            use:['vue-style-loader',
+                'css-loader',]
+
         }],
 
+
+        //module이 대부분은 역할을 한다.(js를 합쳐주는)
     },
     plugins:[
         new VueLoaderPlugin(),
         //module을 만나다 최종 처리가 필요할 때
+
+        //플러그인은 부가적인 역할을 하는 녀석들이다. 예를 들어 만들어진 녀석을 압축하게 할 수 있고 html에 스크립트로 추가할 수도 있다. output이 나오기 전에 전처리를 하는 녀석들이다.
     ],
     output:{
         filename: 'app.js',

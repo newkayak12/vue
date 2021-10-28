@@ -1,106 +1,72 @@
 <!--js가 아닌애-->
 <template>
   <div>
-    <h1>{{result}}</h1>
-<!--    <form v-on:submit="onSubmitForm">-->
-<!--      v-on: 을 @로 바꿀 수 잇다.  preventDefault를 prevent로 가능 -->
-    <form @submit.prevent="onSubmitForm">
-      <input ref="answer" minlength="4" maxlength="4" v-model="value"/>
-      <button type="submit">입력</button>
-    </form>
-    <div>시도 : {{tries.length}}</div>
-    <ul>
-      <li v-for="t in tries">
-        <div>{{t.try}}</div>
-        <div>{{t.result}}</div>
-      </li>
-    </ul>
+     <div id = "screen" v-bind:class="state" @click="onClickScreen">{{message}}</div>
+<!--
+    v-bind >> ":"
+    :를 붙이면 데이터를 자바스크립트에서 사용할 수 있다.
+-->
+      <div>
+          <div>평균 시간 : {{}}</div>
+        <button @click ="onReset">리셋</button>
+      </div>
   </div>
 </template>
 
 
 <script>
-  const getNumber=()=>{
-    const candidates = [1,2,3,4,5,6,7,8,9];
-    const array = [];
-    for(let i = 0; i<4; i+=1){
-      const chosen = candidates.splice(Math.floor(Math.random()*(9-i)),1)[0];
-      array.push(chosen)
-    }
-
-    return array;
-
-  }
-
-
-  //export default >  이걸로 import로 가져올 수 있게 한다.  export default와 import from 은 세트이다.
   export default {
     data(){
       return{
-        answer:getNumber(),
-        tries:[],
-        value:'',
-        result :'',
+        result :[],
+        state : 'waiting',
+        //클래스를 나타낼 데이터
+        message : '클릭해서 시작하세요'
       }
 
     },
     methods:{
-      //현재 화면과 밀접한 연관이 있는 녀석들만 methods에 넣는 시긍로 간다.
-      onSubmitForm(e){
-        // e.preventDefault();
-        if(this.value===this.answer.join('')){ //정답이 맞으면
-          this.tries.push(
-              {
-                try : this.value,
-                result:'홈런'
-              }
-          );
-          alert('게임을 다시 실행합니다.')
-          this.result = '홈런';
-          this.value='';
-          this.tries=[];
-          this.answer = getNumber();
+      onReset(){
 
-        } else {
-          if(this.tries.length >=9){
-            //10번째 시도
-            this.result = `10번 넘게 틀려서 실패! 답은 ${this.answer.join('')}입니다.`
-            alert("게임을 다시 시작합니다.");
-            this.value='';
-            this.answer = getNumber();
-            this.tries=[];
+      },
+      onClickScreen(){
+          if(this.state=='waiting'){
+            this.state='ready';
+          } else if( this.state==='ready'){
+            this.state = "now"
+          } else if( this.state==='now'){
+            this.state = "waiting"
           }
-
-          let strike = 0;
-          let ball = 0;
-          /*
-            화면에 보여지는 녀석은 데이터/ 계산식은 변수이다.
-          */
-          const answerArray = this.value.split('').map(v=>parseInt(v));
-          console.log(answerArray+" : "+this.answer)
-          for(let i = 0; i<4; i+=1){
-            if(answerArray[i] === this.answer[i]){//숫자 자릿수 모두 정답
-                strike++;
-              } else if(this.answer.includes(answerArray[i])){//숫자만 정답
-                ball++;
-              }
-          }
-
-            this.tries.push({
-              try:this.value,
-              result:`${strike} 스트라이크 ${ball} 볼입니다.`
-            })
-        }
-
-        this.$refs.answer.focus();
-        this.value = '';
       }
+
     }
   };
 </script>
 
 
 
-<style>
+<style scoped>
+/*
+scoped를 붙일 수 있다.
+컴포넌트마다 css가 달라지는데 css는 컴포넌트를 넘나들 수 있다.
+그럴 때, 나는 이 컴포넌트 안에서만 이 CSS를 사용하고 싶으면 'scoped'를 붙여서 이를 방지할 수 있다.
+data-v-22c711e와 같이 태그에 부가적으로 붙여서 고유하게 만들어준다.
+*/
+  #screen{
+    width: 300px;
+    height: 200px;
+    text-align: center;
+    user-select: none;
+  }
+  #screen.waiting{
+    background-color: aqua;
+  }
+  #screen.ready{
+    background-color: red;
+    color:white;
+  }
+  #screen.now{
+    background-color: greenyellow;
+  }
 
 </style>
