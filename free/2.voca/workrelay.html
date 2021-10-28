@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>끝말잇기</title>
+</head>
+<body>
+
+<!--화면이 바뀌는 것?? v-if/ v-else로 한다. (라우터가 들어가기도 하는데)-->
+    <div id="root">
+
+<!--        &lt;!&ndash;<div v-if="route === 'main'">&ndash;&gt;-->
+
+
+<!--            &lt;!&ndash;화면은 다 미리 만들어놓고 보여주고 안보여주고 하는 식으로 진행&ndash;&gt;-->
+<!--            <div>-->
+<!--                {{word}}-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash;화면은 처음에 만들어 놓고 데이터만 바뀐다는 마인드로 접근해야한다 .&ndash;&gt;-->
+
+<!--            <form v-on:submit="onSubmitForm">-->
+<!--                <input type = "text" v-model="value" ref="answer">-->
+<!--                <button type="submit">입력</button>-->
+<!--            </form>-->
+
+<!--            <div>-->
+<!--                {{result}}-->
+<!--            </div>            &lt;!&ndash;데이터가 3개 바뀐다.&ndash;&gt;-->
+
+<!--        &lt;!&ndash;-->
+<!--        만약 여러 개를 만들고 싶다면?? 그냥 복붙으로는 데이터가 공유가 된다.-->
+<!--        >>> value1, value2 등으로 여러 개를 만들어야한다.-->
+<!--        >>> 중복을 줄이기 위해서는 다른 조치가 필요하다.-->
+<!--        >> 이렇게 반복되는 부분을 컴포넌트로 만들어서 반복되는 부분을 줄일 수 있다.-->
+<!--        &ndash;&gt;-->
+
+
+
+        <!--</div>-->
+
+        <word-relay start-word="제로초"></word-relay>
+        <word-relay start-word="초밥"></word-relay>
+        <word-relay start-word="바보"></word-relay>
+
+        <!--
+            같은 컴포넌트라고 해도 다 따로 논다. 컴포넌트 하나로 해놨더라도 각기 다른 데이터 영역을 갖는다.
+
+            props를 사용할 때 html쪽에서는 케밥케이스, js쪽에서는 알아서 camelCase로 받는다.
+        -->
+
+
+    </div>
+    <script>
+        //이런 컴포넌트를 굳이 부르자면 전역 컴포넌트라고 부른다.
+        // 당연히 지역 컴포넌트도 있을 것이다.
+        // 실제로는 컴포넌트를 재사용하는 경우가 많다. 물론 컴포넌트가 조금씩 달라지기 마련이다.
+        /*
+            ex) 댓글 컴포넌트를 만들어서 반복되는 것을 막아주는데 각기 내용이 조금씩 다를 수 있다. 공통되는 부분이 반복되지만 내부에서 다를 수도 있다.
+            그리하여 props라는 것이다. (살짝살짝 차이를 두는)
+         */
+        Vue.component('wordRelay',{
+            template:`
+            <div>
+<!--
+        템플릿은 무조건 하나의 태그로 묶어야만 한다.
+        쓸데 없는 div가 생기는게 싫어! 라고 하면
+        <template>로 묶으면 된다.
+ -->
+                <div>
+                    {{word}}
+                </div>
+                <form v-on:submit="onSubmitForm">
+                    <input type = "text" v-model="value" ref="answer">
+                    <button type="submit">입력</button>
+                </form>
+
+                <div>
+                    {{result}}
+                </div>
+            </div> `,
+            props:['startWord'],
+            data(){
+                //컴포넌트에서는 데이터를 함수로 만들어야한다.
+                //getter랑 미슷한 느낌.. 일종의 캡슐화가 가능
+                 return{
+                    word:this.startWord,
+                    result:'',
+                    value:'',
+                    route:'main'
+                 }
+            },
+            methods:{
+                onSubmitForm(e){
+                    e.preventDefault();
+
+                    if(this.word[this.word.length-1] === this.value[0]){
+                        this.result = "딩동댕"
+                        this.word = this.value;
+                        this.value = '';
+                        this.$ref.answer.focus();
+                    } else {
+
+                    }
+                }
+
+            }
+        })
+    </script>
+    <script>
+        const app = new Vue({
+            el:"#root",
+
+        });
+    </script>
+</body>
+</html>
