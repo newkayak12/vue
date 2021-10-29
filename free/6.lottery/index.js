@@ -1,4 +1,4 @@
 import Vue from 'vue';
-import ResponseCheck from './RockSissorsPaper';
-new Vue(ResponseCheck).$mount("#root");
+import LotteryGenerator from './LotteryGenerator';
+new Vue(LotteryGenerator).$mount("#root");
 // el:~~ 의 역할
