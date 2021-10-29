@@ -10,7 +10,8 @@
     </form>
     <div>시도 : {{tries.length}}</div>
     <ul>
-      <li v-for="t in tries">
+      <li v-for="t in tries" :key="t.try">
+<!-- li를 구별해줄 필요가 있는데 이를 구별해줄 이름을 key라고 생각하면된다. Key가 있어야 화면을 재렌더할 때 효율적으로 할 수 있다. 기존의 li는 안지우고 새로운 것만 추가할 때 key가 생성된다.         -->
         <div>{{t.try}}</div>
         <div>{{t.result}}</div>
       </li>
