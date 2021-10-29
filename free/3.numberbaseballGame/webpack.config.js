@@ -14,7 +14,7 @@ module.exports = {
     //node의 모듈을 만들었다.
     //webpack == script가 너무 많아서 그걸 하나로 합치려고 쓴다.
     entry:{
-        app: path.join(__dirname,'main.js'),
+        app: path.join(__dirname,'index.js'),
         //app은 하나로 합쳐질 이름
     },
     module:{
