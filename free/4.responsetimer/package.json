@@ -1,11 +1,11 @@
 {
-  "name": "baseball",
+  "name": "response",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --watch",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --config webpack.config.js --live-reload"
   },
   "author": "",
   "license": "ISC",

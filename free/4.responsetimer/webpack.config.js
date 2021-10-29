@@ -6,6 +6,10 @@ const path = require('path');
 
 
 module.exports = {
+    devServer:{
+        static :path.join(__dirname,'/'),
+
+    },
     mode:'development',//'production'
     devtool :'eval', // hidden-source-map >> webpack build속도가 빠름,
     resolve:{
@@ -14,7 +18,7 @@ module.exports = {
     //node의 모듈을 만들었다.
     //webpack == script가 너무 많아서 그걸 하나로 합치려고 쓴다.
     entry:{
-        app: path.join(__dirname,'main.js'),
+        app: path.join(__dirname,'index.js'),
         //app은 하나로 합쳐질 이름
     },
     module:{
@@ -43,9 +47,10 @@ module.exports = {
         //플러그인은 부가적인 역할을 하는 녀석들이다. 예를 들어 만들어진 녀석을 압축하게 할 수 있고 html에 스크립트로 추가할 수도 있다. output이 나오기 전에 전처리를 하는 녀석들이다.
     ],
     output:{
-        filename: 'app.js',
+        filename: '[name].js',
         path: path.join(__dirname, "dist"),
+        publicPath :"/dist"
+    },
 
-    }
 
 };
