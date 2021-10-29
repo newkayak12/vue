@@ -1,117 +1,139 @@
-<!--js가 아닌애-->
 <template>
   <div>
-     <div id = "screen" v-bind:class="state" @click="onClickScreen">{{message}}</div>
-<!--
-    v-bind >> ":"
-    :를 붙이면 데이터를 자바스크립트에서 사용할 수 있다.
--->
-      <template v-if="result.length">
-<!--
-          display: none;   >> v-show가 false이면 display :none
-          v-if와의 차이점? v-if인 경우는 <`!----`>처리가 된다. >>아예 태그 자체가 존재하지 않는 상태로 된다. >> 레이아웃에 영향을 끼친다.
+    <div id="computer" :style="computedStyleObject"></div>
+    <div>
+      <button @click.prevent="onClickButton('바위')">바위</button>
+      <button @click.prevent="onClickButton('가위')">가위</button>
+      <button @click.prevent="onClickButton('보')">보</button>
+    </div>
 
-          >> v-if를 쓰면 v-else, v-else-if를 사용할 수 있다.
-
-          ++ 추가적으로 위의 div는 그냥 감싸주려고 사용하는건데 >> 만약 그냥 div를 쓰기는 싫은데 v-show는 쓰고 싶으면 template로 감싸주면 div없이 유사한 효과를 낼 수 있다.
-          추가적으로 최상위는 template으로 쓰지 못한다.(즉, template, template 최상위 / 차상위 X)
--->
-
-<!--          <div>평균 시간 :{{result.reduce((a,c)=>a+c,0)/result.length || 0}}ms</div>-->
-          <div>평균 시간 :{{average}}ms</div>
-          <button @click ="onReset">리셋</button>
-      </template>
-
+    <div>{{result}}</div>
+    <div>현재 {{score}}점</div>
   </div>
 </template>
 
 
 <script>
-  let startTime = 0;
-  let endTime = 0;
-  let timeOut = null;
+const rspCoords = {
+  바위 : '0',
+  가위 :'-142px',
+  보: '-284px'
+}
 
+const scores = {
+  가위 : 1,
+  바위 : 0,
+  보: -1,
+}
+const computerChoice = (imgCoord)=>{
+  return Object.entries(rspCoords).find(function(v){
+    return v[1] === imgCoord;
+  })[0];
+};
 
-
+let interval = null;
   export default {
-    data(){
-      return{
-        result :[],
-        state : 'waiting',
-        //클래스를 나타낼 데이터
-        message : '클릭해서 시작하세요'
-      }
-
-    },
-    computed:{
-      average(){
-        return this.result.reduce((a,c)=>a+c,0)/this.result.length || 0;
-        //computed는 일반 데이터를 가공해서 사용할 때 computped를 사용한다.
-        //computed로 계산한 값은 캐싱이된다.
-        /*
-          만약! result그대로인데 message가 바뀌면 template가 재렌더 되고 result 계산은 재실행되면서 재연산한다. >> 굳이 그럴 필요가 없다. (계산이 복잡해지면 문제가 생긴다. )
-          이런 상황에서 computed로 해놓으면 그릴 때 이미 캐싱된 녀석을 가져다 사용하면 된다.  >> 결국 성능상의 문제와 관계가 있기 때문에
-          vue에서는 성능 최적화가 엄청나게 신경쓸 필요까지는 없는데 챙기고 가야할 부분이기 때문이다.
-         */
-      }
-    },
-    methods:{
-      onReset(){
-        this.result =[];
-      },
-      onClickScreen(){
-          if(this.state=='waiting'){
-            this.state='ready';
-            this.message = "초록색이 되면 클릭하세요"
-            timeOut = setTimeout(()=>{
-              this.state = 'now';
-              this.message = "지금 클릭"
-              startTime = new Date();
-
-            }, Math.floor(Math.random()*1000)+2000);
-          } else if( this.state==='ready'){
-
-            clearTimeout(timeOut);
-
-            this.state = "waiting"
-            this.message = "너무 빠르게 눌렀습니다. "
-          } else if( this.state==='now'){
-            endTime = new Date();
-            this.state = "waiting"
-            this.message = "클릭해서 시작하세요."
-            this.result.push(endTime - startTime);
-
+      data(){
+          return{
+            result:'',
+            score:0,
+            imgCoord: rspCoords.바위,
           }
       },
+      computed:{
+        computedStyleObject(){
+          return{
+            background:`url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${this.imgCoord} 0`
+          }
+        }
+      },
+      methods: {
+        //모든 메소드 앞에는 async를 쓸 수있는데 await을 쓰기위해서...
+        //함수를 조금 더 특별하게 만들어주는..?
+        //JS영역이기 때문에 보완
+        onClickButton(choice) {
+            clearInterval(interval);
+            const myScore = scores[choice]
+            const cpuScore = scores[computerChoice(this.imgCoord)];
+            const diff = myScore - cpuScore;
+              if(diff===0){
+                this.result = "비겼습니다."
+              } else if([-1,2].includes(diff)){
+                this.result = "이겼습니다."
+                this.score+=1;
+              } else {
+                this.result = "졌습니다.";
+                this.score -=1;
+              }
 
-    }
+            setTimeout(()=>{
+              this.changeHand();
+            },1000)
+        },
+        changeHand(){
+          interval = setInterval(()=>{
+            if(this.imgCoord === rspCoords.바위){
+              this.imgCoord = rspCoords.가위
+            } else if(this.imgCoord === rspCoords.가위){
+              this.imgCoord = rspCoords.보
+            } else if(this.imgCoord === rspCoords.보){
+              this.imgCoord = rspCoords.바위
+            }
+          },100)
+        }
+      },
+
+    //methods와 같은 계층느낌이네.
+    //VUE의 라이프 사이클
+
+        beforeCreate(){
+          console.log("beforeCreated")
+        },
+        created(){
+          console.log("created")
+          //컴포넌트가 보일 때(화면에 나타나기는 전)
+          //data넣고 computed한 단게
+        },
+        beforeMount() {
+          console.log("beforeMount")
+        },
+        mounted(){
+          console.log("mounted")
+          //화면에 그린 후
+          //화면에 다 그리고 나서
+
+         this.changeHand();
+        },
+        beforeUpdate() {
+          console.log("beforeUpdate")
+        },
+        updated(){
+          console.log("updated")
+          //화면이 바뀔 때
+        },
+        beforeDestroy() {
+          console.log("beforeDestroy")
+          clearInterval(interval);
+          // 메모리 누수 문제
+        }
+        ,destroyed(){
+          console.log("destroyed")
+          //컴포넌트가 화면에서 사라질 때
+        }
+
   };
 </script>
 
 
-
 <style scoped>
-/*
-scoped를 붙일 수 있다.
-컴포넌트마다 css가 달라지는데 css는 컴포넌트를 넘나들 수 있다.
-그럴 때, 나는 이 컴포넌트 안에서만 이 CSS를 사용하고 싶으면 'scoped'를 붙여서 이를 방지할 수 있다.
-data-v-22c711e와 같이 태그에 부가적으로 붙여서 고유하게 만들어준다.
-*/
-  #screen{
-    width: 300px;
+  #computer{
+    width: 142px;
     height: 200px;
-    text-align: center;
-    user-select: none;
+    background-position: 0 0;
   }
-  #screen.waiting{
-    background-color: aqua;
-  }
-  #screen.ready{
-    background-color: red;
-    color:white;
-  }
-  #screen.now{
-    background-color: greenyellow;
-  }
-
 </style>
+
+
+<!--
+created mounted updated destroyed
+-->
