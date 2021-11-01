@@ -24,12 +24,12 @@
 
                </v-toolbar>
           </nav>
-          <v-row>
+          <v-row no-gutters>
                <v-col cols="12" md="4">
-                         왼쪽
+                         <LoginForm/>
                </v-col>
                <v-col cols="12" md="8">
-                         오른쪽
+                       <nuxt/>
                </v-col>
           </v-row>
 
@@ -37,7 +37,11 @@
 </template>
 
 <script>
+     /*import 'vuetify/dis/vuetify.min.css';*/
+     import LoginForm from "~/components/LoginForm";
+     //절대경로처럼(소스) 시작하는 것 '~' >> 보통 지금의 front폴더
 export default {
+     components:{LoginForm,}
 }
 </script>
 
