@@ -1,4 +1,4 @@
 import Vue from 'vue';
-import MineSweeper from './router';
-new Vue(MineSweeper).$mount("#root");
+import Router from './router';
+new Vue(Router).$mount("#root");
 // el:~~ 의 역할
