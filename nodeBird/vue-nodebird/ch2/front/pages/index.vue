@@ -16,7 +16,7 @@ export default {
      },
      computed:{
           me(){
-               return this.$store.state.Use2r.me
+               return this.$store.state.User.me
           },
           mainPosts(){
                return this.$store.state.Posts.mainPosts

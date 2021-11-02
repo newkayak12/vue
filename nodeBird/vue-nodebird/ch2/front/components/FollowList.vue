@@ -24,7 +24,7 @@ export default {
      },
      methods:{
           deleteFollow(){
-               this.$store.dispatch("User.js/deleteFollow", {nickname : this.follow.nickname, flag : this.flag})
+               this.$store.dispatch("User/deleteFollow", {nickname : this.follow.nickname, flag : this.flag})
           }
      }
 

@@ -48,7 +48,7 @@ export default {
      methods:{
           onSubmitLogin(){
                if(this.$refs.loginForm.validate()){
-                    this.$store.dispatch('User.js/login',{
+                    this.$store.dispatch('User/login',{
                          //액션은 비동기 >>> 실행 순서가 달라질 수도 있다.(실행이 완료되는 시점)
                          // routing이되고 dispatch가 될 수 있다.
                          email: this.loginEmail,
@@ -66,7 +66,7 @@ export default {
                     })
 
 
-                    this.$store.dispatch('User.js/createFollow',null)
+                    this.$store.dispatch('User/createFollow',null)
                } else {
                     alert("아이디 혹은 비밀번호가 유효하지 않습니다. ")
                }
