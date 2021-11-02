@@ -56,14 +56,42 @@ export default {
           }
      },
      methods:{
-          onSubmitForm(){
+          // onSubmitForm(){
+          //      if(this.$refs.form.validate()){
+          //           this.$store.dispatch('User/signup', {
+          //                nickname :this.nickname,
+          //                email : this.email,
+          //           }).then(()=>{
+          //                //dispatch는 자체로  promise로 then()으로 순서를 보장할 수 있다.
+          //                this.$router.push({
+          //                     path:"/"
+          //                })
+          //           }).catch(()=>{
+          //                alert('회원가입 실패')
+          //           })
+          //      }
+          // }
+          //
+          //혹은
+
+
+         async onSubmitForm(){
                if(this.$refs.form.validate()){
-                    alert('회원가입 시도!')
-               } else {
-                    alert('폼이 유효하지 않습니다!')
+                   try {
+                        const result = await this.$store.dispatch('User.js/signup', {
+                             nickname: this.nickname,
+                             email: this.email,
+                        })
+                   } catch (err){
+
+                   }
                }
-               console.log(this.valid);
           }
+
+          /*
+               sync와 await라는 특별한 문법을 사용하면 프라미스를 좀 더 편하게 사용할 수 있습니다.
+               async/await는 놀라울 정도로 이해하기 쉽고, 사용법도 어렵지 않습니다.
+           */
      }
 
 }
