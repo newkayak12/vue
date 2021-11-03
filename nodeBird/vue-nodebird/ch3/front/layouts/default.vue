@@ -10,8 +10,14 @@
                     <v-spacer />
 
                     <v-toolbar-items>
-                         <v-text-field label="검색" hide-details prepend-icon="mdi-magnify" :style="{display:'flex',alignItems:'center'}" />
+                         <v-form @submit.prevent="onSearchHashtag">
+                              <div :style="{display: 'flex', height:'100%', alignItems:'center'}">
+                                   <v-text-field v-model="hashTag" label="검색" hide-details prepend-icon="mdi-magnify" :style="{display:'flex',alignItems:'center'}" />
 <!--    v-text-field == input                     -->
+                              </div>
+                         </v-form>
+
+
                          <v-btn text nuxt to="/profile">
                               <div>프로필</div>
                          </v-btn>
@@ -41,6 +47,11 @@
      //절대경로처럼(소스) 시작하는 것 '~' >> 보통 지금의 front폴더
 export default {
      components:{LoginForm,},
+     data(){
+          return{
+               hashTag:'',
+          }
+     },
      computed:{
           name(){
                return this.$store.state.Posts.name;
@@ -50,6 +61,12 @@ export default {
           onChangeName(){
                this.$store.commit("Posts/bye")
 
+          },
+          onSearchHashtag(){
+               this.$router.push({
+                    path:`/hashtag/${this.hashTag}`
+               });
+               this.hashTag = '';
           }
      }
 }
@@ -58,3 +75,18 @@ export default {
 <style scoped>
 
 </style>
+
+<!--
+Q&A
+()=> {
+     return a;
+}
+
+===
+
+()=> a
+
+
+///객체는
+()=>({})
+-->

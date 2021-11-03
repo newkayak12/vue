@@ -42,13 +42,13 @@ export default {
      },
      computed:{
           me(){
-               return this.$store.state.User.me;
+               return this.$store.state.Users.me;
           }
      },
      methods:{
           onSubmitLogin(){
                if(this.$refs.loginForm.validate()){
-                    this.$store.dispatch('User/login',{
+                    this.$store.dispatch('Users/login',{
                          //액션은 비동기 >>> 실행 순서가 달라질 수도 있다.(실행이 완료되는 시점)
                          // routing이되고 dispatch가 될 수 있다.
                          email: this.loginEmail,
@@ -69,7 +69,7 @@ export default {
                }
           },
           onLogOut(){
-               this.$store.dispatch("User/logout")
+               this.$store.dispatch("Users/logout")
           }
      }
 

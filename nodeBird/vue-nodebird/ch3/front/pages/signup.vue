@@ -78,7 +78,7 @@ export default {
          async onSubmitForm(){
                if(this.$refs.form.validate()){
                    try {
-                        const result = await this.$store.dispatch('User/signup', {
+                        const result = await this.$store.dispatch('Users/signup', {
                              nickname: this.nickname,
                              email: this.email,
                         })
@@ -92,6 +92,22 @@ export default {
                sync와 await라는 특별한 문법을 사용하면 프라미스를 좀 더 편하게 사용할 수 있습니다.
                async/await는 놀라울 정도로 이해하기 쉽고, 사용법도 어렵지 않습니다.
            */
+     },
+     middleware:'anonymous',
+     computed:{
+          me(){
+               return this.$store.state["Users/me"]
+          }
+     },
+     watch:{
+          me(value, oldValue){
+               if(value){
+                    this.$router.push({
+                         path:'/'
+                    })
+
+               }
+          }
      }
 
 }

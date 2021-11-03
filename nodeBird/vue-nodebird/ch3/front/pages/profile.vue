@@ -19,14 +19,19 @@
                          <v-subheader>팔로잉</v-subheader>
                          <follow-list :users="followingList" :remove="removeFollowing" />
                     </v-container>
+                    <v-btn dark  color="blue" style="width: 100%;" v-if="hasMoreFollowing"  @click="loadMoreFollowings">더보기</v-btn>
                </v-card>
 
 
                <v-card style="margin-bottom: 20px">
                     <v-container>
                          <v-subheader>팔로워</v-subheader>
-                         <follow-list :abc="abc" :users="followerList" :remove="removeFollower "/>
+                         <follow-list  :users="followerList" :remove="removeFollower "/>
                     </v-container>
+                    <v-btn  dark  color="blue" style="width: 100%; " v-if="hasMoreFollower" @click="loadMoreFollowers">더보기</v-btn>
+<!--
+ profile에서 화면이 보이지만 실제로는 Followlist에서 렌더링이 일어나는 식이다. 이런 식으로 관심사 분리를 하면 의존성도 낮아지고 여튼 좋다.
+-->
                </v-card>
 
 
@@ -62,30 +67,49 @@ export default {
                     v=>!!v||'닉네임을 입력하세요'
                ],
           }
+     },fetch({store}){
+          /*context자리임*/
+          store.dispatch('Users/loadFollowers')
+          store.dispatch('Users/loadFollowings')
      },
      methods:{
           onChangeNickname(){
-               this.$store.dispatch('User.js/changeNickname',{
+               this.$store.dispatch('Users/changeNickname',{
                     nickname:this.nickname
                })
           },
           removeFollowing(id){
-               this.$store.dispatch('User.js/removeFollowing',{id })
+
+               this.$store.dispatch('Users/removeFollowing',{id})
           },
           removeFollower(id){
-               this.$store.dispatch("User.js/removeFollower",{id})
+               this.$store.dispatch("Users/removeFollower",{id})
+          },
+          loadMoreFollowers(){
+               this.$store.dispatch('Users/loadFollowers')
+          },
+          loadMoreFollowings(){
+               this.$store.dispatch('Users/loadFollowings')
           }
+
      },
      computed:{
           followerList(){
-               return this.$store.state.User.followerList
+               return this.$store.state.Users.followerLists
           },
           followingList(){
-               return this.$store.state.User.followingList
+               return this.$store.state.Users.followingLists
+          },
+          hasMoreFollowing(){
+               return this.$store.state.Users.hasMoreFollowing
+          },
+          hasMoreFollower(){
+               return this.$store.state.Users.hasMoreFollower
           }
 
 
-     }
+     },
+     middleware:'authenticated'
 
 }
 </script>

@@ -36,7 +36,7 @@ export default {
      },
      computed:{
           me(){
-               return this.$store.state.User.me;
+               return this.$store.state.Users.me;
           }
      },
      methods:{

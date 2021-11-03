@@ -37,7 +37,7 @@ export default {
      },
      computed:{
           /*...mapState(["User/me"])*/
-          ...mapState("User",["me"])
+          ...mapState("Users",["me"])
 
      },
      methods:{
