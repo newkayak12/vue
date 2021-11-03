@@ -79,13 +79,21 @@ export const mutations = {
 };
 //동기적 작업
 
+
+
 export const actions = {
     //여기서 비동기 작업을 한다.
 
     signup(context, payload){
         //context안에는 다양한 것들이 있다.
-
+            console.log(payload)
         //서버에 회원 가입 요청을 보내느 부분 >> 회원가입 요청 보내고 응답을 보낸 후 로그인 동시에 진행해서 state의 me를 바꿔줄 것
+        this.$axios.post('http://localhost:3085/user',{
+            email:payload.email,
+            nickname:payload.nickname,
+            password:payload.password,
+        } ); //REST API
+        //애매하면 post
         context.commit('setMe',payload);
     },
     login({commit ,dispatch, state, rootState, getters, rootGetters},payload){

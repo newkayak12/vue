@@ -81,10 +81,16 @@ export default {
                         const result = await this.$store.dispatch('Users/signup', {
                              nickname: this.nickname,
                              email: this.email,
+                             password: this.password
                         })
                    } catch (err){
 
                    }
+
+                   this.nickname ='';
+                   this.email='';
+                   this.passwordCheck='';
+                   this.password='';
                }
           }
 

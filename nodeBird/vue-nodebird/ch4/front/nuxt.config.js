@@ -1,14 +1,12 @@
-module.exports={
-      head:{
-              title:'nodeBird'
-      },
-    modules:[
-        '@nuxtjs/vuetify',
-        '@nuxtjs/axios'
-    ],
-    vuetify:{
-
+module.exports = {
+    head: {
+        title: 'NodeBird',
     },
-    plugins:[]
-
+    modules: [
+        '@nuxtjs/axios',
+    ],
+    buildModules: [
+        '@nuxtjs/vuetify',
+    ],
+    vuetify: {},
 };
