@@ -94,6 +94,8 @@ let interval = null;
           //컴포넌트가 보일 때(화면에 나타나기는 전)
           //data넣고 computed한 단게
         },
+
+
         beforeMount() {
           console.log("beforeMount")
         },
@@ -104,6 +106,8 @@ let interval = null;
 
          this.changeHand();
         },
+
+
         beforeUpdate() {
           console.log("beforeUpdate")
         },
@@ -111,6 +115,8 @@ let interval = null;
           console.log("updated")
           //화면이 바뀔 때
         },
+
+
         beforeDestroy() {
           console.log("beforeDestroy")
           clearInterval(interval);
