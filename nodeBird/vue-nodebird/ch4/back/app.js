@@ -1,42 +1,47 @@
 const express = require('express');
 const cors = require('cors')
 const db = require('./models')
+const passport = require('passport')
 const app = express();
+
+//bcrypt
+//scrypt 등이 있음
+const passportConfig = require('./passport')
+const session = require('express-session')
+const cookie = require('cookie-parser')
+const morgan = require('morgan')
+const usersRouter = require('./routes/user')
+const postRouter = require("./routes/post")
 
 
 db.sequelize.sync();
+passportConfig();
+
+
+//////////////////////////////////////
+app.use(morgan('dev'))
 app.use(cors({
-    orgin:'http://localhost:3000',
+    origin:'http://localhost:3000',
     credentials:true
 }))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 // app.use는 request/response를 조작한다 >> 미들웨어
+app.use(session({
+    resave:false,
+    saveUninitialized:false,
+    secret:'cookiesecret'
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cookie())
+app.use('/user', usersRouter)
+app.use('/post', postRouter)
+
+//////////////////////////////////////
 
 
 
-app.get('/', (req, res,next)=>{
-    res.status(200).send('안녕 시퀄라이저')
-})
-app.post('/user', async (req,res,next)=>{
-    console.log(req.body.email+"ss")
-    try{
-        const newUser = await db.User.create({
-
-            // where:{
-                email: req.body.email,
-                password: req.body.password,
-                nickname :req.body.nickname,
-            // },
-        });
-        res.status(201).json(newUser)
-        //send:문자열 /json
-    }catch(err){
-        console.log(err)
-        next(err)
-    }
-
-})
 
 app.listen(3085, ()=>{
     console.log(`백엔드 서버 ${3085}번을 사용중입니다.

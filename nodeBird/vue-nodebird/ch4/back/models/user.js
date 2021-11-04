@@ -3,6 +3,7 @@ module.exports=(sequelize, DataTypes)=>{
         email:{
             type:DataTypes.STRING(40),
             allowNull:false,// NN
+            unique:true //uq
         },
         nickname:{
             type:DataTypes.STRING(20),
@@ -18,7 +19,8 @@ module.exports=(sequelize, DataTypes)=>{
     });
 
     User.associate = (db) =>{
-
+        db.User.hasMany(db.Post)
+        db.User.hasMany(db.Comment)
     };
     return User;
 }
