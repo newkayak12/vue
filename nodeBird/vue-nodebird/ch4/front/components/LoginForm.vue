@@ -52,7 +52,6 @@ export default {
                          //액션은 비동기 >>> 실행 순서가 달라질 수도 있다.(실행이 완료되는 시점)
                          // routing이되고 dispatch가 될 수 있다.
                          email: this.loginEmail,
-                         nickname : 'test',
                          password: this.loginPassword
                     }).then(()=>{
                          // dispatch는 promise이기 때문에 .then()으로 실행 순서를 보장할 수 있다.

@@ -14,8 +14,11 @@
                           :rules="[v => !!v.trim() || '내용을 입력하세요.']"
                           @input="onChangeTextarea"
                     />
-                    <v-btn type="submit" color="green" absolute right>게시</v-btn>
-                    <v-btn>이미지 업로드</v-btn>
+                    <v-container>
+                         <v-btn type="submit" color="green" absolute right>게시</v-btn>
+                         <input type="file" multiple hidden ref="imageInput" @change="onChangeImage">
+                         <v-btn @click.prevent="onClickImageUpload" type="button">이미지 업로드</v-btn>
+                    </v-container>
                </v-form>
 
           </v-container>
@@ -74,7 +77,23 @@ export default {
                     })
                      .catch(()=>{})
                }
+          },
+          onClickImageUpload(){
+               this.$refs.imageInput.click();
+          },
+          onChangeImage(e){
+               console.log(e.target.files);
+               const imageFormData = new FormData();
+               [].forEach.call(e.target.files, (f)=>{
+                    imageFormData.append('image', f)
+               })
+               //유사 배열 객체를 forEach()쓰고 싶으면 위와 같이 사용하면 된다.
+               /*
+                    {image:[file1, file2]} 이런식으로 만들어질 것
+                */
+               this.$store.dispatch('Posts/uploadImages', imageFormData)
           }
+
 
      }
 }

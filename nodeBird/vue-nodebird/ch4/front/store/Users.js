@@ -92,16 +92,39 @@ export const actions = {
             email:payload.email,
             nickname:payload.nickname,
             password:payload.password,
-        } ); //REST API
+        } ).then((res)=>{
+            context.commit('setMe',res.data);
+        }).catch((err)=>{
+            console.error(err)
+        }); //REST API
         //애매하면 post
-        context.commit('setMe',payload);
+
     },
     login({commit ,dispatch, state, rootState, getters, rootGetters},payload){
         // rootState, rootGetters는 index 모듈의 state, getters
-        commit('setMe',payload)
+
+        this.$axios.post('http://localhost:3085/user/login', {
+            email:payload.email,
+            password:payload.password,
+        },
+        {
+            withCredentials:true
+        }
+        ).then((res)=>{
+            commit('setMe',res.data)
+        }).catch((err)=>{
+            console.error(err)
+        })
     },
     logout(context, payload){
-        context.commit('setMe', null)
+        this.$axios.post('http://localhost:3085/user/logout', {},{
+            withCredentials:true,
+        })
+        .then((data)=>{
+            context.commit('setMe', null)
+        }).catch((err)=>{
+            console.error(err)
+        })
     },
     changeNickname({commit}, payload) {
         commit('changeNickname',payload)
