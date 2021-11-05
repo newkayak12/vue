@@ -21,20 +21,28 @@ export const mutations = {
         state.mainPosts.splice(index,1);
     },
     addComment(state,payload){
-            const index = state.mainPosts.findIndex(v=>v.id === payload.postId)
-            state.mainPosts[index].Comments.unshift(payload)
+            const index = state.mainPosts.findIndex(v=>v.id === payload.PostId)
+            console.log("addcomment/mutations")
+            console.log("======")
+            console.log(payload)
+            console.log("======")
+            console.log(state.mainPosts)
+            console.log(index)
+        state.mainPosts[index].Comments.unshift(payload)
 
     },
     loadComments(state,payload){
         const index = state.mainPosts.findIndex(v=>v.id ===payload.postId);
-        state.mainPosts[index].Comments = payload
+        state.mainPosts[index].Comments = payload.data
+        console.log("loadComments/mutation")
+        console.log(state.mainPosts)
     },
     loadPosts(state, payload) {
         // if(payload.reset){
         //     state.mainPosts = payload.data;
         // } else {
             state.mainPosts = state.mainPosts.concat(payload);
-            console.log('mutations')
+            console.log('loadPosts')
             console.log(state.mainPosts)
         // }
         state.hasMorePost = (payload.length === limit);
@@ -45,8 +53,24 @@ export const mutations = {
     },
     removeImagePath(state,payload){
         state.imagePaths.splice(payload,1);
+    },
+    likePost(state,payload){
+        const index = state.mainPosts.findIndex(v=>v.id ===payload.postId);
+        state.mainPosts[index].Likers.push({
+            id:payload.userId
+        })
+    },
+    unlikePost(state, payload) {
+        const index = state.mainPosts.findIndex(v=>v.id === payload.postId);
+        const userIndex = state.mainPosts[index].Likers.findIndex(v=>v.id === payload.userId);
+
+        state.mainPosts[index].Likers.splice(userIndex,1);
     }
 }
+
+
+
+/////////////////////////////////////////////////////
 
 export const actions = {
     add({commit, state}, payload){
@@ -82,12 +106,14 @@ export const actions = {
 
     },
     addComment({commit}, payload){
-        this.$axios.post(`/posts/${payload.postId}/comment`, {
+        this.$axios.post(`/post/${payload.postId}/comment`, {
             content:payload.content
         },{
             withCredentials:true
         })
-            .then(()=>{
+            .then((res)=>{
+            console.log("addComment/action")
+            console.log(res.data)
             commit('addComment',res.data)
         })
             .catch((err)=>{
@@ -95,9 +121,10 @@ export const actions = {
             })
     },
     loadComment({commit},payload){
-        console.log("loadComment")
+        console.log("loadComment/action")
         const res = this.$axios.get(`/post/${payload.postId}/comments`)
-            .then(()=>{
+            .then((res)=>{
+                console.log(res.data)
 
                     commit('loadComments', {
                         postId:payload.postId,
@@ -105,7 +132,6 @@ export const actions = {
                     })
             })
             .catch((err)=>{
-                    console.error(err)
             })
 
     },
@@ -153,5 +179,52 @@ export const actions = {
             console.log(err)
         })
     },
+    retweet({commit}, payload){
+        console.log(`rt:${payload.postId}`)
+        this.$axios.post(`/post/${payload.postId}/retweet`,{},{
+            withCredentials:true
+        })
+        .then((res)=>{
+            commit('addMainPost',res.data)
+        })
+        .catch((err)=>{
+            console.error(err)
+            alert(err.response.data)
+        })
+    },
+    likePost({commit},payload){
+        console.log(`likePost:${payload.postId}`)
+        this.$axios.post(`/post/${payload.postId}/like`,{},{
+            withCredentials:true
+        })
+        .then((res)=>{
+                commit('likePost',{
+                    userId:res.data.userId,
+                    postId:payload.postId,
+                })
+        })
+        .catch((err)=>{
+            console.error(err)
+        })
+
+    },
+    unlikePost({commit},payload){
+        console.log(`unlikePost:${payload.postId}`)
+        this.$axios.delete(`/post/${payload.postId}/like`,{
+            withCredentials:true
+        })
+        .then((res)=>{
+            commit('unlikePost',{
+                userId:res.data.userId,
+                postId:payload.postId,
+            })
+        })
+        .catch((err)=>{
+            console.error(err)
+        })
+
+    }
+
+
 
 }

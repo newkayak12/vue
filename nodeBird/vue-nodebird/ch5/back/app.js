@@ -14,7 +14,7 @@ const usersRouter = require('./routes/user')
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
 
-db.sequelize.sync();
+db.sequelize.sync({});
 passportConfig();
 
 

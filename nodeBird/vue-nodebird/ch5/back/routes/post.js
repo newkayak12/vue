@@ -66,6 +66,10 @@ router.post('/',isLoggedIn, async (req,res,next)=>{
                 attributes:["id","nickname"],
             },{
                 model:db.Image
+            },{
+                model:db.User,
+                as:'Likers',
+                attributes:['id']
             }]
         })
         return res.json(fullPost)
@@ -89,6 +93,7 @@ router.post('/images',isLoggedIn, upload.array('image'),(req,res)=>{
 })
 
 router.get('/:id/comments', async (req,res,next)=>{
+        console.log("loadComments")
     try{
         const post = await db.Post.findOne({where:{id:req.params.id}});
         //:id는 params로 접근 가능
@@ -102,9 +107,9 @@ router.get('/:id/comments', async (req,res,next)=>{
             },
             include:[{
                 model: db.User,
-                attributes: ['id','nickname']
+                attributes: ['nickname']
             }],
-            order:[['createAt', 'ASC']],//2차원 배열로 하는 이유는 조건이 여러 개 있을 수 있어서
+            order:[['createdAt', 'ASC']],//2차원 배열로 하는 이유는 조건이 여러 개 있을 수 있어서
         });
         res.json(comments)
     }catch(err){
@@ -115,6 +120,7 @@ router.get('/:id/comments', async (req,res,next)=>{
 
 
 router.post('/:id/comment', isLoggedIn, async (req,res,next)=>{
+    console.log("addComment")
     //:id == pathVariable
     try{
         const post = await db.Post.findOne({where:{id:req.params.id}});
@@ -163,4 +169,91 @@ router.delete('/:id',async (req,res,next)=>{
 })
 
 
+router.post("/:id/retweet", isLoggedIn, async (req,res,next)=>{
+    try{
+        const post = await db.Post.findOne({
+            where:{id: req.params.id},
+            include:[{
+                model: db.Post,
+                as:'Retweet',  // 리트윗한 게시글이면 원본 게시글이 리트윗하는 (리트에 리트일경우
+            }]
+        })
+        if(!post){
+            return res.status(404).send("포스트가 존재하지 않습니다.")
+        }
+        if(req.user.id === post.UserId ||(post.Retweet && post.Retweet.UserId === req.user.id)){
+            return res.status(403).send('자신의 글은 리트윗할 수 없습니다.')
+        }
+        const retweetTargetId = post.RetweetId || post.id;
+        const exPost = await db.Post.findOne({
+            where:{
+                UserId:req.user.id,
+                RetweetId:retweetTargetId
+            }
+        })
+        if(exPost){
+            return res.status(403).send("이미 리트윗헀습니다.")
+        }
+        const retweet = await db.Post.create({
+           UserId:req.user.id,
+           RetweetId:retweetTargetId,//원본 아이디 >>
+           content:'rt',
+        });
+
+        const retweetWithPrevPost = await db.Post.findOne({
+           where:{id:retweet.id},
+           include:[{
+               model:db.User,
+               attributes:["id","nickname"],
+           },{
+               model:db.User,
+               as:"Likers",
+               attributes:['id']
+           },{
+               model:db.Post,
+               as:'Retweet',
+               include:[{
+                   model:db.User,
+                   attributes:['id','nickname'],
+               },{
+                   model:db.Image
+               }]
+           }]
+        });
+        res.json(retweetWithPrevPost)
+    }catch (err){
+        console.error(err)
+        next(err)
+    }
+})
+
+router.post('/:id/like', isLoggedIn, async(req,res,next)=>{
+    console.log(`like/axios ${req.params.id}`)
+    try{
+        const post = await db.Post.findOne({where:{id:req.params.id}});
+        if(!post){
+            return res.status(404).send('포스트가 존재하지 않습니다.')
+        }
+        await post.addLiker(req.user.id);
+        res.json({userId:req.user.id})
+    } catch(e){
+        console.error(e)
+        next(e)
+    }
+})
+
+router.delete('/:id/like', isLoggedIn, async (req,res,next)=>{
+    console.log()
+    try{
+        const post = await db.Post.findOne({where:{id:req.params.id}});
+        if(!post){
+            return res.status(404).send('포스트가 존재하지 않습니다.')
+        }
+        await post.removeLiker(req.user.id);
+        res.json({userId:req.user.id})
+    }catch(e){
+        console.error(e)
+        next(e)
+    }
+})
 module.exports = router;

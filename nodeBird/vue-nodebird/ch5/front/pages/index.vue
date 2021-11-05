@@ -31,12 +31,13 @@ export default {
        // 컴포넌트가 마운트 되기 전에 store에 비동기적으로 데이터를 넣을 때 사용
        // fetch를 쓰지 않으면 화면이 로드됐을 때 데이터를 불러오지 않아서 빈 화면이 나올 것
           console.log("index_fetch")
-          console.log(this.mainPosts)
            return store.dispatch('Posts/loadPosts');
      },
      mounted(){
           //created()는 window를 쓸 수 없음 >> 화면에 붙기 전에는 Documents나 Window를 사용할 수 없다.
           window.addEventListener('scroll', this.onScroll)
+          console.log("mounted")
+          console.log(this.mainPosts)
      },
      beforeDestroy() {
           window.removeEventListener('scroll', this.onScroll)

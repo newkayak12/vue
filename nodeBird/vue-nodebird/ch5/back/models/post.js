@@ -14,8 +14,10 @@ module.exports = (sequelize, DataTypes)=>{
         //테이블 간의 관계를 설정해주는 부분
         db.Post.belongsTo(db.User);
         db.Post.hasMany(db.Comment);
+        db.Post.belongsToMany(db.User, {through:"Like", as:"Likers"})
         db.Post.hasMany(db.Image)
         db.Post.belongsToMany(db.Hashtag, {through:'PostHashtag'})
+        db.Post.belongsTo(db.Post,{as:"Retweet"})
     }
 
     return Post;

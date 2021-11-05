@@ -14,6 +14,11 @@ const totalFollower =8;
 const totalFollowing = 6;
 const limit = 3;
 
+
+
+
+
+///////////////////////////////////////////////////////////////////
 export const mutations = {
     setMe(state, payload){
         //state는 상단의 state에 접근
@@ -45,8 +50,7 @@ export const mutations = {
          }
      }*/
     removeFollowing(state, payload) {
-        console.log(state.followerLists)
-        const index = state.followingLists.findIndex(v => v.id === payload.id);
+        const index = state.followingLists.findIndex(v => v.id === payload.userId);
         state.followingLists.splice(index, 1);
     },
     removeFollower(state, payload) {
@@ -75,11 +79,30 @@ export const mutations = {
 
         state.followerLists = state.followerLists.concat(fakeUsers)
         state.hasMoreFollower = fakeUsers.length===limit;
-    }
+    },
+    following(state, payload) {
+        state.me.Followings.push({
+            id:payload.userId
+        })
+    },
 };
 //동기적 작업
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 export const actions = {
     //여기서 비동기 작업을 한다.
@@ -193,11 +216,33 @@ export const actions = {
             .catch((err)=>{
                 console.error(err);
             });
-
-
-
-
     },
+    follow({commit}, payload){
+        this.$axios.post(`/user/${payload.userId}/follow`,{},{
+            withCredentials:true
+        })
+        .then((res)=>{
+                commit('following',{
+                    userId : payload.userId
+            })
+        })
+        .catch((e)=>{
+            console.error(e)
+        })
+    },
+    unFollow({commit, payload}) {
+        this.$axios.delete(`/user/${payload.userId}/follow`,{
+            withCredentials:true
+        }).then((res)=>{
+                commit('removeFollowing',{
+                    userId : payload.userId
+                })
+        })
+        .catch((e)=>{
+            console.error(e)
+        })
+    }
+
 
 }
 //비동기적 작업

@@ -2,30 +2,30 @@
      <v-app>
 <!--          //vuetify 쓸 때 최상위-->
           <nav>
-<v-toolbar dark color="green">
-                    <v-toolbar-title>
-                         <nuxt-link to="/" style="text-decoration: none; color: white">NodeBird</nuxt-link>
-                    </v-toolbar-title>
+               <v-toolbar dark color="green">
+                         <v-toolbar-title>
+                              <nuxt-link to="/" style="text-decoration: none; color: white">NodeBird</nuxt-link>
+                         </v-toolbar-title>
 
-                    <v-spacer />
+                         <v-spacer />
 
-                    <v-toolbar-items>
-                         <v-form @submit.prevent="onSearchHashtag">
-                              <div :style="{display: 'flex', height:'100%', alignItems:'center'}">
-                                   <v-text-field v-model="hashTag" label="검색" hide-details prepend-icon="mdi-magnify" :style="{display:'flex',alignItems:'center'}" />
-<!--    v-text-field == input                     -->
-                              </div>
-                         </v-form>
+                         <v-toolbar-items>
+                              <v-form @submit.prevent="onSearchHashtag">
+                                   <div :style="{display: 'flex', height:'100%', alignItems:'center'}">
+                                        <v-text-field v-model="hashTag" label="검색" hide-details prepend-icon="mdi-magnify" :style="{display:'flex',alignItems:'center'}" />
+     <!--    v-text-field == input                     -->
+                                   </div>
+                              </v-form>
 
 
-                         <v-btn text nuxt to="/profile">
-                              <div>프로필</div>
-                         </v-btn>
-                         <v-btn text nuxt to="/signup">
-                              <div>회원가입</div>
-                         </v-btn>
-</v-toolbar-items>
-</v-toolbar>
+                              <v-btn text nuxt to="/profile">
+                                   <div>프로필</div>
+                              </v-btn>
+                              <v-btn text nuxt to="/signup">
+                                   <div>회원가입</div>
+                              </v-btn>
+                    </v-toolbar-items>
+               </v-toolbar>
           </nav>
 <!--          <div>{{ name }}</div>
           <v-btn @click="onChangeName"> bye</v-btn>-->
