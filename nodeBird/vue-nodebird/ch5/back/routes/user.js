@@ -6,17 +6,17 @@ const {isNotLoggedIn, isLoggedIn} = require("./middlewares");
 
 const router = express.Router();
 
-router.post('/')
 
-module.exports=router;
+
 
 router.get('/', isLoggedIn, async (req,res,next)=>{
+    console.log("isLoggedIn?")
     const user = req.user;
     res.json(user);
 })
 
 router.post('/', isNotLoggedIn, async (req,res,next)=>{
-
+    //회원 가입
     //connect.sid라는 이름으로 쿠키가 심어질 것
 
     try{
@@ -102,7 +102,18 @@ router.post('/login', isNotLoggedIn, (req,res,next)=>{
                 return next(err)
             }
 
-            return res.json(user)
+            const fullUser = await db.User.findOne({
+                where:{
+                    id:user.id
+                },
+                attributes:['id','email','nickname'],
+                include:[{
+                    model:db.Post,
+                    attributes:['id'],
+                }]
+            })
+
+            return res.json(fullUser)
             //우리가 따로 바디에 데이터를 심어서 내려보낸다.
         })
         //passport initialize에서 미들웨어를 타고 req에 login, logout을 미리 심어줬다.
@@ -119,3 +130,6 @@ router.post('/logout', isLoggedIn, (req,res)=>{
         req.session.destroy(); // 선택사항..
         return res.status(200).send("로그아웃 되었습니다.")
 })
+
+
+module.exports=router;

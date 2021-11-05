@@ -33,7 +33,9 @@ export const mutations = {
         // if(payload.reset){
         //     state.mainPosts = payload.data;
         // } else {
-            state.mainPosts = state.mainPosts.concat(payload.data);
+            state.mainPosts = state.mainPosts.concat(payload);
+            console.log('mutations')
+            console.log(state.mainPosts)
         // }
         state.hasMorePost = (payload.length === limit);
 
@@ -53,7 +55,7 @@ export const actions = {
                                                           >>> index임?
                   모듈/이름
         * */
-        this.$axios.post('http://localhost:3085/post', {
+        this.$axios.post('/post', {
             content:payload.content,
             image: state.imagePaths
         },{
@@ -69,9 +71,10 @@ export const actions = {
         });
     },
     remove({commit}, payload){
-        this.$axios.delete(`http://localhost:3085/post/${payload.postId}`,{
+        this.$axios.delete(`/post/${payload.postId}`,{
             withCredentials:true
         }).then(()=>{
+            console.log('commit')
             commit('removeMainPost', payload);
         }).catch((err)=>{
             console.error(err)
@@ -79,7 +82,7 @@ export const actions = {
 
     },
     addComment({commit}, payload){
-        this.$axios.post(`http://localhost:3085/posts/${payload.postId}/comment`, {
+        this.$axios.post(`/posts/${payload.postId}/comment`, {
             content:payload.content
         },{
             withCredentials:true
@@ -93,7 +96,7 @@ export const actions = {
     },
     loadComment({commit},payload){
         console.log("loadComment")
-        const res = this.$axios.get(`http://localhost:3085/post/${payload.postId}/comments`)
+        const res = this.$axios.get(`/post/${payload.postId}/comments`)
             .then(()=>{
 
                     commit('loadComments', {
@@ -108,7 +111,7 @@ export const actions = {
     },
     async loadPosts({commit, state}, payload){
         if(state.hasMorePost){
-             await this.$axios.get(`http://localhost:3085/posts?offset=${state.mainPosts.length}&limit=10`)
+             await this.$axios.get(`/posts?offset=${state.mainPosts.length}&limit=10`)
             .then((res)=>{
                 commit('loadPosts',res.data);
             })
@@ -141,7 +144,7 @@ export const actions = {
 
         console.log("Posts/uploadImage")
         console.log(payload)
-        this.$axios.post("http://localhost:3085/post/images", payload, {
+        this.$axios.post("/post/images", payload, {
             withCredentials:true
         })
         .then((res)=>{

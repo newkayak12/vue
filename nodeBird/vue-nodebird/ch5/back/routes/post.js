@@ -24,6 +24,7 @@ router.post('/',isLoggedIn, async (req,res,next)=>{
         // req.body.content,
         //     req.body.imagePaths,
         //
+            console.log("isLoggedIn")
             const hashtags = req.body.content.match(/#[^\s#]+/g);
             const newPost = await db.Post.create({
                 content:req.body.content,
@@ -147,12 +148,14 @@ router.post('/:id/comment', isLoggedIn, async (req,res,next)=>{
 })
 //수정
 router.delete('/:id',async (req,res,next)=>{
+    console.log("delete")
     try{
         await db.Post.destroy({
             where:{
                 id:req.params.id,
             }
         })
+        res.send('삭제했습니다.')
     }catch(err){
         console.error(err);
         next(err)

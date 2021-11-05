@@ -88,7 +88,7 @@ export const actions = {
         //context안에는 다양한 것들이 있다.
             console.log(payload)
         //서버에 회원 가입 요청을 보내느 부분 >> 회원가입 요청 보내고 응답을 보낸 후 로그인 동시에 진행해서 state의 me를 바꿔줄 것
-        this.$axios.post('http://localhost:3085/user',{
+        this.$axios.post('/user',{
             email:payload.email,
             nickname:payload.nickname,
             password:payload.password,
@@ -103,7 +103,7 @@ export const actions = {
     login({commit ,dispatch, state, rootState, getters, rootGetters},payload){
         // rootState, rootGetters는 index 모듈의 state, getters
 
-        this.$axios.post('http://localhost:3085/user/login', {
+        this.$axios.post('/user/login', {
             email:payload.email,
             password:payload.password,
         },
@@ -117,7 +117,7 @@ export const actions = {
         })
     },
     logout(context, payload){
-        this.$axios.post('http://localhost:3085/user/logout', {},{
+        this.$axios.post('/user/logout', {},{
             withCredentials:true,
         })
         .then((data)=>{
@@ -183,15 +183,19 @@ export const actions = {
         }
     },
     async loadUser({ state, commit }) {
-        try {
+        console.log("loadUser")
             const res = await this.$axios.get('/user', {
                 withCredentials: true,
+            })
+            .then((res)=>{
+                commit('setMe', res.data);
+            })
+            .catch((err)=>{
+                console.error(err);
             });
-            console.log(res.data)
-            commit('setMe', res.data);
-        } catch (err) {
-            console.error(err);
-        }
+
+
+
 
     },
 
