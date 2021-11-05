@@ -13,6 +13,7 @@
 
                <v-card-text>
                     <div>
+
 <!--                         <div>{{post.content}}</div>-->
                          <div :to="'/post/'+post.id">{{post.content}}</div>
                     </div>

@@ -18,6 +18,15 @@
                          <v-btn type="submit" color="green" absolute right>게시</v-btn>
                          <input type="file" multiple hidden ref="imageInput" @change="onChangeImage">
                          <v-btn @click.prevent="onClickImageUpload" type="button">이미지 업로드</v-btn>
+                         <div>
+                              <div v-for="(p,i) in imagePaths" :key = 'p' style="display: inline-block; margin-top: 10px" >
+                                   <img :src="`http://localhost:3085/${p}`" :alt="p" style="width: 150px">
+                                   <div>
+                                        <v-btn @click="onRemoveImage(i)" type="button" color="blue">제거</v-btn>
+                                   </div>
+                              </div>
+
+                         </div>
                     </v-container>
                </v-form>
 
@@ -40,7 +49,8 @@ export default {
      },
      computed:{
           /*...mapState(["User/me"])*/
-          ...mapState("Users",["me"])
+          ...mapState("Users",["me"]),
+          ...mapState("Posts",['imagePaths'])
 
      },
      methods:{
@@ -56,18 +66,6 @@ export default {
                if(this.$refs.textForm.validate()){
                     this.$store.dispatch("Posts/add",{
                               content: this.content,
-                              User :{
-                                   nickname: this.me.nickname
-                              },
-                              Comments:[
-
-                              ],
-                              Images:[
-
-                              ],
-                              id: Date.now(),
-                              createdAt:Date.now(),
-
                     })
                     .then(()=>{
                          this.hideDetails = false;
@@ -92,6 +90,10 @@ export default {
                     {image:[file1, file2]} 이런식으로 만들어질 것
                 */
                this.$store.dispatch('Posts/uploadImages', imageFormData)
+          },
+          onRemoveImage(index){
+               this.$store.commit("Posts/removeImagePath", index)
+
           }
 
 

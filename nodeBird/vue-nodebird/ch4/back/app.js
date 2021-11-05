@@ -38,6 +38,10 @@ app.use(cookie())
 app.use('/user', usersRouter)
 app.use('/post', postRouter)
 
+app.use('/',express.static('uploads'))
+//프론트에서 접근할 주소 , 실제 주소
+// '/'에서 가져올 수 있게 해줌 >> 프론트에서 백엔드의 내부 구조를 볼 수 없게
+
 //////////////////////////////////////
 
 
