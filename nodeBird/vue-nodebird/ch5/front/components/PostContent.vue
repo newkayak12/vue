@@ -34,11 +34,14 @@ export default {
           }
      },
      computed:{
+          me(){
+               return this.$store.state.Users.me
+          },
           canFollow(){
-               return this.me && this.post.User.id != this.me && !this.me.Followings.find(v=> v.id === this.post.User.id);
+               return this.me && this.post.User.id != this.me.id && !this.me.Followings.find(v=> v.id === this.post.User.id);
           },
           canUnFollow(){
-               return this.me && this.post.User.id !== this.me && this.me.Followings.find(v=>v.id === this.post.User.id);
+               return this.me && this.post.User.id !== this.me.id && this.me.Followings.find(v=>v.id === this.post.User.id);
           }
      },
      methods:{

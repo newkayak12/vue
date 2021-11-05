@@ -38,26 +38,26 @@ export const mutations = {
     addFollower(state,payload){
         state.followerLists.push(payload)
     },
-    /* deleteFollow(state,payload){
-         if(payload.flag==='following'){
-            const index = state.followingList.findIndex(v=>v.nickname===payload.nickname);
-            console.log(index)
-            state.followingList.splice(index, 1)
-         }
-         if(payload.flag==='follower'){
-             const index = state.followerList.findIndex(v=>v.nickname===payload.nickname);
-             state.followerList.splice(index, 1)
-         }
-     }*/
-    removeFollowing(state, payload) {
-        const index = state.followingLists.findIndex(v => v.id === payload.userId);
-        state.followingLists.splice(index, 1);
-    },
+     // deleteFollow(state,payload){
+     //     if(payload.flag==='following'){
+     //        const index = state.followingList.findIndex(v=>v.nickname===payload.nickname);
+     //        console.log(index)
+     //        state.followingList.splice(index, 1)
+     //     }
+     //     if(payload.flag==='follower'){
+     //         const index = state.followerList.findIndex(v=>v.nickname===payload.nickname);
+     //         state.followerList.splice(index, 1)
+     //     }
+     // },
+
     removeFollower(state, payload) {
-        const index = state.followerLists.findIndex(v => v.id === payload.id);
+        const index = state.F.findIndex(v => v.id === payload.id);
         state.followerLists.splice(index, 1);
 
     },
+
+
+
     loadMoreFollowings(state){
         const diff = totalFollowing - state.followingLists.length;
         const fakeUsers = Array(diff>limit? limit:diff).fill().map(v=>({
@@ -84,6 +84,10 @@ export const mutations = {
         state.me.Followings.push({
             id:payload.userId
         })
+    },
+    removeFollowing(state, payload) {
+        const index = state.me.Followings.findIndex(v => v.id === payload.userId);
+        state.me.Followings.splice(index, 1);
     },
 };
 //동기적 작업
@@ -230,7 +234,7 @@ export const actions = {
             console.error(e)
         })
     },
-    unFollow({commit, payload}) {
+    unFollow({commit}, payload) {
         this.$axios.delete(`/user/${payload.userId}/follow`,{
             withCredentials:true
         }).then((res)=>{

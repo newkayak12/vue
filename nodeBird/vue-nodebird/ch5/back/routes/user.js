@@ -35,7 +35,7 @@ router.post('/', isNotLoggedIn, async (req,res,next)=>{
 
             })
         }
-        const newUser = await db.User.create({
+         await db.User.create({
 
             // where:{
             email: req.body.email,
@@ -65,13 +65,29 @@ router.post('/', isNotLoggedIn, async (req,res,next)=>{
                     return next(err)
                 }
 
-                return res.json(user)
+
+
+                const fullUser = await db.User.findOne({
+                    where: { id: user.id },
+                    attributes: ['id', 'email', 'nickname'],
+                    include: [{
+                        model: db.Post,
+                        attributes: ['id'],
+                    }, {
+                        model: db.User,
+                        as: 'Followings',
+                        attributes: ['id'],
+                    }, {
+                        model: db.User,
+                        as: 'Followers',
+                        attributes: ['id'],
+                    }],
+                });
+                return res.json(fullUser);
                 //우리가 따로 바디에 데이터를 심어서 내려보낸다.
             })
             //passport initialize에서 미들웨어를 타고 req에 login, logout을 미리 심어줬다.
         })(req,res,next);
-
-
 
 
     }catch(err){
@@ -93,7 +109,7 @@ router.post('/login', isNotLoggedIn, (req,res,next)=>{
             return res.status(401).send(info.reason);
         }
 
-        return req.login(user, async (error)=>{
+        return req.login(user, async (err)=>{
             //세션에 사용자 정보 저장 >> 어떻게?? serializeUser
             //쿠키는 헤더에 심어져서 사용자에게 내려보내진다 .
 
@@ -103,16 +119,23 @@ router.post('/login', isNotLoggedIn, (req,res,next)=>{
             }
 
             const fullUser = await db.User.findOne({
-                where:{
-                    id:user.id
-                },
-                attributes:['id','email','nickname'],
-                include:[{
-                    model:db.Post,
-                    attributes:['id'],
-                }]
-            })
-
+                where: { id: user.id },
+                attributes: ['id', 'email', 'nickname'],
+                include: [{
+                    model: db.Post,
+                    attributes: ['id'],
+                }, {
+                    model: db.User,
+                    as: 'Followings',
+                    attributes: ['id'],
+                }, {
+                    model: db.User,
+                    as: 'Followers',
+                    attributes: ['id'],
+                }],
+            });
+            console.log("LOGIN")
+            console.log(fullUser)
             return res.json(fullUser)
             //우리가 따로 바디에 데이터를 심어서 내려보낸다.
         })
@@ -130,9 +153,15 @@ router.post('/logout', isLoggedIn, (req,res)=>{
         req.session.destroy(); // 선택사항..
         return res.status(200).send("로그아웃 되었습니다.")
 })
+
+
+
+
+
+///follow
 router.post('/:id/follow',isLoggedIn, async (req,res,next)=>{
     try{
-        const me = await db.user.findOne({
+        const me = await db.User.findOne({
             where:{id:req.user.id},
         });
         await me.addFollowing(req.params.id);
@@ -144,7 +173,7 @@ router.post('/:id/follow',isLoggedIn, async (req,res,next)=>{
 })
 router.delete('/:id/follow', isLoggedIn, async (req,res,next)=>{
     try{
-        const me = await db.user.findOne({
+        const me = await db.User.findOne({
             where:{id:req.user.id},
         });
         await me.removeFollowing(req.params.id);

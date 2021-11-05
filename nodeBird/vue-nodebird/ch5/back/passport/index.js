@@ -9,7 +9,8 @@ module.exports=()=>{
 
     passport.deserializeUser(async(id,done)=>{
         try {
-            const user = await db.User.findOne({where: {id},
+            const user = await db.User.findOne(
+                {where: {id},
                 attributes:['id','nickname'],
                 include:[{
                     model:db.User,
@@ -20,10 +21,11 @@ module.exports=()=>{
                     as:'Followers',
                     attributes:['id']
                 }]
-            })
+            });
             // 이 부분을 redis로 바꿔주면 된다.
             // deserializeUser는 페이지 이동마다 여기에 오고
             // 그러면 결국 DB에 계속 접속하니까 캐싱으로 극복한다 .
+            return done(null,user);
         } catch(err){
             console.err(err);
             return done(err)

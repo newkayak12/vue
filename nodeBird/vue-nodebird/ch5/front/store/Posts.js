@@ -125,7 +125,6 @@ export const actions = {
         const res = this.$axios.get(`/post/${payload.postId}/comments`)
             .then((res)=>{
                 console.log(res.data)
-
                     commit('loadComments', {
                         postId:payload.postId,
                         data:res.data,
@@ -139,6 +138,8 @@ export const actions = {
         if(state.hasMorePost){
              await this.$axios.get(`/posts?offset=${state.mainPosts.length}&limit=10`)
             .then((res)=>{
+                console.log('action/loadPosts')
+                console.log(res.data)
                 commit('loadPosts',res.data);
             })
             .catch((err)=>{
