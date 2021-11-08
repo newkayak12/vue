@@ -3,7 +3,6 @@ const db = require("../models");
 const passport = require("passport");
 const bcrypt = require('bcrypt');
 const {isNotLoggedIn, isLoggedIn} = require("./middlewares");
-const {parse} = require("nodemon/lib/cli");
 
 const router = express.Router();
 
@@ -15,6 +14,8 @@ router.get('/', isLoggedIn, async (req,res,next)=>{
     const user = req.user;
     res.json(user);
 })
+// 자기 정보 불러오기
+
 
 router.post('/', isNotLoggedIn, async (req,res,next)=>{
     //회원 가입
@@ -46,6 +47,10 @@ router.post('/', isNotLoggedIn, async (req,res,next)=>{
         });
         // return res.status(201).json(newUser)
         //send:문자열 /json
+//회원가입
+
+
+
 
         //>>login
         passport.authenticate('local',(err, user, info)=>{
@@ -97,6 +102,11 @@ router.post('/', isNotLoggedIn, async (req,res,next)=>{
     }
 
 })
+//회원 가입
+
+
+
+
 
 router.post('/login', isNotLoggedIn, (req,res,next)=>{
 
@@ -148,13 +158,15 @@ router.post('/login', isNotLoggedIn, (req,res,next)=>{
 
     //FRONT에 쿠키 심기
 })
+//로그인
+
 
 router.post('/logout', isLoggedIn, (req,res)=>{
         req.logout()
         req.session.destroy(); // 선택사항..
         return res.status(200).send("로그아웃 되었습니다.")
 })
-
+//로그아웃
 
 
 
@@ -172,6 +184,10 @@ router.post('/:id/follow',isLoggedIn, async (req,res,next)=>{
         next(e)
     }
 })
+//팔로우
+
+
+
 router.delete('/:id/follow', isLoggedIn, async (req,res,next)=>{
     try{
         const me = await db.User.findOne({
@@ -185,6 +201,9 @@ router.delete('/:id/follow', isLoggedIn, async (req,res,next)=>{
         next(e)
     }
 })
+//언팔로우
+
+
 router.patch('/nickname', isLoggedIn, async (req,res,next)=>{
     try{
         await db.User.update({
@@ -198,6 +217,8 @@ router.patch('/nickname', isLoggedIn, async (req,res,next)=>{
         next(e)
     }
 })
+//닉네임 변경
+
 
 router.get('/:id/followings', isLoggedIn, async(req,res,next)=>{
         try{
@@ -218,6 +239,9 @@ router.get('/:id/followings', isLoggedIn, async(req,res,next)=>{
             next(e)
         }
 })
+//팔로잉
+
+
 
 router.get('/:id/followers', isLoggedIn, async(req,res,next)=>{
     try{
@@ -236,6 +260,9 @@ router.get('/:id/followers', isLoggedIn, async(req,res,next)=>{
         console.error(e);
         next(e)
     }
+//팔로워 가져오기
+
+
 
 }),
     router.delete('/:id/follower', isLoggedIn,  async(req, res, next)=>{
@@ -250,7 +277,9 @@ router.get('/:id/followers', isLoggedIn, async(req,res,next)=>{
             console.error(e)
         }
     }),
-router.post(`/:id/posts`, isNotLoggedIn, async(req,res,next)=>{
+    //팔로워 지우기기
+
+router.get(`/:id/posts`, async(req,res,next)=>{
     try{
         let where ={
             UserId:parseInt(req.params.id, 10) || (req.user && req.user.id) || 0,
@@ -280,6 +309,10 @@ router.post(`/:id/posts`, isNotLoggedIn, async(req,res,next)=>{
         console.log(e)
     }
 })
+//특정 사람의 게시글 로드
+
+
+
 
 router.get(`/:id`, async(req,res,next)=>{
     try {
@@ -306,4 +339,5 @@ router.get(`/:id`, async(req,res,next)=>{
         next(e)
     }
 })
+//다른 사용자의 팔로워 팔로잉 게시글 수 로드
 module.exports=router;

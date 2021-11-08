@@ -35,6 +35,7 @@ router.get('/', async (req,res,next)=>{
         console.log(posts)
         res.json(posts)
     }catch(err){
+        console.log("posts")
         console.error(err)
         next(err)
     }

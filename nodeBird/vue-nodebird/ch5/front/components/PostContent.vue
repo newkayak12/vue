@@ -2,7 +2,7 @@
      <div>
           <v-card-title>
                <h3>
-                    <nuxt-link :to="'/user/'+post.id" >
+                    <nuxt-link :to="'/user/'+post.User.id" >
                          {{post.User.nickname}}
                     </nuxt-link>
                     <v-btn v-if="canFollow" @click="onFollow">팔로우</v-btn>
@@ -14,7 +14,7 @@
                <div>
 
                     <!--                         <div>{{post.content}}</div>-->
-                    <div :to="'/post/'+post.id">{{post.content}}</div>
+                    <div>{{post.content}}</div>
                </div>
                <post-images :images="post.Images || []"/>
           </v-card-text>

@@ -1,5 +1,15 @@
 <template>
      <v-container>
+          <v-card style="margin-bottom: 20px">
+               <v-container>
+                    {{other.nickname}}
+                    <v-row>
+                         <v-col cols="4"> 팔로잉 : {{other.Followings.length}}</v-col>
+                         <v-col cols="4"> 팔로워 : {{other.Followers.length}}</v-col>
+                         <v-col cols="4"> 게시글 : {{other.Posts.length}}</v-col>
+                    </v-row>
+               </v-container>
+          </v-card>
           <div>
                <post-card v-for="p in mainPosts" :key="p.id" :post="p"/>
           </div>
@@ -13,21 +23,24 @@ export default {
           PostCard,
      },
      computed:{
-          me(){
-               return this.$store.state.Users.me
+          other(){
+               return this.$store.state.Users.other;
           },
+
           mainPosts(){
                return this.$store.state.Posts.mainPosts
-          }, hasMorePost(){
-               return this.$store.state.Posts.hasMorePost
           }
      },
-     fetch({store}){
-          //처음 로드시 데이터를 가져와 넣는
-          // 컴포넌트가 마운트 되기 전에 store에 비동기적으로 데이터를 넣을 때 사용
-          // fetch를 쓰지 않으면 화면이 로드됐을 때 데이터를 불러오지 않아서 빈 화면이 나올 것
-
-          store.dispatch('Posts/loadPosts')
+     fetch({store, params}){
+          //fetch에서는 this.$route.params.id 안됨
+          console.log(params)
+          store.dispatch('Users/loadOther',{
+               userId: params.id
+          })
+          return store.dispatch('Posts/loadUserPosts',{
+               userId : params.id,
+               reset : true
+          });
      },
      mounted(){
           //created()는 window를 쓸 수 없음 >> 화면에 붙기 전에는 Documents나 Window를 사용할 수 없다.
@@ -48,7 +61,7 @@ export default {
 
                if(window.scrollY+document.documentElement.clientHeight > document.documentElement.scrollHeight - 300){
                     if(this.hasMorePost){
-                         this.$store.dispatch('Posts/loadPosts');
+                         this.$store.dispatch('Posts/loadPosts',{reset:true});
                     }
                }
 

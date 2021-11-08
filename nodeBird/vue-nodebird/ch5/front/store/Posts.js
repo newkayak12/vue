@@ -37,18 +37,15 @@ export const mutations = {
     loadComments(state,payload){
         const index = state.mainPosts.findIndex(v=>v.id ===payload.postId);
         state.mainPosts[index].Comments = payload.data
-        console.log("loadComments/mutation")
-        console.log(state.mainPosts)
     },
+
     loadPosts(state, payload) {
-        // if(payload.reset){
-        //     state.mainPosts = payload.data;
-        // } else {
-            state.mainPosts = state.mainPosts.concat(payload);
-            console.log('loadPosts')
-            console.log(state.mainPosts)
-        // }
-        state.hasMorePost = (payload.length === limit);
+        if(payload.reset){
+            state.mainPosts = payload.data;
+        } else {
+            state.mainPosts = state.mainPosts.concat(payload.data);
+        }
+        state.hasMorePost = (payload.data.length === limit);
 
     },concatImagePaths(state,payload){
         state.imagePaths = state.imagePaths.concat(payload)
@@ -89,7 +86,6 @@ export const actions = {
             withCredentials:true
         })
         .then((res)=>{
-            console.log(res.data)
             commit('addMainPost',res.data)
 
         })
@@ -101,7 +97,6 @@ export const actions = {
         this.$axios.delete(`/post/${payload.postId}`,{
             withCredentials:true
         }).then(()=>{
-            console.log('commit')
             commit('removeMainPost', payload);
         }).catch((err)=>{
             console.error(err)
@@ -115,8 +110,6 @@ export const actions = {
             withCredentials:true
         })
             .then((res)=>{
-            console.log("addComment/action")
-            console.log(res.data)
             commit('addComment',res.data)
         })
             .catch((err)=>{
@@ -124,10 +117,8 @@ export const actions = {
             })
     },
     loadComment({commit},payload){
-        console.log("loadComment/action")
         const res = this.$axios.get(`/post/${payload.postId}/comments`)
             .then((res)=>{
-                console.log(res.data)
                     commit('loadComments', {
                         postId:payload.postId,
                         data:res.data,
@@ -138,20 +129,52 @@ export const actions = {
 
     },
     loadPosts: throttles( async function({commit, state}, payload){
-
-
-        if(state.hasMorePost){
-            const lastPost = state.mainPosts[state.mainPosts.length-1];
-             // await this.$axios.get(`/posts?offset=${state.mainPosts.length}&limit=10`)
-             await this.$axios.get(`/posts?offset=${lastPost&&lastPost.id}&limit=10`)
-            .then((res)=>{
-                commit('loadPosts',res.data);
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-
+        try {
+            if (payload && payload.reset) {
+                const res = await this.$axios.get(`/posts?limit=10`);
+                commit('loadPosts', {
+                    data: res.data,
+                    reset: true,
+                });
+                return;
+            }
+            if (state.hasMorePost) {
+                const lastPost = state.mainPosts[state.mainPosts.length - 1];
+                const res = await this.$axios.get(`/posts?lastId=${lastPost && lastPost.id}&limit=10`);
+                commit('loadPosts', {
+                    data: res.data,
+                });
+                return;
+            }
+        } catch (err) {
+            console.error(err);
         }
+
+            // if(payload&&payload.reset){
+            //     this.$axios.get("/posts?limit=10")
+            //     .then((res)=>{
+            //         commit(`loadPosts`,{
+            //             data:res.data,
+            //             reset:true
+            //         })
+            //     })
+            //     .catch((e)=>{
+            //         console.error(e)
+            //     })
+            // }
+            //
+            // if(state.hasMorePost){
+            //     const lastPost = state.mainPosts[state.mainPosts.length-1];
+            //     await this.$axios.get(`/posts?offset=${lastPost&&lastPost.id}&limit=10`)
+            //         .then((res)=>{
+            //             commit('loadPosts', {data: res.data, reset:true});
+            //         })
+            //         .catch((err)=>{
+            //             console.error(err)
+            //         })
+            // }
+
+        // 이 두 개의 차이점을 정확하게 모르겠는데 분명 자바스크립트 상에서는 미묘하게 차이가 있을 것도 같은데
         /*
             throttle : 실행하고 3초 기다리고 다시 실행 할 수 있다.
             debounce : 기다리고 모았다가 실행
@@ -236,17 +259,56 @@ export const actions = {
 
     },
     loadUserPosts: throttles (async function({commit},payload){
-        try{
-            if(state.hasMorePost){
+        // try{
+        //     if(payload && payload.reset){
+        //         const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`);
+        //         commit('loadPosts',
+        //             {
+        //                 data: res.data,
+        //                 reset:true
+        //             }
+        //     );
+        //         return;
+        //     }
+        //     if(state.hasMorePost){
+        //         const lastPost = state.mainPosts[state.mainPosts.length - 1];
+        //         const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}&limit=10`);
+        //         console.log('OtherPosts')
+        //         console.log(res.data)
+        //         commit(`loadPosts`,
+        //             {
+        //                 data: res.data,
+        //                 reset:true
+        //            }
+        //         );
+        //         return;
+        //     }
+        // }catch (e) {
+        //     console.error(e)
+        // }
+
+
+        try {
+            if (payload && payload.reset) {
+                const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`);
+                commit('loadPosts', {
+                    data: res.data,
+                    reset: true,
+                });
+                return;
+            }
+            if (state.hasMorePost) {
                 const lastPost = state.mainPosts[state.mainPosts.length - 1];
                 const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}&limit=10`);
-                commit(`loadPosts`, res.data);
-                return
+                commit('loadPosts', {
+                    data: res.data,
+                });
+                return;
             }
-        }catch (e) {
-            console.error(e)
+        } catch (err) {
+            console.error(err);
         }
-    })
+    },2000)
 
 
 

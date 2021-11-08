@@ -9,21 +9,21 @@ module.exports=()=>{
 
     passport.deserializeUser(async(id,done)=>{
         try {
-            const user = await db.User.findOne(
-                {where: {id},
-                attributes:['id','nickname'],
-                include:[{
-                    model:db.User,
-                    as:"Followings",
-                    attributes:['id'],
-                },{
-                    model:db.User,
-                    as:'Followers',
-                    attributes:['id']
-                },{
-                    model:db.Post,
-                    attributes:['id']
-                }]
+            const user = await db.User.findOne({
+                where: { id },
+                attributes: ['id', 'nickname'],
+                include: [{
+                    model: db.Post,
+                    attributes: ['id'],
+                }, {
+                    model: db.User,
+                    as: 'Followings',
+                    attributes: ['id'],
+                }, {
+                    model: db.User,
+                    as: 'Followers',
+                    attributes: ['id'],
+                }],
             });
             // 이 부분을 redis로 바꿔주면 된다.
             // deserializeUser는 페이지 이동마다 여기에 오고
