@@ -1,3 +1,6 @@
+import throttles from 'lodash.throttle';
+
+
 export const state = () =>({
    mainPosts:[],
     hasMorePost:true,
@@ -134,12 +137,14 @@ export const actions = {
             })
 
     },
-    async loadPosts({commit, state}, payload){
+    loadPosts: throttles( async function({commit, state}, payload){
+
+
         if(state.hasMorePost){
-             await this.$axios.get(`/posts?offset=${state.mainPosts.length}&limit=10`)
+            const lastPost = state.mainPosts[state.mainPosts.length-1];
+             // await this.$axios.get(`/posts?offset=${state.mainPosts.length}&limit=10`)
+             await this.$axios.get(`/posts?offset=${lastPost&&lastPost.id}&limit=10`)
             .then((res)=>{
-                console.log('action/loadPosts')
-                console.log(res.data)
                 commit('loadPosts',res.data);
             })
             .catch((err)=>{
@@ -147,7 +152,12 @@ export const actions = {
             })
 
         }
-    },
+        /*
+            throttle : 실행하고 3초 기다리고 다시 실행 할 수 있다.
+            debounce : 기다리고 모았다가 실행
+         */
+    }, 2000),
+
     // async loadPosts({ commit, state }, payload) {
     //
     //     if(state.hasMorePost) {
@@ -224,7 +234,19 @@ export const actions = {
             console.error(err)
         })
 
-    }
+    },
+    loadUserPosts: throttles (async function({commit},payload){
+        try{
+            if(state.hasMorePost){
+                const lastPost = state.mainPosts[state.mainPosts.length - 1];
+                const res = await this.$axios.get(`/user/${payload.userId}/posts?lastId=${lastPost && lastPost.id}&limit=10`);
+                commit(`loadPosts`, res.data);
+                return
+            }
+        }catch (e) {
+            console.error(e)
+        }
+    })
 
 
 

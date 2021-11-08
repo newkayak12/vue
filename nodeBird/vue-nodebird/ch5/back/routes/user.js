@@ -3,6 +3,7 @@ const db = require("../models");
 const passport = require("passport");
 const bcrypt = require('bcrypt');
 const {isNotLoggedIn, isLoggedIn} = require("./middlewares");
+const {parse} = require("nodemon/lib/cli");
 
 const router = express.Router();
 
@@ -248,5 +249,61 @@ router.get('/:id/followers', isLoggedIn, async(req,res,next)=>{
         }catch(e){
             console.error(e)
         }
-    })
+    }),
+router.post(`/:id/posts`, isNotLoggedIn, async(req,res,next)=>{
+    try{
+        let where ={
+            UserId:parseInt(req.params.id, 10) || (req.user && req.user.id) || 0,
+            RetweetId: null
+        }
+        if(parseInt(req.query.lastId, 10)){
+            where[db.Sequelize.Op.lt] =  parseInt(req.query.lastId, 10)
+        }
+
+
+        const posts = await db.Post.findAll({
+            where,
+            include:[{
+                model:db.User,
+                attributes:['id', 'nickname'],
+            },{
+                model:db.Image,
+            },{
+                model:db.User,
+                through:'Like',
+                as:'Likers',
+                attributes:['id']
+            }]
+        });
+        res.json(posts)
+    } catch(e){
+        console.log(e)
+    }
+})
+
+router.get(`/:id`, async(req,res,next)=>{
+    try {
+        const user = await db.User.findOne({
+            where: { id: parseInt(req.params.id, 10) },
+            include: [{
+                model: db.Post,
+                as: 'Posts',
+                attributes: ['id'],
+            }, {
+                model: db.User,
+                as: 'Followings',
+                attributes: ['id'],
+            }, {
+                model: db.User,
+                as: 'Followers',
+                attributes: ['id'],
+            }],
+            attributes: ['id', 'nickname'],
+        });
+        res.json(user)
+    }catch (e) {
+        console.error(e)
+        next(e)
+    }
+})
 module.exports=router;

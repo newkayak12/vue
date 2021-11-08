@@ -7,6 +7,7 @@ export const state = () =>({
     //숙제
     hasMoreFollower:true,
     hasMoreFollowing:true,
+    other:null, // 다른 사람의 정보
 
 });
 
@@ -27,6 +28,9 @@ export const mutations = {
 
         //mutations에는 비동기 작업이 있으면 안된다. >> setTimeout / promise / AJAX / xhr / axios 등 >>
         //mutations에서는 못 쓴다.
+    },
+    setOther(state,payload){
+        state.other = payload
     },
     changeNickname(state, payload){
         state.me.nickname = payload.nickname;
@@ -285,6 +289,16 @@ export const actions = {
                 console.error(err);
             });
     },
+    async loadOther({commit},payload){
+        try{
+            const res = await this.$axios.get(`/user/${payload.userId}`,{
+                withCredentials:true
+            })
+            commit(`setOther`, res.data)
+        } catch (e){
+            console.error(e)
+        }
+    },
     follow({commit}, payload){
         this.$axios.post(`/user/${payload.userId}/follow`,{},{
             withCredentials:true
@@ -322,8 +336,9 @@ export const actions = {
         .catch((e)=>{
             console.error(e)
         })
-
     },
+
+
 
 
 }

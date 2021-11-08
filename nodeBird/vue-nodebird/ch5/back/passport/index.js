@@ -20,6 +20,9 @@ module.exports=()=>{
                     model:db.User,
                     as:'Followers',
                     attributes:['id']
+                },{
+                    model:db.Post,
+                    attributes:['id']
                 }]
             });
             // 이 부분을 redis로 바꿔주면 된다.
@@ -27,7 +30,6 @@ module.exports=()=>{
             // 그러면 결국 DB에 계속 접속하니까 캐싱으로 극복한다 .
             return done(null,user);
         } catch(err){
-            console.err(err);
             return done(err)
         }
     })
