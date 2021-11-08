@@ -69,8 +69,8 @@ export default {
           }
      },fetch({store}){
           /*context자리임*/
-          store.dispatch('Users/loadFollowers')
-          store.dispatch('Users/loadFollowings')
+                store.dispatch('Users/loadFollowers',{offset:0})
+         return store.dispatch('Users/loadFollowings',{offset:0})
      },
      methods:{
           onChangeNickname(){
@@ -78,12 +78,11 @@ export default {
                     nickname:this.nickname
                })
           },
-          removeFollowing(id){
-
-               this.$store.dispatch('Users/removeFollowing',{id})
+          removeFollowing(userId){
+               this.$store.dispatch('Users/unFollow',{userId})
           },
-          removeFollower(id){
-               this.$store.dispatch("Users/removeFollower",{id})
+          removeFollower(userId){
+               this.$store.dispatch("Users/removeFollower",{userId})
           },
           loadMoreFollowers(){
                this.$store.dispatch('Users/loadFollowers')

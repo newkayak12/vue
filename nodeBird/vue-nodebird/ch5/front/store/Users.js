@@ -50,35 +50,40 @@ export const mutations = {
      //     }
      // },
 
-    removeFollower(state, payload) {
-        const index = state.F.findIndex(v => v.id === payload.id);
-        state.followerLists.splice(index, 1);
 
+
+
+
+    loadMoreFollowings(state, payload){
+        // const diff = totalFollowing - state.followingLists.length;
+        // const fakeUsers = Array(diff>limit? limit:diff).fill().map(v=>({
+        //     //역시나 실무에서는 '더보기' 누르고 있는 도중에도 팔로우가 올 수 있기 때문에
+        //     // last id  방식을 사용한다.
+        //         id: Math.random(),
+        //         nickname: Math.floor(Math.random()*1000),
+        // }));
+        if(payload.offset === 0){
+            state.followingLists = payload.data
+        //    초기화
+        } else {
+            state.followingLists = state.followingLists.concat(payload.data)
+        }
+        state.hasMoreFollowing = payload.data.length===limit;
     },
+    loadMoreFollowers(state, payload){
+        // const diff = totalFollower - state.followerLists.length;
+        // const fakeUsers = Array(diff>limit? limit:diff).fill().map(v=>({
+        //     id: Math.random(),
+        //     nickname: Math.floor(Math.random()*1000),
+        // }));
 
-
-
-    loadMoreFollowings(state){
-        const diff = totalFollowing - state.followingLists.length;
-        const fakeUsers = Array(diff>limit? limit:diff).fill().map(v=>({
-            //역시나 실무에서는 '더보기' 누르고 있는 도중에도 팔로우가 올 수 있기 때문에
-            // last id  방식을 사용한다.
-                id: Math.random(),
-                nickname: Math.floor(Math.random()*1000),
-        }));
-
-        state.followingLists = state.followingLists.concat(fakeUsers)
-        state.hasMoreFollowing = fakeUsers.length===limit;
-    },
-    loadMoreFollowers(state){
-        const diff = totalFollower - state.followerLists.length;
-        const fakeUsers = Array(diff>limit? limit:diff).fill().map(v=>({
-            id: Math.random(),
-            nickname: Math.floor(Math.random()*1000),
-        }));
-
-        state.followerLists = state.followerLists.concat(fakeUsers)
-        state.hasMoreFollower = fakeUsers.length===limit;
+        if(payload.offset === 0){
+            state.followerLists = payload.data
+            //    초기화
+        } else {
+            state.followerLists = state.followerLists.concat(payload.data)
+        }
+        state.hasMoreFollower = payload.data.length===limit;
     },
     following(state, payload) {
         state.me.Followings.push({
@@ -86,8 +91,19 @@ export const mutations = {
         })
     },
     removeFollowing(state, payload) {
-        const index = state.me.Followings.findIndex(v => v.id === payload.userId);
+        let index = state.me.Followings.findIndex(v => v.id === payload.userId);
         state.me.Followings.splice(index, 1);
+
+        index = state.followingLists.findIndex(v => v.id === payload.userId);
+        state.followingLists.splice(index,1)
+    },
+     removeFollower(state, payload) {
+        let index = state.me.Followers.findIndex(v => v.id === payload.userId);
+        state.me.Followers.splice(index, 1);
+
+        index = state.followerLists.findIndex(v => v.id === payload.userId);
+        state.followerLists.splice(index, 1);
+
     },
 };
 //동기적 작업
@@ -154,7 +170,14 @@ export const actions = {
         })
     },
     changeNickname({commit}, payload) {
-        commit('changeNickname',payload)
+
+        this.$axios.patch('/user/nickname', {nickname:payload.nickname},{
+            withCredentials:true
+        }).then((res)=>{
+            commit('changeNickname',payload)
+        }).catch((error)=>{
+            console.error(error)
+        })
     },
     /*createFollow({commit}){
         let follower=[
@@ -192,22 +215,63 @@ export const actions = {
         context.commit('deleteFollow',payload)
     }*/
 
-    removeFollowing({commit}, payload){
-        commit(`removeFollowing`,payload)
-    },
-    removeFollower({commit}, payload){
-        commit(`removeFollower`,payload)
-    },
+    // removeFollowing({commit}, payload){
+    //     commit(`removeFollowing`,payload)
+    // },
+
 
     loadFollowers({commit, state}, payload){
-        if(state.hasMoreFollower){
-            commit('loadMoreFollowers')
+        // if(state.hasMoreFollower){
+        console.log("loadFollower/ payload")
+        console.log(payload)
+        // if((!payload && payload.offset === 0) && !state.hasMoreFollower){
+        if (!(payload && payload.offset === 0) && !state.hasMoreFollower) {
+            return;
         }
+            let offset = state.followerLists.length;
+        if(payload && payload.offset === 0){
+            offset = 0;
+        }
+
+        return this.$axios.get(`/user/${state.me.id}/followers?limit=3&offset=${offset}`,{
+            withCredentials:true
+        })
+        .then((res)=>{
+            commit("loadMoreFollowers",{
+                data:res.data,
+                offset,
+            })
+
+        }).catch((err)=>{
+            console.error(err)
+        })
+        // }
     },
     loadFollowings({commit, state}, payload){
-        if(state.hasMoreFollowing){
-            commit("loadMoreFollowings")
+        if(!(payload && payload.offset === 0) && !(state.hasMoreFollowing)){
+            return;
         }
+
+        let offset = state.followingLists.length;
+
+        if(payload && payload.offset === 0){
+            offset = 0;
+        }
+
+
+        return this.$axios.get(`/user/${state.me.id}/followings?limit=3&offset=${offset}`,{
+            withCredentials:true
+        })
+        .then((res)=>{
+            commit("loadMoreFollowings",{
+                data:res.data,
+                offset,
+            })
+
+        }).catch((err)=>{
+            console.error(err)
+        })
+
     },
     async loadUser({ state, commit }) {
         console.log("loadUser")
@@ -245,7 +309,21 @@ export const actions = {
         .catch((e)=>{
             console.error(e)
         })
-    }
+    },
+    removeFollower({commit}, payload){
+        return this.$axios.delete(`user/${payload.userId}/follower`,{
+            withCredentials:true
+        })
+        .then((res)=>{
+            commit('removeFollower',{
+                userId : payload.userId
+            })
+        })
+        .catch((e)=>{
+            console.error(e)
+        })
+
+    },
 
 
 }

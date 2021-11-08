@@ -197,4 +197,56 @@ router.patch('/nickname', isLoggedIn, async (req,res,next)=>{
         next(e)
     }
 })
+
+router.get('/:id/followings', isLoggedIn, async(req,res,next)=>{
+        try{
+            const user = await db.User.findOne({
+                where:{
+                    id: req.user.id
+                }
+            });
+            const followings = await user.getFollowings({
+                attributes:['id','nickname'],
+                limit:parseInt(req.query.limit || 3, 10),
+                offset:parseInt(req.query.offset || 0, 10)
+
+            })
+            res.json(followings)
+        } catch (e){
+            console.error(e)
+            next(e)
+        }
+})
+
+router.get('/:id/followers', isLoggedIn, async(req,res,next)=>{
+    try{
+        const user = await db.User.findOne({ where: { id: req.user.id }});
+        if (!user) {
+            res.status(403).send('없는 사람을 찾으려고 하시네요?');
+        }
+        const followers = await user.getFollowers({
+            attributes:['id','nickname'],
+            limit:parseInt(req.query.limit ||3, 10),
+            offset:parseInt(req.query.offset || 0, 10)
+
+        });
+        res.status(200).json(followers);
+    }catch (e){
+        console.error(e);
+        next(e)
+    }
+
+}),
+    router.delete('/:id/follower', isLoggedIn,  async(req, res, next)=>{
+        try{
+            const me = await db.User.findOne({
+                where:{id: req.user.id},
+            })
+
+            await me.removeFollower(req.params.id)
+            res.send(req.params.id)
+        }catch(e){
+            console.error(e)
+        }
+    })
 module.exports=router;
