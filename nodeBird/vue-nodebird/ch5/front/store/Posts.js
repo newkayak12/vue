@@ -308,7 +308,32 @@ export const actions = {
         } catch (err) {
             console.error(err);
         }
+    },2000),
+
+    loadHashtagPosts: throttles (async function({commit},payload){
+
+        try {
+            if (payload && payload.reset) {
+                const res = await this.$axios.get(`/hashtag/${payload.hashtag}?limit=10`);
+                commit('loadPosts', {
+                    data: res.data,
+                    reset: true,
+                });
+                return;
+            }
+            if (state.hasMorePost) {
+                const lastPost = state.mainPosts[state.mainPosts.length - 1];
+                const res = await this.$axios.get(`/hashtag/${payload.hashtag}/posts?lastId=${lastPost && lastPost.id}&limit=10`);
+                commit('loadPosts', {
+                    data: res.data,
+                });
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+        }
     },2000)
+
 
 
 

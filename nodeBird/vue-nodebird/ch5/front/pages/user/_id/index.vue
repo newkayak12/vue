@@ -33,14 +33,16 @@ export default {
      },
      fetch({store, params}){
           //fetch에서는 this.$route.params.id 안됨
-          console.log(params)
-          store.dispatch('Users/loadOther',{
-               userId: params.id
-          })
-          return store.dispatch('Posts/loadUserPosts',{
-               userId : params.id,
-               reset : true
-          });
+          return Promise.all([
+               store.dispatch('Users/loadOther',{
+                    userId: params.id
+               }),
+                store.dispatch('Posts/loadUserPosts',{
+                    userId : params.id,
+                    reset : true
+               })
+          ])
+
      },
      mounted(){
           //created()는 window를 쓸 수 없음 >> 화면에 붙기 전에는 Documents나 Window를 사용할 수 없다.

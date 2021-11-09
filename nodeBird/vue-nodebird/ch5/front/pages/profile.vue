@@ -69,8 +69,12 @@ export default {
           }
      },fetch({store}){
           /*context자리임*/
-                store.dispatch('Users/loadFollowers',{offset:0})
-         return store.dispatch('Users/loadFollowings',{offset:0})
+          Promise.all([
+               store.dispatch('Users/loadFollowers',{offset:0}),
+               store.dispatch('Users/loadFollowings',{offset:0})
+          ])
+
+
      },
      methods:{
           onChangeNickname(){
