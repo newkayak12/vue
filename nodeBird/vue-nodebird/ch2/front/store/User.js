@@ -44,7 +44,30 @@ export const actions = {
 
     signup(context, payload){
         //context안에는 다양한 것들이 있다.
+        console.log("context")
         console.log(context)
+        console.log("commit")
+        console.log(context.commit)
+        console.log("state")
+        console.log(context.state)
+        console.log("rootState")
+        console.log(context.rootState)
+        /*
+            Index:Object (empty)
+            Posts:Object
+            mainPosts:Array[0]
+            User:Object
+            followerList:Array[0]
+            followingList:Array[0]
+            me:Object
+
+         */
+        console.log("getters")
+        console.log(context.getters)
+        console.log("rootGetters")
+        console.log(context.rootGetters)
+
+
 
         //서버에 회원 가입 요청을 보내느 부분 >> 회원가입 요청 보내고 응답을 보낸 후 로그인 동시에 진행해서 state의 me를 바꿔줄 것
         context.commit('setMe',payload);

@@ -4,7 +4,7 @@
                <v-form ref="loginForm" v-model="loginValid" @submit.prevent="onSubmitLogin">
                     <v-container>
                          <v-text-field v-model="loginEmail" label="이메일" type="email" required :rules="loginEmailRules" />
-                         <v-text-field v-model="loginPassword" label="비밀번호" type="password" required :rules="loginPasswordRules" />
+                         <v-text-field v-model="loginPassword" label="비밀번호" type="password" required :rules="loginPasswordRules"   />
                          <v-btn color="green" type="submit" :disabled="!loginValid">로그인</v-btn>
                          <v-btn nuxt to="/signup">회원가입</v-btn>
                     </v-container>

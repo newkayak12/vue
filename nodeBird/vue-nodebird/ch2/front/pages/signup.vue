@@ -78,7 +78,7 @@ export default {
          async onSubmitForm(){
                if(this.$refs.form.validate()){
                    try {
-                        const result = await this.$store.dispatch('User.js/signup', {
+                        const result = await this.$store.dispatch('User/signup', {
                              nickname: this.nickname,
                              email: this.email,
                         })
