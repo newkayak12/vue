@@ -339,5 +339,6 @@ router.get(`/:id`, async(req,res,next)=>{
         next(e)
     }
 })
+
 //다른 사용자의 팔로워 팔로잉 게시글 수 로드
 module.exports=router;

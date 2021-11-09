@@ -13,6 +13,7 @@ const morgan = require('morgan')
 const usersRouter = require('./routes/user')
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
+const hashtagRouter = require("./routes/hashtag")
 
 db.sequelize.sync({});
 passportConfig();
@@ -38,6 +39,7 @@ app.use(cookie())
 app.use('/user', usersRouter)
 app.use('/post', postRouter)
 app.use('/posts',postsRouter)
+app.use('/hashtag',hashtagRouter)
 
 app.use('/',express.static('uploads'))
 //프론트에서 접근할 주소 , 실제 주소

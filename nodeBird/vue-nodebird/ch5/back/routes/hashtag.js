@@ -4,20 +4,27 @@ const db = require('../models')
 
 const router = express.Router()
 
-router.get('/', async (req,res,next)=>{
-    try{ let where = {};
-        if (parseInt(req.query.lastId, 10)) {
-            where = {
-                id: {
-                    [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10), // less than
-                },
-            };
+router.get('/:tag', async (req,res,next)=>{
+    console.log("hashtag")
+    console.log(`${decodeURIComponent(req.params.tag)}`)
+    try{
+        let where = {};
+        if(parseInt(req.query.lastId, 10)){
+            where= {
+                id:{
+                    [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10),
+                }
+            }
         }
         const posts = await db.Post.findAll({
             where,
             include: [{
+                model:db.Hashtag,
+                where:{name : decodeURIComponent(req.params.tag) },
+            },{
                 model: db.User,
                 attributes: ['id', 'nickname'],
+
             }, {
                 model: db.Image,
             }, {
