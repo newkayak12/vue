@@ -10,32 +10,58 @@ const passportConfig = require('./passport')
 const session = require('express-session')
 const cookie = require('cookie-parser')
 const morgan = require('morgan')
+const prod = process.env.NODE_ENV == 'production'
 const usersRouter = require('./routes/user')
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
 const hashtagRouter = require("./routes/hashtag")
+const helmet = require("helmet");
+const hpp = require('hpp');
+const dotenv = require('notenv')
 
+dotenv.config()
 db.sequelize.sync({});
 passportConfig();
 
 
 //////////////////////////////////////
-app.use(morgan('dev'))
-app.use(cors({
-    origin:'http://localhost:3080',
-    credentials:true
-}))
+if(prod){
+    app.use(hpp());
+    app.use(helmet());
+    app.use(morgan('combined'))
+    app.use(cors({
+        origin:`50.18.35.77:${process.env.PORT}`,
+        credentials:true
+    }))
+} else {
+    app.use(morgan('dev'))
+
+    app.use(cors({
+        origin:'http://localhost:3080',
+        credentials:true
+    }))
+}
+
+
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 // app.use는 request/response를 조작한다 >> 미들웨어
 app.use(session({
     resave:false,
     saveUninitialized:false,
-    secret:'cookiesecret'
+    secret:process.env.COOKIE_SECRET,
+    cookie:{
+        httpOnly:true,
+        secure:false,
+        //domain: prod && .nodebird.com
+    }
+
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookie())
+app.use(cookie(process.env.COOKIE_SECRET))
 app.use('/user', usersRouter)
 app.use('/post', postRouter)
 app.use('/posts',postsRouter)
@@ -50,7 +76,7 @@ app.use('/',express.static('uploads'))
 
 
 
-app.listen(3085, ()=>{
-    console.log(`백엔드 서버 ${3085}번을 사용중입니다.
+app.listen(prod? process.env.PORT :3085, ()=>{
+    console.log(`백엔드 서버 ${prod? process.env.PORT :3085}번을 사용중입니다.
     `)
 })
