@@ -14,7 +14,6 @@
   "license": "ISC",
   "config": {
     "nuxt": {
-      "port": "3080"
     }
   },
   "dependencies": {
