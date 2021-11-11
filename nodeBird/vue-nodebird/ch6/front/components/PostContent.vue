@@ -21,6 +21,7 @@
 <!--                    <div>{{post.content}}</div>-->
                </div>
                <post-images :images="post.Images || []"/>
+               <div>{{$moment(post.createdAt).fromNow()}}</div>
           </v-card-text>
      </div>
 </template>
@@ -71,7 +72,7 @@ export default {
 <style scoped>
 a{
      text-decoration:  none;
-     color: #68e5e5;
+     color: #125fd3;
      font-weight: bold;
 }
 

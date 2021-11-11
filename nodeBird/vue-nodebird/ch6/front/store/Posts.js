@@ -40,7 +40,6 @@ export const mutations = {
     },
     loadPost(state, payload){
         state.mainPosts = [payload];
-        console.log("is it work?")
     },
     loadPosts(state, payload) {
         if(payload.reset){
@@ -132,9 +131,13 @@ export const actions = {
 
     },
     async loadPost  ({commit, state}, payload){
+
             try {
                     const res = await this.$axios.get(`/post/${payload}`);
-                    commit('loadPost', { data: res.data,});
+
+                    console.log(res.data)
+                    console.log("afterGetData")
+                    commit('loadPost', res.data);
                     return;
             } catch (err) {
                 console.error(err);

@@ -286,6 +286,7 @@ export const actions = {
                 commit('setMe', res.data);
             })
             .catch((err)=>{
+                console.error("loadUserError")
                 console.error(err);
             });
     },

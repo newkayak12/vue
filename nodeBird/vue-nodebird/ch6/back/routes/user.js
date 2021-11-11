@@ -315,6 +315,7 @@ router.get(`/:id/posts`, async(req,res,next)=>{
 
 
 router.get(`/:id`, async(req,res,next)=>{
+
     try {
         const user = await db.User.findOne({
             where: { id: parseInt(req.params.id, 10) },

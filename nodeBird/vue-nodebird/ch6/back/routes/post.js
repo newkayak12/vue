@@ -259,6 +259,7 @@ router.delete('/:id/like', isLoggedIn, async (req,res,next)=>{
 
 router.get(`/:id`, async(req,res,next)=>{
     console.log("isItRejected?")
+    console.log("singlePost")
     try{
         const post = await db.Post.findOne({
             where:{ id: req.params.id},
