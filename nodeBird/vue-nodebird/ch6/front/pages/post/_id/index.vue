@@ -28,6 +28,27 @@ export default {
           console.log("afterMounted")
           console.log(this.post)
      },
+     head(){
+          return{
+               title: `${this.post.User.nickname}`,
+               meta:[{
+                    charset:'utf-8'
+               },{
+                    name: 'description', content:`${this.post.content}`
+               },{
+                    hid: 'ogtitle', name:'og:title', content: `${this.post.User.nickname}의 게시글`
+               },{
+                    hid: 'ogdesc',  name:'og:description', content: `${this.post.content}`
+               },{
+                    hid: 'ogimage', property:'og:image', content: this.post.Images[0]? this.post.Images[0].src :'https://vue.nodebird.com/vue-nodebird.png',
+               },{
+                    hid: 'ogurl',   property:'og:url', content:`https://vue.nodebird.com/post/${this.post.id}`
+               }],
+               link:[{
+                    rel: 'shortcut icon', href: '/vue-nodebird.png'},
+               ]
+          }
+     }
 
 };
 </script>
