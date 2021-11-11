@@ -17,7 +17,7 @@ const postsRouter = require("./routes/posts")
 const hashtagRouter = require("./routes/hashtag")
 const helmet = require("helmet");
 const hpp = require('hpp');
-const dotenv = require('notenv')
+const dotenv = require('dotenv')
 
 dotenv.config()
 db.sequelize.sync({});
