@@ -60,8 +60,8 @@ module.exports = {
     },
     vuetify: {},
     axios:{
-        browserBaseURL:"ec2-54-241-236-42.us-west-1.compute.amazonaws.com:80",
-        baseURL:'ec2-54-241-236-42.us-west-1.compute.amazonaws.com:80',
+        browserBaseURL:"http://54.241.236.42:80",
+        baseURL:'http://54.241.236.42:80',
         https: false,
     },
     server:{
