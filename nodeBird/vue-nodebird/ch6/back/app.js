@@ -30,7 +30,7 @@ if(prod){
     app.use(helmet());
     app.use(morgan('combined'))
     app.use(cors({
-        origin:`50.18.35.77:${process.env.PORT}`,
+        origin:`http://50.18.35.77:${process.env.PORT}`,
         credentials:true
     }))
 } else {
