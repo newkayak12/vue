@@ -55,7 +55,7 @@ app.use(session({
     cookie:{
         httpOnly:true,
         secure:false,
-        domain: prod && 'http://50.18.35.77'
+        domain: prod
     }
 
 }))
