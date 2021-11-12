@@ -60,8 +60,8 @@ module.exports = {
     },
     vuetify: {},
     axios:{
-        browserBaseURL:"http://54.241.236.42:80",
-        baseURL:'http://54.241.236.42:80',
+        browserBaseURL:process.env.NODE_ENV ==='production'?  "http://54.241.236.42:80" :'http://localhost:3085' ,
+        baseURL:process.env.NODE_ENV ==='production'?  "http://54.241.236.42:80" :'http://localhost:3085' ,
         https: false,
     },
     server:{
