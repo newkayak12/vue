@@ -1,6 +1,7 @@
 <template>
      <v-app>
           <nav style="display: flex; justify-content: space-between; background: royalblue; height: 100px; align-items: center" >
+
                <div style="margin-left: 5VW">
                     <nuxt-link to="/">LOGO</nuxt-link>
                </div>
