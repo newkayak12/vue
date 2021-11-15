@@ -15,17 +15,17 @@
                               <nuxt-link to="/posts">SNS</nuxt-link>
                          </li>
                          <li style="list-style: none; ">
-                              <nuxt-link to="/profile">프로필</nuxt-link>
+                              <nuxt-link to="/profile" v-show="userInfo">프로필</nuxt-link>
                          </li>
                     </ul>
                </div>
           </nav>
           <v-row no-gutters>
-               <v-col cols="12" md="4" style="justify-content: center; align-items: start; display: flex; padding-top: 40px; padding-bottom: 40px">
-                    <login-form style="width: 80%;" v-if="login"/>
+               <v-col cols="12" md="4" style="justify-content: center; align-items: start; display: flex; padding-top: 20px; padding-bottom: 20px;">
+                    <login-form style="width: 80%;" v-if="signup"/>
                     <Signup v-else />
                </v-col>
-               <v-col cols="12" md="8" style="width: 100%;">
+               <v-col cols="12" md="8" style="width: 100%; padding-top: 20px">
                    <nuxt/>
                </v-col>
           </v-row>
@@ -39,9 +39,18 @@ export default {
      components :{LoginForm, Signup},
      data(){
           return{
-               login:true,
+
 
           }
+     },
+     computed:{
+          signup(){
+               return this.$store.state.user.user.signup;
+          },
+          userInfo(){
+               return this.$store.state.user.user.userInfo
+          }
+
      }
 
 }

@@ -6,8 +6,16 @@
 
 <script>
 export default {
-     name: 'profiile',
-     description: ''
+     data(){
+          return{
+
+          }
+     },
+     methods:{
+
+     },
+     middleware:'authenticated'
+
 }
 </script>
 
