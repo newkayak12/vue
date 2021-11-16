@@ -4,7 +4,7 @@
 
 <script>
 export default {
-     name: 'BoardLIst',
+     name: 'PageBar',
      description: ''
 }
 </script>

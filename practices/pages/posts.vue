@@ -1,16 +1,35 @@
 <template>
-     <div>
-          posts
-     </div>
+     <v-container st>
+          <PostCard v-for="postsPiece in posts"  style="margin: 10px; padding: 10px; background: royalblue; border-radius: 5px;" :postsPiece="postsPiece"/>
+     </v-container>
 </template>
 
 <script>
+import PostCard from "@/components/post/PostCard";
 export default {
-     name: 'posts',
-     description: ''
+     components:{PostCard},
+     data(){
+          return {
+
+          }
+     },
+     computed:{
+       posts(){
+            return this.$store.state.posts.post.post;
+       }
+     },
+     methods:{
+
+     },
+     fetch({store}){
+          return store.dispatch("posts/post/loadPosts")
+     }
+
 }
 </script>
 
-<style scoped>
-
+<style>
+ *{
+      box-sizing: border-box;
+ }
 </style>

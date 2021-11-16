@@ -19,7 +19,7 @@
                          <span>모든 약관에 동의합니다.</span>
                     </label>
                     <div style="display: flex; justify-content: center; ">
-                         <v-btn color="blue" style="margin: 10px" type="submit" :disabled="!signupPass" > 회원가입 </v-btn>
+                         <v-btn color="blue" style="margin: 10px" type="submit" :disabled="!signupPass" width="80%" > 회원가입 </v-btn>
                          <v-btn dark color="blue" style="margin: 10px" @click="onCancel"> 취소 </v-btn>
                     </div>
                </form>

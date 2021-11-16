@@ -1,7 +1,7 @@
 <template>
      <div>
           <div style="margin-top: 10px; margin-bottom: 20px; padding: 5px">
-               <h1 style="text-align: center">{{userInfo.nickname}}님 반갑습니다.</h1>
+               <h3 style="text-align: center">{{userInfo.nickname}}님 반갑습니다.</h3>
                <h5 style="text-align: right; color: #b4abab">마지막으로 로그인한 시간 : {{userInfo.lastLoggedIn.toDateString()}}</h5>
           </div>
           <div style="margin: 25px; display: flex; justify-content: space-around; padding: 10px">
