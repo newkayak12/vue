@@ -27,7 +27,8 @@
 </template>
 
 <script>
-     import PostImages from "~/components/PostImages";
+
+import PostImages from "~/components/PostImages";
 export default {
      components: {
           PostImages,

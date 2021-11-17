@@ -15,7 +15,7 @@
                     <div>
 
 <!--                         <div>{{post.content}}</div>-->
-                         <div :to="'/post/'+post.id">{{post.content}}</div>
+                         <nuxt-link :to="'/post/'+post.id">{{post.content}}</nuxt-link>
                     </div>
                </v-card-text>
 

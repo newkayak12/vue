@@ -75,6 +75,7 @@ export default {
           //혹은
 
 
+
          async onSubmitForm(){
                if(this.$refs.form.validate()){
                    try {

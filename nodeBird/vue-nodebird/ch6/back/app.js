@@ -10,7 +10,7 @@ const passportConfig = require('./passport')
 const session = require('express-session')
 const cookie = require('cookie-parser')
 const morgan = require('morgan')
-const prod = process.env.NODE_ENV == 'production'
+const prod = process.env.NODE_ENV === 'production'
 const usersRouter = require('./routes/user')
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
@@ -55,7 +55,7 @@ app.use(session({
     cookie:{
         httpOnly:true,
         secure:false,
-        domain: prod
+
     }
 
 }))
