@@ -8,5 +8,14 @@ module.exports = {
     ],
     vuetify:{
 
-    },plugins:[]
+    },
+    plugins:[
+
+    ],
+    build: {
+        babel: {
+            plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+        },
+    },
+
 }

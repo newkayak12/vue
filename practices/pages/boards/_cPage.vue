@@ -5,17 +5,14 @@
           </div>
           {{boardList.boardId}}
                     <BoardList :boardList = boardList />
-          <div style="margin:10px; padding: 10px">
+          <div style="margin:10px; padding: 10px; width: 100%; display: flex; justify-content: center; align-content: center">
                <PageBar />
           </div>
      </div>
 </template>
 
 <script>
-function paging(cPage){
 
-     return 1;
-}
 import BoardList from "@/components/board/BoardList";
 import PageBar from "@/components/board/PageBar";
 export default {
@@ -32,16 +29,18 @@ export default {
           boardList (){
                return this.$store.state.boards.board.board;
           },
+          numberPerPage(){
+
+          }
      },
      methods:{
           onWriteBoard(){
                //글 작성
-          }
+          },
 
      },
      fetch({store, params}){
-          let pageNo = ((params.cPage-1)/5)*5
-          store.dispatch('boards/board/loadBoard', pageNo )
+          store.dispatch('boards/board/loadBoard',params.cPage)
      }
 
 }

@@ -176,7 +176,7 @@ export const mutations = {
 export const actions = {
     loadPosts(context, payload =1){
         context.commit('loadPost', payload)
-    }
+    },
 
 }
 const getters = {

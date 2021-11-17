@@ -22,11 +22,11 @@
                </v-card>
                <v-card  style="padding: 10px; margin:10px">
                     <v-card-title >팔로워 목록</v-card-title>
-                    <v-card v-for=" follower in 3" style="margin: 10px">1</v-card>
+                    <v-card v-for=" follower in 3" style="margin: 10px" :key="follower.email">1</v-card>
                </v-card>
                <v-card  style="padding: 10px; margin:20px 10px 10px 10px">
                     <v-card-title >팔로잉 목록</v-card-title>
-                    <v-card v-for=" follower in 3" style="margin: 10px">1</v-card>
+                    <v-card v-for=" following in 3" style="margin: 10px" :key="following.email">1</v-card>
                </v-card>
           </v-container>
      </div>

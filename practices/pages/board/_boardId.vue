@@ -1,6 +1,7 @@
 <template>
-     <div>
-          post detail
+     <div style="display: flex; flex-direction: column; align-items: center" class="boards">
+
+
      </div>
 </template>
 
@@ -15,7 +16,7 @@ export default {
 
      },
      fetch({store, params}){
-          console.log(params)
+          store.dispatch('board/board/loadBoard',params.boardId)
      },
      methods:{
 

@@ -16,7 +16,7 @@
           </v-card-subtitle>
           <v-card-text>
                <div v-if = "postsPiece.photo.length !== 0" style=" margin: 5px; padding: 10px; display: flex; flex-direction: row; justify-content: space-around;">
-                    <v-card v-for="postPhoto in postsPiece.photo" style=" margin: 5px; width: 50%;">
+                    <v-card v-for="postPhoto in postsPiece.photo" :key="postPhoto" style=" margin: 5px; width: 50%;">
                          {{postPhoto}}
                     </v-card>
                </div>
@@ -65,7 +65,7 @@ export default {
 .v-card__subtitle{
      margin: 5px;
      display: flex;
-     justify-content: end;
+     justify-content: flex-end;
 }
 .v-card__subtitle span {
      margin: 5px;

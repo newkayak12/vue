@@ -1,6 +1,6 @@
 <template>
      <v-container st>
-          <PostCard v-for="postsPiece in posts"  style="margin: 10px; padding: 10px; background: royalblue; border-radius: 5px;" :postsPiece="postsPiece"/>
+          <PostCard v-for="postsPiece in posts" :key="postsPiece.postId" style="margin: 10px; padding: 10px; background: royalblue; border-radius: 5px;" :postsPiece="postsPiece"/>
      </v-container>
 </template>
 
