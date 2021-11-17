@@ -4,18 +4,25 @@ export const state=()=>({
 export const mutations={
     loadBoard(state, payload) {
         // let dummy = this.$store.state.boards.board.board;
-        // let dummy = [1,2,3]
-        // state.boardOne = dummy.find((element)=>{
-        //     console.log(element)
-        // })
+
+        let dummy = payload.board.board
+        console.log(dummy)
+        state.boardOne = dummy.find((element)=>{
+            if(parseInt(element.boardId)===parseInt(payload.boardId)){
+                return element
+            }
+        })
+        console.log(state.boardOne)
+
     }
 }
 export const actions={
     loadBoard(context, payload){
-        context.commit('loadBoard',payload)
+        context.commit('loadBoard',{boardId:payload, board: context.rootState.boards.board})
     }
 
 }
 export const getters={
+
 
 }

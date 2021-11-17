@@ -7,7 +7,36 @@ export const mutations = {
     loadPost(state, payload){
         let i = 1;
         let dummyPost = [
+
             {
+                postId: i,
+                title : `제목${i}`,
+                writer : 'newakayk12',
+                writtenDate: new Date(),
+                content : `내용${i++}`,
+                iLiked : true,
+                photo:[
+
+                ],
+                reply:[
+
+                ]
+
+            },
+            {
+                postId: i,
+                title : `제목${i}`,
+                writer : 'newakayk12',
+                writtenDate: new Date().setFullYear(2020,12,24),
+                content : `내용${i++}`,
+                photo:[
+
+                ],
+                reply:[
+
+                ]
+
+            }, {
                 postId: i,
                 title : `제목${i}`,
                 writer : 'newakayk12',
@@ -26,9 +55,8 @@ export const mutations = {
                 postId: i,
                 title : `제목${i}`,
                 writer : 'newakayk12',
-                writtenDate: new Date(),
+                writtenDate: new Date().setFullYear(2020,12,24),
                 content : `내용${i++}`,
-                iLiked : false,
                 photo:[
 
                 ],
@@ -36,101 +64,7 @@ export const mutations = {
 
                 ]
 
-            },
-            {
-                postId: i,
-                title : `제목${i}`,
-                writer : 'newakayk12',
-                writtenDate: new Date(),
-                content : `내용${i++}`,
-                iLiked : false,
-                photo:[
-
-                ],
-                reply:[
-
-                ]
-
-            },
-            {
-                postId: i,
-                title : `제목${i}`,
-                writer : 'newakayk12',
-                writtenDate: new Date(),
-                content : `내용${i++}`,
-                iLiked : false,
-                photo:[
-
-                ],
-                reply:[
-
-                ]
-
-            },
-            {
-                postId: i,
-                title : `제목${i}`,
-                writer : 'newakayk12',
-                writtenDate: new Date(),
-                content : `내용${i++}`,
-                iLiked : false,
-                photo:[
-
-                ],
-                reply:[
-
-                ]
-
-            },
-            {
-                postId: i,
-                title : `제목${i}`,
-                writer : 'newakayk12',
-                writtenDate: new Date(),
-                content : `내용${i++}`,
-                iLiked : false,
-                photo:[
-
-                ],
-                reply:[
-
-                ]
-
-            },
-            {
-                postId: i,
-                title : `제목${i}`,
-                writer : 'newakayk12',
-                writtenDate: new Date(),
-                content : `내용${i++}`,
-                iLiked : false,
-                photo:[
-
-                ],
-                reply:[
-
-                ]
-
-            },
-
-            {
-                postId: i,
-                title : `제목${i}`,
-                writer : 'newakayk12',
-                writtenDate: new Date(),
-                content : `내용${i++}`,
-                iLiked : true,
-                photo:[
-                    {src:'dummy'},
-                    {src:'dummy2'}
-
-                ],
-                reply:[
-
-                ]
-
-            },
-            {
+            }, {
                 postId: i,
                 title : `제목${i}`,
                 writer : 'newakayk12',
