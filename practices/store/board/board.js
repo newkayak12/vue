@@ -12,14 +12,13 @@ export const mutations={
                 return element
             }
         })
-        console.log(state.boardOne)
+    },
 
-    }
 }
 export const actions={
     loadBoard(context, payload){
         context.commit('loadBoard',{boardId:payload, board: context.rootState.boards.board})
-    }
+    },
 
 }
 export const getters={

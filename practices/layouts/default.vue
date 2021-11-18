@@ -3,7 +3,9 @@
           <nav style="display: flex; justify-content: space-between; background: royalblue; height: 100px; align-items: center" >
 
                <div style="margin-left: 5VW">
-                    <nuxt-link to="/posts">LOGO</nuxt-link>
+                    <nuxt-link to="/" >
+                         <img :src="require(`@/assets/download.jpg`)" alt="LOGO" width="150px" >
+                    </nuxt-link>
                </div>
 
                <div style="margin-right: 5VW; align-items: center" >
@@ -33,12 +35,14 @@
 </template>
 
 <script>
+const img = require('../assets/download.jpg')
 import LoginForm from "~/components/user/LoginForm";
 import Signup from "~/components/user/Signup";
 export default {
      components :{LoginForm, Signup},
      data(){
           return{
+               logo: "./assets/download.jpg"
 
 
           }

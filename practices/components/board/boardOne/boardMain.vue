@@ -1,6 +1,5 @@
 <template>
-     <div>
-          {{board}}
+     <div style="border-bottom: 1px gray solid">
           <table>
                <tr>
                     <td>
@@ -45,7 +44,7 @@
                <tr>
                     <td colspan="5">
                          <div  style="display: flex; flex-direction: row;justify-content: space-around">
-                              <v-card v-for="photoOne in board.photo" :key="photoOne" width="350px" height="350px">
+                              <v-card v-for="photoOne in board.photo" :key="photoOne.src" width="350px" height="350px">
                                    {{photoOne}}
                               </v-card>
                          </div>
@@ -56,7 +55,7 @@
                </tr>
                <tr>
                     <td colspan="5"  style="text-align: end">
-                         <div>
+                         <div style="padding-top: 20px">
                               <span>
                                    <v-icon style="margin: 5px">
                                          mdi-format-align-justify
@@ -88,8 +87,7 @@ export default {
          board:{
               type:Object,
               required:true,
-         }
-
+         },
     },
      computed:{
           days(){
@@ -110,6 +108,7 @@ table{
      padding :10px;
      width: 100%;
      border-collapse: collapse;
+
 }
 td{
      padding : 5px;

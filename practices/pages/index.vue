@@ -11,7 +11,7 @@ export default {
           posts
      },
      fetch({store}){
-          return store.dispatch('boards/board/loadBoard')
+          return store.dispatch('posts/post/loadPosts')
      }
 
 }

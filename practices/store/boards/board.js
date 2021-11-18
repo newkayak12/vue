@@ -801,9 +801,9 @@ export const mutations = {
         let no = state.pageBarHead
         state.pageBar = []
 
-        // while(!(no>pgEnd || no > totalPg)){
-        //     state.pageBar.push(no++)
-        // }
+        while(!(no>pgEnd || no > totalPg)){
+            state.pageBar.push(no++)
+        }
     },
     sortingBoard(state,payload){
 
