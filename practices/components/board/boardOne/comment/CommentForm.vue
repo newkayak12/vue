@@ -66,7 +66,8 @@ export default {
                })
                 .then((res)=>{
                     this.commentContent=''
-                     if(this.onWriteReply!==null){
+
+                     if(typeof this.onWriteReply =="function"){
                          this.onWriteReply()
                      }
                 })

@@ -14,11 +14,11 @@ export const mutations = {
     },
     login(state,payload){
         //로그인
-        console.log('login', payload)
-
         //dummy
+        console.log(payload)
+
         state.userInfo={
-            email: payload.email,
+            email: typeof payload!=='undefined'? payload.email:'newkayak12@gmail.com',
             nickname:'newkayak12',
             lastLoggedIn: new Date(),
             following: [
@@ -90,6 +90,9 @@ export const mutations = {
 
         }
 
+    },
+    logout(state,payload){
+        state.userInfo=null;
     }
 
 }
@@ -100,7 +103,16 @@ export const actions ={
     login(context, payload ){
         context.commit('login',payload)
 
+    },
+    logout(context,payload){
+        context.commit('logout',payload)
+    },
+    loadUser(context, payload){
+        //백엔드가 있어야 가능한 로그인 유지
+        // 그냥 로그인 상태로 두자
+        context.commit('login')
     }
+
 }
 export const getter = {
 

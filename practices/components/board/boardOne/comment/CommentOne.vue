@@ -1,11 +1,16 @@
 <template>
      <div style="margin: 0px; padding: 0px; display: flex; flex-direction: column;" :style="commentCss">
-        <v-card style="margin: 10px; padding:10px; display: flex;" :style="commentsCss2" >
+        <v-card style="margin: 10px; padding:20px; display: flex;" :style="commentsCss2" >
              <span v-if="parseInt(commentOne.level)===1" style="padding-left: 15px; color: royalblue" class="v-icon notranslate mdi  mdi-comment-multiple-outline theme--light" @click="onWriteReplies"/>
              <span v-if="parseInt(commentOne.level)!==1" style="padding-left: 15px; color: royalblue" class="v-icon notranslate mdi  mdi-arrow-right-bold-circle theme--light" />
              <span :style="commentsCss3">{{commentOne.commentContent}}</span>
              <span style="width: 8%; font-size: 10px" >{{commentOne.commentWriter}}</span>
              <span style="width: 12%; font-size: 10px" >{{days}}</span>
+             <span style="width: 5px; padding:10px; padding-right: 20px;" @click="onDeleteComment" v-show="isMe">
+                  <v-icon>
+                       mdi-close-box-outline
+                  </v-icon>
+             </span>
 <!--              mdi-reply -->
         </v-card>
           <div v-if="cocoment">
@@ -14,6 +19,9 @@
 
      </div>
 </template>
+
+
+
 
 <script>
 import CommentForm from "@/components/board/boardOne/comment/CommentForm";
@@ -62,6 +70,16 @@ export default {
                     return 'width:80%'
                }
                return 'width:70%';
+          },
+          isMe(){
+               let loginCheck = (this.$store.state.user.user.userInfo!==null)? true:false;
+               if(!loginCheck){
+                    return false;
+               }
+               let isItMine = (this.commentOne.commentWriter===this.$store.state.user.user.userInfo.nickname)? true:false
+               return loginCheck&&isItMine
+
+
           }
 
      },
@@ -75,10 +93,17 @@ export default {
           },
           cocomentOff(){
                this.cocoment=false
+          },
+          onDeleteComment(){
+               this.$store.dispatch('comment/comment/deleteComment',this.commentOne.commentId)
+
+
           }
      }
 }
 </script>
+
+
 
 <style scoped>
      div span{

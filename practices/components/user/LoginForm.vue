@@ -60,16 +60,14 @@ export default {
               this.$store.commit("user/user/signupToggle")
           },
           async onLogin(){
-               console.log(this.emailCheckBoolean)
-               console.log(this.passwordCheckBoolean)
-               console.log(this.emailCheckBoolean&&this.passwordCheckBoolean)
                if(this.passwordCheckBoolean && this.emailCheckBoolean){
                     await this.$store.dispatch('user/user/login',{
                          email:this.email,
                          password:this.password
                     })
                     .then((res)=>{
-
+                         this.email = '';
+                         this.password = '';
                     })
                     .catch((error)=>{
                          console.log(error)

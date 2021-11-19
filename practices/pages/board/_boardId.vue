@@ -28,7 +28,8 @@ export default {
           },
           comment(){
                return this.$store.state.comment.comment.comments
-          }
+          },
+
 
      },
      fetch({store, params}){

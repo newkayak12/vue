@@ -21,20 +21,28 @@ export const mutations = {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
-                boardWriter : `작성자 ${i}`,
+                boardWriter : `newkayak12`,
                 viewCount : `${i+20}`,
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: true,
+                    dislike:null
+
+                }
             },
             {
                 boardId : i,
@@ -45,15 +53,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:"newkayak12",
+                    like: null,
+                    dislike:true
+
+                }
             },
             {
                 boardId : i,
@@ -64,15 +80,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: true,
+                    dislike:null
+
+                }
             },
             {
                 boardId : i,
@@ -83,15 +107,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:true
+
+                }
             },
             {
                 boardId : i,
@@ -102,15 +134,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:true
+
+                }
             },
             {
                 boardId : i,
@@ -121,15 +161,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:true
+
+                }
             },
             {
                 boardId : i,
@@ -140,15 +188,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:true
+
+                }
             },
             {
                 boardId : i,
@@ -159,15 +215,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: true,
+                    dislike:null
+
+                }
             },
             {
                 boardId : i,
@@ -178,15 +242,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             },
             {
                 boardId : i,
@@ -197,15 +269,23 @@ export const mutations = {
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -215,15 +295,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -233,15 +321,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -251,15 +347,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -269,15 +373,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -287,15 +399,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -305,15 +425,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -323,15 +451,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -341,15 +477,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -359,15 +503,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -377,15 +529,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -395,15 +555,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -413,15 +581,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -431,15 +607,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -449,15 +633,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -467,15 +659,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -485,15 +685,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -503,15 +711,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -521,15 +737,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -539,15 +763,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -557,15 +789,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -575,15 +815,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -593,15 +841,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -611,15 +867,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -629,15 +893,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -647,15 +919,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -665,15 +945,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -683,15 +971,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -701,15 +997,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -719,15 +1023,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -737,15 +1049,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -755,15 +1075,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             }, {
                 boardId : i,
                 boardTitle : `게시판 제목 ${i}`,
@@ -773,15 +1101,23 @@ export const mutations = {
                 writtenDate : new Date(),
                 photo :[
                     {
+                        idx:1,
                         src:'img1'
                     },
                     {
+                        idx:2,
                         src:'img2'
                     }
                 ],
                 replyCount: i+10,
                 likeCount:i,
                 dislikeCount: (i++)+10,
+                likeOrDislike: {
+                    email:'newkayak12',
+                    like: null,
+                    dislike:null
+
+                }
             },
         ]
         state.totalData = dummyBoard.length

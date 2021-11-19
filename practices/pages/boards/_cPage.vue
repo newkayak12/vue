@@ -1,9 +1,8 @@
 <template>
      <div style="display: flex; flex-direction: column; align-items: center" class="boards">
           <div style="display: flex; justify-content: end; align-items: end; width: 90%">
-               <v-btn style="background: royalblue; color: white" id="writebtn" @click="onWriteBoard">글 작성하기</v-btn>
+               <v-btn style="background: royalblue; color: white" @click.native="onWriteBoard" :to="link"  nuxt>글 작성하기</v-btn>
           </div>
-          {{boardList.boardId}}
                     <BoardList :boardList = boardList />
           <div style="margin:10px; padding: 10px; width: 100%; display: flex; justify-content: center; align-content: center">
                <PageBar />
@@ -22,7 +21,7 @@ export default {
      },
      data(){
           return{
-
+               link:'/boardForm'
           }
      },
      computed:{
@@ -35,12 +34,18 @@ export default {
      },
      methods:{
           onWriteBoard(){
+               if(this.$store.state.user.user.userInfo===null){
+                    alert("로그인이 필요합니다.")
+                    return;
+               }
+
+
                //글 작성
           },
 
      },
      fetch({store, params}){
-          store.dispatch('boards/board/loadBoard',params.cPage)
+          return store.dispatch('boards/board/loadBoard',params.cPage)
      }
 
 }

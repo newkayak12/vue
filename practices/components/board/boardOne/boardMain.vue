@@ -24,17 +24,15 @@
                          </h4>
                     </td>
                     <td>
-                         <span>
+                         <span @click="onThumbUp">
                               <v-icon>
-                                   mdi-thumb-up-outline
-                                   <!--mdi-thumb-up-->
+                                   {{thumbUpFlag}}
                               </v-icon>
                               {{board.likeCount}}
                          </span>
-                         <span>
+                         <span @click="onThumbDown">
                               <v-icon>
-                                   mdi-thumb-down-outline
-                                   <!--mdi-thumb-down-->
+                                  {{thumbDownFlag}}
                               </v-icon>
                               {{board.dislikeCount}}
                          </span>
@@ -56,18 +54,18 @@
                <tr>
                     <td colspan="5"  style="text-align: end">
                          <div style="padding-top: 20px">
-                              <span>
-                                   <v-icon style="margin: 5px">
+                              <v-btn :style="deleteIconColor" style="margin-left: 5px; margin-right: 10px" :disabled="btnDisabled">
+                                   <v-icon style="margin: 5px" :style="deleteIconColor">
                                          mdi-format-align-justify
                                    </v-icon>
                                    수정하기
-                              </span>
-                                             <span>
-                                   <v-icon style="margin: 5px">
+                              </v-btn >
+                              <v-btn :style="deleteIconColor" style="margin-left: 10px; margin-left: 5px" :disabled="btnDisabled">
+                                   <v-icon style="margin: 5px" :style="deleteIconColor">
                                         mdi-delete-variant
                                    </v-icon>
                                    삭제하기
-                              </span>
+                              </v-btn>
                          </div>
                     </td>
                </tr>
@@ -89,17 +87,102 @@ export default {
               required:true,
          },
     },
+     data(){
+       return{
+            thumbUpFlag:'mdi-thumb-up-outline',
+            thumbDownFlag:'mdi-thumb-down-outline',
+            btnDisabled : true
+       }
+     },
      computed:{
           days(){
                let date  = this.board.writtenDate;
                let today = new Date()
                return getDiff(date,today)
+          },
+          deleteIconColor(){
+               let login = this.$store.state.user.user.userInfo!=null? true:false
+               if(!login){
+                    this.btnDisabled = true
+                    return "color : #C2BABAFF";
+               }
+               let isItMine = this.$store.state.user.user.userInfo.nickname===this.board.boardWriter? true:false
+                    if(isItMine){
+                         this.btnDisabled = false
+                    } else {
+                         this.btnDisabled = true
+                    }
+               return "color : "+ (login&&isItMine? "black":"#C2BABAFF")
+
           }
+
      },
      fetch(){
+          this.thumbUp()
+          this.thumbDown()
+          return
+     },
+     methods:{
+          thumbUp(){
+               if((this.$store.state.user.user.userInfo===null)||(this.board.likeOrDislike.email !== this.$store.state.user.user.userInfo.nickname)){
+                    this.thumbUpFlag= "mdi-thumb-up-outline";
+                    return;
+               }
+               let flag = this.board.likeOrDislike.like === true? true:false
+               this.thumbUpFlag = flag? "mdi-thumb-up":"mdi-thumb-up-outline"
+               return
+          },
+          thumbDown(){
+               if((this.$store.state.user.user.userInfo===null)||(this.board.likeOrDislike.email !== this.$store.state.user.user.userInfo.nickname)){
+                    this.thumbDownFlag="mdi-thumb-down-outline";
+                    return
+               }
+               let flag = this.board.likeOrDislike.dislike === true? true:false
+               this.thumbDownFlag=flag? "mdi-thumb-down":"mdi-thumb-down-outline"
+               return
 
+          },
+          onThumbUp(){
+               if(this.$store.state.user.user.userInfo===null){
+                    alert("로그인이 필요한 서비스입니다.")
+                    return
+               }
+               if(this.board.likeOrDislike.like===true){
+                    //좋아요만 해제
+                    this.thumbUpFlag = "mdi-thumb-up-outline"
+                    this.$store.dispatch('board/board/detachThumbUp',{flag:false, boardId:this.board.boardId})
+                    return;
+               }
+                    this.$store.dispatch('board/board/onThumbUp',{flag:true, boardId:this.board.boardId})
+                    this.thumbDownFlag = "mdi-thumb-down-outline"
+                    this.thumbUpFlag = "mdi-thumb-up"
+               //손가락질
+
+
+
+          },
+          onThumbDown(){
+               if(this.$store.state.user.user.userInfo===null){
+                    alert("로그인이 필요한 서비스입니다.")
+                    return
+               }
+               if(this.board.likeOrDislike.dislike===true){
+                    this.thumbDownFlag = "mdi-thumb-down-outline"
+                    this.$store.dispatch('board/board/detachThumbDown',{flag:false, boardId:this.board.boardId})
+                    //안좋아요만 해제
+                    return;
+               }
+                    this.$store.dispatch('board/board/onThumbDown',{flag:true, boardId:this.board.boardId})
+                    this.thumbDownFlag = "mdi-thumb-down"
+                    this.thumbUpFlag = "mdi-thumb-up-outline"
+               //손가락질
+
+
+
+           }
      }
 }
+
 </script>
 
 <style scoped>
@@ -108,7 +191,6 @@ table{
      padding :10px;
      width: 100%;
      border-collapse: collapse;
-
 }
 td{
      padding : 5px;
