@@ -22,8 +22,8 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `newkayak12`,
-                viewCount : `${i+20}`,
-                writtenDate : new Date().setFullYear(2020,10,i),
+                viewCount : `${i+5550}`,
+                writtenDate : new Date().setFullYear(2020,12,i),
                 photo :[
                     {
                         idx:1,
@@ -49,8 +49,8 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `작성자 ${i}`,
-                viewCount : `${i+20}`,
-                writtenDate : new Date().setFullYear(2020,10,i),
+                viewCount : `${i+1230}`,
+                writtenDate : new Date().setFullYear(2020,9,i),
                 photo :[
                     {
                         idx:1,
@@ -76,7 +76,7 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `작성자 ${i}`,
-                viewCount : `${i+20}`,
+                viewCount : `${i+2522220}`,
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
@@ -103,7 +103,7 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `작성자 ${i}`,
-                viewCount : `${i+20}`,
+                viewCount : `${i+220}`,
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
@@ -157,7 +157,7 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `작성자 ${i}`,
-                viewCount : `${i+20}`,
+                viewCount : `${i+22220}`,
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
@@ -184,7 +184,7 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `작성자 ${i}`,
-                viewCount : `${i+20}`,
+                viewCount : `${i+2120}`,
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
@@ -211,7 +211,7 @@ export const mutations = {
                 boardTitle : `게시판 제목 ${i}`,
                 boardContent : `게시판 내용 ${i}`,
                 boardWriter : `작성자 ${i}`,
-                viewCount : `${i+20}`,
+                viewCount : `${i+220}`,
                 writtenDate : new Date().setFullYear(2020,10,i),
                 photo :[
                     {
@@ -1173,6 +1173,17 @@ export const mutations = {
             }
         })
         console.log(state.board)
+    },
+    writeBoard(state, payload) {
+        state.board.unshift(payload)
+    },
+    deleteBoard(state,payload){
+        let idx = state.board.findIndex((ele)=>{
+            if(parseInt(ele.boardId)===parseInt(payload)){
+                return ele
+            }
+        })
+        state.board.splice(idx,1)
     }
 
 }
@@ -1212,6 +1223,13 @@ export const actions ={
         // }
 
         context.commit('sortingBoard',payload)
+    },
+    writeBoard(context, payload){
+        context.commit('writeBoard',payload)
+    },
+    deleteBoard(context,payload){
+        context.commit('deleteBoard',payload)
+
     }
 
 

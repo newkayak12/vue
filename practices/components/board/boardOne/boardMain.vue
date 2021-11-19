@@ -54,13 +54,14 @@
                <tr>
                     <td colspan="5"  style="text-align: end">
                          <div style="padding-top: 20px">
-                              <v-btn :style="deleteIconColor" style="margin-left: 5px; margin-right: 10px" :disabled="btnDisabled">
+                              <v-btn :style="deleteIconColor" style="margin-left: 5px; margin-right: 10px" :disabled="btnDisabled"  @click.native="onModifyBoard" :to="link" nuxt>
                                    <v-icon style="margin: 5px" :style="deleteIconColor">
                                          mdi-format-align-justify
                                    </v-icon>
                                    수정하기
                               </v-btn >
-                              <v-btn :style="deleteIconColor" style="margin-left: 10px; margin-left: 5px" :disabled="btnDisabled">
+                              <v-btn :style="deleteIconColor" style="margin-left: 10px; margin-left: 5px" :disabled="btnDisabled" @click.native="onDeleteBoard" :to="link" nuxt
+                              >
                                    <v-icon style="margin: 5px" :style="deleteIconColor">
                                         mdi-delete-variant
                                    </v-icon>
@@ -89,6 +90,7 @@ export default {
     },
      data(){
        return{
+            link:'/boards/1',
             thumbUpFlag:'mdi-thumb-up-outline',
             thumbDownFlag:'mdi-thumb-down-outline',
             btnDisabled : true
@@ -140,7 +142,6 @@ export default {
                let flag = this.board.likeOrDislike.dislike === true? true:false
                this.thumbDownFlag=flag? "mdi-thumb-down":"mdi-thumb-down-outline"
                return
-
           },
           onThumbUp(){
                if(this.$store.state.user.user.userInfo===null){
@@ -157,9 +158,6 @@ export default {
                     this.thumbDownFlag = "mdi-thumb-down-outline"
                     this.thumbUpFlag = "mdi-thumb-up"
                //손가락질
-
-
-
           },
           onThumbDown(){
                if(this.$store.state.user.user.userInfo===null){
@@ -176,10 +174,14 @@ export default {
                     this.thumbDownFlag = "mdi-thumb-down"
                     this.thumbUpFlag = "mdi-thumb-up-outline"
                //손가락질
-
-
-
-           }
+           },
+          onDeleteBoard(){
+               let boardId = this.board.boardId
+               return this.$store.commit('boards/board/deleteBoard',boardId);
+          },
+          onModifyBoard(){
+                    //modify
+          }
      }
 }
 

@@ -9,7 +9,7 @@
                               </h4>
                          </th>
                          <td>
-                              <input type="text" maxlength="30" v-model="boardTitle">
+                              <input type="text" maxlength="30" v-model="boardTitle" style="padding:10px">
                          </td>
                          <td> 작성자 : {{nickname}}</td>
                     </tr>
@@ -31,7 +31,7 @@
                     <tr>
                          <th>내용</th>
                          <td colspan="2" >
-                              <textarea v-model="boardContent" cols="30" rows="10"></textarea>
+                              <textarea v-model="boardContent" cols="30" rows="10" style="padding: 10px"></textarea>
                          </td>
                     </tr>
      <!--               <tr>-->
@@ -43,14 +43,16 @@
                          <input type="file" multiple style="display: none" ref="addImg" @change="onAddedImg">
                     <div v-if="showImg" style="height: 200px">
                          <p style="font-size: 12px">이미지 미리 보기</p>
-                         <Img v-for="imgPiece in this.photo" :key="imgPiece.idx" :imgPiece ="imgPiece"/>
+                         <Img v-for="imgPiece in this.photo" :key="imgPiece.idx" :imgPiece ="imgPiece" :photo="photo" :showImg="showImg"/>
                     </div>
                </div>
                <div style="margin: 20px; padding: 10px; display: flex; justify-content: center;  width: 80%">
 <!--                    <v-btn type="button"  :to="link" tag="button">취소</v-btn>-->
                     <nuxt-link  tag="button" :to="link" type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default">취소</nuxt-link>
                     <!--  nuxt-link를 렌더할 태그를 고를 수 있다. -->
-                    <v-btn type="submit" style="background: royalblue; color: white">작성</v-btn>
+                    <nuxt-link tag="button" :to="link" type="submit" style="background: royalblue; color: white" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" @click.native="onSubmitBoardForm">
+                         작성
+                    </nuxt-link>
                </div>
           </form>
      </div>
@@ -68,12 +70,7 @@ export default {
                link:`/boards/1`,
                boardTitle:'',
                boardContent:'',
-               writtenDate:new Date(),
                boardWriter:'',
-               viewCount:0,
-               replyCount : 0,
-               likeCount: 0,
-               dislikeCount:0,
                photo:[],
 
           }
@@ -103,7 +100,7 @@ export default {
                Array.prototype.forEach.call(img, (v,i)=>{
                     let reader = new FileReader();
                     let img = {
-                         idx:(i+1),
+                         idx:Math.random()*100000+10,
                          src:v.name,
                     }
 
@@ -116,20 +113,60 @@ export default {
 
                })
 
+               //뷰를 강제로 렌더링시켜서 빠르게 이미지를 뜨게 하는데..
+               //이게 뷰는 강제로 재렌더를 시킬 방법이 이거 말고는 떠오르질 않는단말이지.
+
+                         this.showImg=false
                      let timer = setTimeout(()=>{
                          this.showImg = true
-                   },1000)
+                   },10)
 
 
 
           },
           onSubmitBoardForm(){
-               alert("hi!")
+               if(this.boardId===''){
+                    let temp = this.photo
+                    temp.forEach((v,i)=>{
+                         delete v.idx
+                         delete v.preview
+                    })
+
+                    let boardOne = {
+                         boardId: Math.floor(Math.random()*100000+30),
+                         boardTitle:this.boardTitle,
+                         boardContent:this.boardContent,
+                         boardWriter:this.boardWriter,
+                         viewCount:0,
+                         writtenDate:new Date(),
+                         photo:temp,
+                         replyCount : 0,
+                         likeCount: 0,
+                         dislikeCount:0,
+                         likeOrDislike:{
+                              email:'newkayak12',
+                              like:null,
+                              dislike:null
+                         }
+                    }
+                    return this.$store.dispatch('boards/board/writeBoard',boardOne)
+               }
+
           },
 
 
      },
-     middleware:'gotoBoard'
+     middleware:'gotoBoard',
+     watch:{
+          photo(){
+               if(this.photo.length===0){
+                    this.showImg=false
+               }
+
+          }
+
+
+     }
 }
 </script>
 
