@@ -43,7 +43,7 @@
                          <input type="file" multiple style="display: none" ref="addImg" @change="onAddedImg">
                     <div v-if="showImg" style="height: 200px">
                          <p style="font-size: 12px">이미지 미리 보기</p>
-                         <Img v-for="imgPiece in this.photo" :key="imgPiece.idx" :imgPiece ="imgPiece" :photo="photo" :showImg="showImg"/>
+                         <Img v-for="imgPiece in this.photo" :key="imgPiece.idx" :imgPiece ="imgPiece" :photo="photo" />
                     </div>
                </div>
                <div style="margin: 20px; padding: 10px; display: flex; justify-content: center;  width: 80%">
@@ -106,7 +106,7 @@ export default {
                this.boardContent = boardOne.boardContent
                this.boardWriter = boardOne.boardWriter
                let temp = boardOne.photo.slice()
-               console.log(temp)
+               this.photo = temp
                this.viewCount = boardOne.viewCount
                this.replyCount = boardOne.replyCount
                this.likeCount = boardOne.likeCount

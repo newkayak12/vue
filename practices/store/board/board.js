@@ -22,8 +22,6 @@ export const mutations={
     onThumbUp(state, payload) {
 
         if(payload.element.likeOrDislike.dislike!==null&&(payload.element.likeOrDislike.like!==payload.element.likeOrDislike.dislike)){
-            console.log("안좋아요가 눌려있을 때만 작동")
-            console.log(payload.element.likeOrDislike)
             payload.element.dislikeCount -= parseInt(payload.element.dislikeCount)===0? 0:1;
         }
         Vue.set(payload.element.likeOrDislike,'like',payload.flag)
@@ -33,7 +31,6 @@ export const mutations={
     onThumbDown(state, payload) {
             if(payload.element.likeOrDislike.like!==null&&(payload.element.likeOrDislike.like!==payload.element.likeOrDislike.dislike)){
                 payload.element.likeCount -= parseInt(payload.element.likeCount)===0? 0:1;
-                console.log("???")
             }
             Vue.set(payload.element.likeOrDislike,'dislike',payload.flag)
             Vue.set(payload.element.likeOrDislike,'like',!payload.flag)
@@ -89,7 +86,6 @@ export const actions={
             }
         })
         context.commit('detachThumbDown',{boardId:payload.boardId, flag:payload.flag, element:element})
-
     }
 
 }

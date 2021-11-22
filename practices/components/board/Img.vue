@@ -16,9 +16,6 @@ export default {
           photo:{
                type:Array
           },
-          showImg:{
-               type:Boolean
-          }
      },
      methods:{
           onDelete(){

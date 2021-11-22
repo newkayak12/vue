@@ -1,13 +1,24 @@
 <template>
-     <v-container>
-          <PostCard v-for="postsPiece in posts" :key="postsPiece.postId" style="margin: 10px; padding: 10px; background: royalblue; border-radius: 5px;" :postsPiece="postsPiece"/>
-     </v-container>
+     <div>
+          <v-container>
+               <div  style="margin: 10px; padding: 10px; background: royalblue; border-radius: 5px;">
+                  <PostForm />
+               </div>
+          </v-container>
+          <v-container>
+               <PostCard v-for="postsPiece in posts" :key="postsPiece.postId" style="margin: 10px; padding: 10px; background: royalblue; border-radius: 5px;" :postsPiece="postsPiece"/>
+          </v-container>
+     </div>
 </template>
 
 <script>
 import PostCard from "@/components/post/PostCard";
+import PostForm from "@/components/post/PostForm";
 export default {
-     components:{PostCard},
+     components:{
+          PostCard,
+          PostForm
+     },
      data(){
           return {
 
