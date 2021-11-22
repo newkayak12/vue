@@ -1,7 +1,7 @@
-####ToDoList
+#ToDoList
 ```
 [게시판]
-1. 대댓글 : reple 달고 대갯글 달면 index틀어짐
+~~1. 대댓글 : reple 달고 대갯글 달면 index틀어짐~~
 2. 수정 : 컴포넌트 재사용
 ```
 

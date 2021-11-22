@@ -170,7 +170,7 @@ export const mutations={
          //문제점 : 방금 단 댓글에 댓글을 달면 인덱스를 찾지 못해서 맨 위에 달리는 불상사가 생김
         //findIndex의 반환 값은 해당 엘리먼트를 반환하면 인덱스를 주니까 이점 유의해야함
         // 그래서 그동안 인덱스가 틀어진 것임
-        
+
 
      },
     deleteComment(state,payload){
