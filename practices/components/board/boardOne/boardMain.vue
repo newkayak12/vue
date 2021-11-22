@@ -60,8 +60,7 @@
                                    </v-icon>
                                    수정하기
                               </v-btn >
-                              <v-btn :style="deleteIconColor" style="margin-left: 10px; margin-left: 5px" :disabled="btnDisabled" @click.native="onDeleteBoard" :to="link" nuxt
-                              >
+                              <v-btn :style="deleteIconColor" style="margin-left: 10px; margin-left: 5px" :disabled="btnDisabled" @click.native="onDeleteBoard" :to="link" nuxt>
                                    <v-icon style="margin: 5px" :style="deleteIconColor">
                                         mdi-delete-variant
                                    </v-icon>

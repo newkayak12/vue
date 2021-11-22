@@ -146,18 +146,9 @@ export const mutations={
         //대댓글 달기
          let index = state.comments.findIndex((element, index)=>{
              if(element.boardId === payload.boardId && element.commentId === payload.refId){
-
-                 console.log(`\n${element.boardId} : ${payload.boardId}`)
-                 console.log(`${element.commentId} : ${payload.refId}`)
-                 console.log(index+"\n")
-                 return index;
+                 return element;
              }
          })//기존 대댓글이 하나도 없을 때 사용하는 인덱스
-
-         payload.commentWriter = payload.userInfo.nickname
-         payload.commentId = Math.floor(Math.random()*1000000)+1000
-         delete payload.userInfo
-
          const plusIndex = (function(){
              let count = 0;
              state.comments.forEach((v,i)=>{
@@ -169,10 +160,17 @@ export const mutations={
              return count;
          })// 추가로 대댓글이 있다면 사용하는 인덱스
 
+        payload.commentWriter = payload.userInfo.nickname
+        payload.commentId = Math.floor(Math.random()*1000000)+1000
+        delete payload.userInfo
 
-         let cocomentIndex = parseInt(plusIndex())===0? index+1:(parseInt(plusIndex()))+1
+        let cocomentIndex = parseInt(plusIndex())===0? index+1:(parseInt(plusIndex()))+1
+        console.log(cocomentIndex)
          state.comments.splice(cocomentIndex,0, payload)
          //문제점 : 방금 단 댓글에 댓글을 달면 인덱스를 찾지 못해서 맨 위에 달리는 불상사가 생김
+        //findIndex의 반환 값은 해당 엘리먼트를 반환하면 인덱스를 주니까 이점 유의해야함
+        // 그래서 그동안 인덱스가 틀어진 것임
+        
 
      },
     deleteComment(state,payload){
