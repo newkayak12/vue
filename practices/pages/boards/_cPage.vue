@@ -46,6 +46,10 @@ export default {
      },
      fetch({store, params}){
           return store.dispatch('boards/board/loadBoard',params.cPage)
+     },
+     mounted() {
+          this.$store.dispatch('boards/board/afterLoad')
+
      }
 
 }

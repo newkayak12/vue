@@ -48,9 +48,9 @@
                </div>
                <div style="margin: 20px; padding: 10px; display: flex; justify-content: center;  width: 80%">
 <!--                    <v-btn type="button"  :to="link" tag="button">취소</v-btn>-->
-                    <nuxt-link  tag="button" :to="link" type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default">취소</nuxt-link>
+                    <nuxt-link  tag="button" @click.native="onCancel" :to="link" type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default">취소</nuxt-link>
                     <!--  nuxt-link를 렌더할 태그를 고를 수 있다. -->
-                    <nuxt-link tag="button" :to="link" type="submit" style="background: royalblue; color: white" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" @click.native="onSubmitBoardForm">
+                    <nuxt-link tag="button" @click.native="onSubmitBoardForm" :to="link" type="submit" style="background: royalblue; color: white" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default" >
                          작성
                     </nuxt-link>
                </div>
@@ -64,18 +64,64 @@ export default {
      components:{
           Img
      },
+     props:{
+          isView:{
+               type:Boolean,
+               require:false,
+          },
+          isViewChanger:{
+               type:Function,
+               require:false
+          }
+     },
      data(){
           return{
                showImg:false,
                link:`/boards/1`,
+               boardId:'',
                boardTitle:'',
                boardContent:'',
                boardWriter:'',
                photo:[],
+               viewCount:0,
+               replyCount : 0,
+               likeCount: 0,
+               dislikeCount:0,
+               likeOrDislike:{
+                    email:'newkayak12',
+                    like:null,
+                    dislike:null
+               }
 
           }
      },
-
+     beforeMount() {
+          // 그냥 글쑈기로 들어오면 undefined
+          // 게시글 > 수정 false
+          // 게시글 갔다가 글쓰기로 들어오면 false
+          if(typeof this.isView==='boolean' && !this.isView && this.$store.state.board.board.boardOne!==null){
+               const boardOne = this.$store.state.board.board.boardOne
+               this.boardId = boardOne.boardId
+               this.boardTitle=boardOne.boardTitle
+               this.boardContent = boardOne.boardContent
+               this.boardWriter = boardOne.boardWriter
+               let temp = boardOne.photo.slice()
+               console.log(temp)
+               this.viewCount = boardOne.viewCount
+               this.replyCount = boardOne.replyCount
+               this.likeCount = boardOne.likeCount
+               this.dislikeCount = boardOne.dislikeCount
+               this.likeOrDislike = boardOne.likeOrDislike
+          }
+     },
+     mounted() {
+          if(typeof this.isView==='boolean' && !this.isView && this.$store.state.board.board.boardOne!==null&&this.photo.length>0){
+               this.showImg=false
+               let timer = setTimeout(()=>{
+                    this.showImg = true
+               },10)
+          }
+     },
      computed:{
        nickname(){
             let nickname = this.$store.state.user.user.userInfo.nickname;
@@ -89,9 +135,11 @@ export default {
 
           },
           onAddedImg(event){
+               // if(typeof this.isView==='boolean' && !this.isView && this.$store.state.board.board.boardOne!==null){
+               //      this.photo=[]
+               // }
                let img = this.$refs.addImg.files
-               if(img["length"]>2){
-                    this.photo = [];
+               if(img["length"]+this.photo.length>2){
                     alert("이미지는 2개까지 가능합니다.")
                     return
                }
@@ -100,7 +148,7 @@ export default {
                Array.prototype.forEach.call(img, (v,i)=>{
                     let reader = new FileReader();
                     let img = {
-                         idx:Math.random()*100000+10,
+                         idx:Math.ceil(Math.random()*100000+10),
                          src:v.name,
                     }
 
@@ -125,7 +173,7 @@ export default {
 
           },
           onSubmitBoardForm(){
-               if(this.boardId===''){
+
                     let temp = this.photo
                     temp.forEach((v,i)=>{
                          delete v.idx
@@ -133,26 +181,34 @@ export default {
                     })
 
                     let boardOne = {
-                         boardId: Math.floor(Math.random()*100000+30),
+                         boardId: this.boardId===''? Math.floor(Math.random()*100000+30): this.boardId,
                          boardTitle:this.boardTitle,
                          boardContent:this.boardContent,
                          boardWriter:this.boardWriter,
-                         viewCount:0,
                          writtenDate:new Date(),
                          photo:temp,
-                         replyCount : 0,
-                         likeCount: 0,
-                         dislikeCount:0,
-                         likeOrDislike:{
-                              email:'newkayak12',
-                              like:null,
-                              dislike:null
-                         }
+                         viewCount:this.viewCount,
+                         replyCount : this.replyCount,
+                         likeCount: this.likeCount,
+                         dislikeCount:this.dislikeCount,
+                         likeOrDislike:this.likeOrDislike
                     }
+
+               if(this.boardId===''){
                     return this.$store.dispatch('boards/board/writeBoard',boardOne)
                }
 
+               this.link=`/boards/1`
+               return this.$store.dispatch('boards/board/modifyBoard',boardOne)
+
           },
+          onCancel(){
+               if(typeof this.isView==='boolean' && !this.isView && this.$store.state.board.board.boardOne!==null){
+                    this.link=`/board/`+this.$store.state.board.board.boardOne.boardId
+                    this.isViewChanger(true)
+               }
+          }
+
 
 
      },
@@ -161,8 +217,9 @@ export default {
           photo(){
                if(this.photo.length===0){
                     this.showImg=false
-               }
 
+               }
+               console.log(this.photo)
           }
 
 

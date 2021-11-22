@@ -1,4 +1,4 @@
-
+import Vue from 'vue'
 export const state = () => ({
     board:[],
     numberPerPage : 10,
@@ -15,6 +15,8 @@ export const state = () => ({
 export const mutations = {
 
     loadBoard(state, payload){
+
+
         let i = 1;
         let dummyBoard = [
             {
@@ -1124,7 +1126,7 @@ export const mutations = {
         let totalPg =  Math.ceil(state.totalData/state.numberPerPage)
         state.totalPage = totalPg
         state.cPage = parseInt(payload);
-        state.pageBarHead = Math.floor((parseInt(payload)-1)/state.pageBarSize) * state.pageBarSize +1;
+        state.pageBarHead = Math.floor((state.cPage-1)/state.pageBarSize) * state.pageBarSize +1;
         let pgEnd = state.pageBarHead+state.pageBarSize-1
         state.pageBarEnd   = pgEnd
 
@@ -1140,6 +1142,12 @@ export const mutations = {
         while(!(no>pgEnd || no > totalPg)){
             state.pageBar.push(no++)
         }
+
+
+    },
+    afterLoad(state,payload){
+        payload.board.board.boardOne = null
+
     },
     sortingBoard(state,payload){
 
@@ -1172,7 +1180,6 @@ export const mutations = {
 
             }
         })
-        console.log(state.board)
     },
     writeBoard(state, payload) {
         state.board.unshift(payload)
@@ -1184,6 +1191,15 @@ export const mutations = {
             }
         })
         state.board.splice(idx,1)
+    },
+    modifyBoard(state,payload){
+        let idx = state.board.findIndex((ele)=>{
+            if(parseInt(ele.boardId)===parseInt(payload.boardId)){
+                return ele
+            }
+        });
+
+        Vue.set(state.board, idx, payload)
     }
 
 }
@@ -1192,6 +1208,9 @@ export const actions ={
         context.commit('loadBoard',payload)
         // {offset, cPage}
         let offset = (state.numberPerPage*(state.cPage-1))
+    },
+    afterLoad(context){
+        context.commit('afterLoad', context.rootState)
     },
     sortingBoard(context,payload){
         // DB에서 진행
@@ -1230,6 +1249,9 @@ export const actions ={
     deleteBoard(context,payload){
         context.commit('deleteBoard',payload)
 
+    },
+    modifyBoard(context, payload){
+        context.commit('modifyBoard', payload)
     }
 
 

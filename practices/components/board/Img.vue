@@ -37,7 +37,8 @@ export default {
                          return ele;
                     }
                })
-              this.photo.splice(index,1)
+
+              this.photo = this.photo.splice(index,1).slice()
           }
      },
 

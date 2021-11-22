@@ -14,7 +14,9 @@ export const mutations={
         })
 
         //조회수
-        state.boardOne.viewCount= parseInt(state.boardOne.viewCount)+1;
+        if(state.boardOne!==null){
+            state.boardOne.viewCount= parseInt(state.boardOne.viewCount)+1;
+        }
 
     },
     onThumbUp(state, payload) {

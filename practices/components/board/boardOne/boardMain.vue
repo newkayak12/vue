@@ -54,7 +54,7 @@
                <tr>
                     <td colspan="5"  style="text-align: end">
                          <div style="padding-top: 20px">
-                              <v-btn :style="deleteIconColor" style="margin-left: 5px; margin-right: 10px" :disabled="btnDisabled"  @click.native="onModifyBoard" :to="link" nuxt>
+                              <v-btn :style="deleteIconColor" style="margin-left: 5px; margin-right: 10px" :disabled="btnDisabled"  @click="onModifyBoard" >
                                    <v-icon style="margin: 5px" :style="deleteIconColor">
                                          mdi-format-align-justify
                                    </v-icon>
@@ -86,6 +86,10 @@ export default {
               type:Object,
               required:true,
          },
+         isViewChanger:{
+              type:Function,
+              require:false
+         }
     },
      data(){
        return{
@@ -179,7 +183,7 @@ export default {
                return this.$store.commit('boards/board/deleteBoard',boardId);
           },
           onModifyBoard(){
-                    //modify
+                    this.isViewChanger(false)
           }
      }
 }
