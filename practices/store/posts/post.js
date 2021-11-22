@@ -13,7 +13,7 @@ export const mutations = {
             {
                 postId: i,
                 title : `제목${i}`,
-                writer : 'newakayk12',
+                writer : 'newkayak12',
                 writtenDate: new Date(),
                 content : `내용${i++}`,
                 iLiked : true,
@@ -26,7 +26,7 @@ export const mutations = {
                 rt:{
                     postId: 4,
                     title : `제목4`,
-                    writer : 'newakayk12',
+                    writer : 'lzyjin',
                     writtenDate: new Date(),
                     content : `내용4`,
                     photo:[
@@ -39,7 +39,7 @@ export const mutations = {
             {
                 postId: i,
                 title : `제목${i}`,
-                writer : 'newakayk12',
+                writer : 'newkayak12',
                 writtenDate: new Date().setFullYear(2020,12,24),
                 content : `내용${i++}`,
                 photo:[
@@ -52,7 +52,7 @@ export const mutations = {
             }, {
                 postId: i,
                 title : `제목${i}`,
-                writer : 'newakayk12',
+                writer : 'lzyjin',
                 writtenDate: new Date(),
                 content : `내용${i++}`,
                 iLiked : true,
@@ -67,7 +67,7 @@ export const mutations = {
             {
                 postId: i,
                 title : `제목${i}`,
-                writer : 'newakayk12',
+                writer : 'woosik',
                 writtenDate: new Date().setFullYear(2020,12,24),
                 content : `내용${i++}`,
                 photo:[
@@ -80,7 +80,7 @@ export const mutations = {
             }, {
                 postId: i,
                 title : `제목${i}`,
-                writer : 'newakayk12',
+                writer : 'dongwoo',
                 writtenDate: new Date(),
                 content : `내용${i++}`,
                 iLiked : true,
@@ -95,7 +95,21 @@ export const mutations = {
             {
                 postId: i,
                 title : `제목${i}`,
-                writer : 'newakayk12',
+                writer : 'newkayak12',
+                writtenDate: new Date().setFullYear(2020,12,24),
+                content : `내용${i++}`,
+                photo:[
+
+                ],
+                reply:[
+
+                ]
+
+            },
+            {
+                postId: i,
+                title : `제목${i}`,
+                writer : 'joongmin',
                 writtenDate: new Date().setFullYear(2020,12,24),
                 content : `내용${i++}`,
                 photo:[
@@ -132,6 +146,24 @@ export const mutations = {
         temp.iLiked = payload.flag
         Vue.set(state.post, idx ,temp)
         console.log(temp)
+    },
+    modifyPost(state, payload) {
+        let idx = state.post.findIndex((ele)=>{
+            if(parseInt(ele.postId)===parseInt(payload.postId)){
+                return ele
+            }
+        });
+        Vue.set(state.post, idx, payload)
+    },
+    deletePost(state,payload){
+        let idx = state.post.findIndex((ele)=>{
+            if(parseInt(ele.postId)===parseInt(payload)){
+                return ele
+            }
+        })
+
+        state.post.splice(idx,1)
+
     }
 
 }
@@ -144,10 +176,17 @@ export const actions = {
     },
     iLiked(context, payload){
         context.commit('iLiked',payload)
+    },
+    modifyPost(context,payload){
+        context.commit("modifyPost",payload)
+    },
+    deletePost(context,payload){
+        context.commit("deletePost",payload)
     }
-
-
 }
+
+
+
 const getters = {
 
 }

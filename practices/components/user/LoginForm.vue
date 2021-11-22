@@ -21,12 +21,18 @@
                     <personal-info :userInfo="userInfo"/>
                </v-card>
                <v-card  style="padding: 10px; margin:10px">
-                    <v-card-title >팔로워 목록</v-card-title>
-                    <v-card v-for=" follower in 3" style="margin: 10px" :key="follower.email">1</v-card>
+                    <v-card-title >나를 팔로우한 사람들</v-card-title>
+                    <FollowList v-for="er in follower" :key="er.nickname" :follow="er"/>
+                    <div style="margin: 10px" v-if="this.$store.state.user.user.userInfo.following.length>3">
+                         <v-btn style="width: 100%; background: royalblue; color: white">더보기</v-btn>
+                    </div>
                </v-card>
                <v-card  style="padding: 10px; margin:20px 10px 10px 10px">
-                    <v-card-title >팔로잉 목록</v-card-title>
-                    <v-card v-for=" following in 3" style="margin: 10px" :key="following.email">1</v-card>
+                    <v-card-title >내가 팔로우한 사람들</v-card-title>
+                    <FollowList v-for="ing in following" :key="ing.nickname" :follow="ing"/>
+                    <div style="margin: 10px"  v-if="this.$store.state.user.user.userInfo.follower.length>3">
+                         <v-btn style="width: 100%; background: royalblue; color: white">더보기</v-btn>
+                    </div>
                </v-card>
           </v-container>
      </div>
@@ -34,8 +40,12 @@
 
 <script>
 import PersonalInfo from "@/components/user/PersonalInfo";
+import FollowList from "@/components/user/social/FollowList";
 export default {
-     components:{PersonalInfo},
+     components:{
+          PersonalInfo,
+          FollowList
+     },
      data(){
           return {
                email: this.email,
@@ -52,6 +62,12 @@ export default {
           },
           signup(){
                return this.$store.state.user.user.signup
+          },
+          follower(){
+               return this.$store.state.user.user.userInfo.follower.slice(0,3)
+          },
+          following(){
+               return this.$store.state.user.user.userInfo.following.slice(0,3)
           }
 
      },

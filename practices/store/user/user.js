@@ -10,7 +10,6 @@ export const mutations = {
     },
     signup(state,payload){
         //회원 가입
-        console.log('signup', payload)
     },
     login(state,payload){
         //로그인
@@ -22,77 +21,66 @@ export const mutations = {
             nickname:'newkayak12',
             lastLoggedIn: new Date(),
             following: [
+                //내가 팔로잉 한 사람들
                 {
                     email: 'lzyjin@gmail.com',
-                    nickname: 'yj'
+                    nickname: 'lzyjin'
                 },
                 {
                     email : 'woosik@gmail.com',
-                    nickname: 'ws'
+                    nickname: 'woosik'
                 },
                 {
                     email : 'dongWoo@gmail.com',
-                    nickname: 'dw'
+                    nickname: 'dongwoo'
+                },
+                {
+                    email : 'hyeonsoo@gmail.com',
+                    nickname: 'hyeonsoo'
                 }
             ],
             follower:[
+                //나를 팔로우 한 사람들
                 {
                     email: 'lzyjin@gmail.com',
-                    nickname: 'yj'
+                    nickname: 'lzyjin'
                 },
                 {
                     email:'dongWoo@gmail.com',
-                    nickname:'dw'
+                    nickname:'dongwoo'
                 },
                 {
                     email:'hyunsoo@gmail.com',
-                    nickname: 'hs'
+                    nickname: 'hyeonsoo'
+                },
+                {
+                    email : 'joonmin@gmail.com',
+                    nickname: 'joonmin'
                 }
             ],
-            posts:[
-                {
-                    title:'title1',
-                    writer:'newkayak12',
-                    content:'content1',
-                    writeDate:new Date(),
-
-                },
-                {
-                    title:'title2',
-                    writer:'newkayak12',
-                    content:'content1',
-                    writeDate:new Date(),
-
-                },
-                {
-                    title:'title3',
-                    writer:'newkayak12',
-                    content:'content1',
-                    writeDate:new Date(),
-
-                },
-                {
-                    title:'title4',
-                    writer:'newkayak12',
-                    content:'content1',
-                    writeDate:new Date(),
-
-                },
-                {
-                    title:'title5',
-                    writer:'newkayak12',
-                    content:'content1',
-                    writeDate:new Date(),
-
-                },
-
-            ]
-
+            myPost:[]
         }
 
     },
     logout(state,payload){
         state.userInfo=null;
+    },
+    addFollowing(state, payload) {
+        state.userInfo.following.find((ele)=>{
+            if(ele.nickname===payload){
+                return
+            }
+        })
+
+        state.userInfo.following.push({email:"others@email.com", nickname:payload})
+    },
+    unfollowing(state, payload) {
+        let idx = state.userInfo.following.findIndex((ele)=>{
+            if(ele.nickname===payload){
+                return ele
+            }
+        })
+        state.userInfo.following.splice(idx,1)
     }
 
 }
@@ -111,6 +99,12 @@ export const actions ={
         //백엔드가 있어야 가능한 로그인 유지
         // 그냥 로그인 상태로 두자
         context.commit('login')
+    },
+    addFollowing(context, payload){
+        context.commit('addFollowing',payload)
+    },
+    unfollowing(context,payload){
+        context.commit('unfollowing',payload)
     }
 
 }

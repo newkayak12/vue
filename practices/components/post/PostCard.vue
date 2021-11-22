@@ -13,17 +13,17 @@
 
                     <PostContent :postsPiece="postsPiece" style="background: white;"/>
                     <v-card-actions style="margin:5px 10px; display: flex; justify-content: start; background: white;">
-                         <v-btn text color="white" style="background: royalblue" @click="onRetweet">
+                         <v-btn text color="white" style="background: royalblue" @click="onRetweet" v-if="isthisMyPost">
                               <v-icon>mdi-chart-timeline-variant</v-icon>
      <!--                         <v-icon>mdi mdi-twitter-retweet</v-icon>-->
                          </v-btn>
-                         <v-btn text color="white" style="background: royalblue" @click="onHeart">
+                         <v-btn text color="white" style="background: royalblue" @click="onHeart" v-if="isthisMyPost">
                               <v-icon >{{heartIcon}}</v-icon>
                          </v-btn>
-                         <v-btn text color="white" style="background: royalblue" @click="onShowPostForm">
+                         <v-btn text color="white" style="background: royalblue" @click="onReply" v-if="isthisMyPost">
                               <v-icon>mdi-comment-outline</v-icon>
                          </v-btn>
-                         <v-menu offset-y open-on-hover >
+                         <v-menu offset-y open-on-hover v-if="!isthisMyPost">
                               <template v-slot:activator="{on}">
                                    <v-btn text color="white" style="background: royalblue; margin-left: 10px;" v-on="on">
                                         <v-icon>mdi-dots-horizontal</v-icon>
@@ -31,14 +31,18 @@
                               </template>
 
                               <div>
-                                   <v-btn>삭제</v-btn>
-                                   <v-btn>수정</v-btn>
+                                   <v-btn text @click="onDeletePost" style="background: #da1c54; color: white">삭제</v-btn>
+                                   <v-btn text @click="onShowPostForm" :style="rtCannotBeModified? 'background:white;':'background: royalblue; color: white'" :disabled="rtCannotBeModified">수정</v-btn>
                               </div>
                          </v-menu>
                     </v-card-actions>
                </div>
                <div style="margin-top:10px; display: flex; justify-content: center;"  v-else>
-                    <PostForm  style="width: 80%;" />
+                    <PostForm  style="width: 80%;"  :postsPiece="postsPiece" :onShowPostForm="onShowPostForm" >
+                         <template v-slot:cancelbtn >
+                              <v-btn @click="onShowPostForm" style="margin-right: 10px">취소</v-btn>
+                         </template>
+                    </PostForm>
                </div>
           </v-card>
 
@@ -63,6 +67,15 @@ export default {
           }
      },
      computed:{
+          rtCannotBeModified(){
+               let flag = this.postsPiece.rt !==null && typeof this.postsPiece.rt !=='undefined'? true:false
+               return flag
+          },
+          isthisMyPost(){
+               let userFlag = this.$store.state.user.user.userInfo === null? false:true;
+               let notMyPostFlag = this.$store.state.user.user.userInfo.nickname===this.postsPiece.writer? false :true;
+               return userFlag&&notMyPostFlag
+          }
 
      },
      props:{
@@ -95,7 +108,15 @@ export default {
                let heartFlag = this.postsPiece.iLiked? false:true
                this.$store.dispatch('posts/post/iLiked',{postId:this.postsPiece.postId, flag:heartFlag})
                this.heartIcon= heartFlag? 'mdi-heart' : `mdi-heart-outline`
+          },
+          onDeletePost(){
+               let postId = this.postsPiece.postId
+               this.$store.dispatch('posts/post/deletePost', postId)
+          },
+          onReply(){
+
           }
+
 
      }
 }

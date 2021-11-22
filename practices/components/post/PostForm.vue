@@ -20,7 +20,10 @@
                <div  style="width: 99%; padding:10px; margin:5px; display: flex; justify-content: space-between">
                     <v-btn type="button" @click="onAddPhoto"> 파일 첨부</v-btn>
                     <input type="file" multiple ref="postPhoto" @change="onAddedPhoto" hidden>
-                    <v-btn type="submit" style="background: royalblue; color : white;"> 등록 </v-btn>
+                    <div style="padding: 5px">
+                         <slot name="cancelbtn"></slot>
+                         <v-btn type="submit" style="background: royalblue; color : white;"> 등록 </v-btn>
+                    </div>
                </div>
           </form>
      </v-card>
@@ -29,6 +32,16 @@
 <script>
 import Img from "@/components/board/Img";
 export default {
+     props:{
+          postsPiece:{
+               type:Object,
+               required:false
+          },
+          onShowPostForm:{
+               type:Function,
+               required: false
+          }
+     },
      components:{
           Img
      },
@@ -48,15 +61,23 @@ export default {
      },
      computed:{
      },
+     beforeMount() {
+
+          if(typeof this.postsPiece !=='undefined' && this.postsPiece!==null){
+               this.postId = this.postsPiece.postId
+               this.postTitle = this.postsPiece.title
+               this.postWriter = this.postsPiece.writer
+               this.postWrittenDate= this.postsPiece.writtenDate
+               this.postContent = this.postsPiece.content
+               this.photo = this.postsPiece.photo.slice()
+               this.reply = this.postsPiece.reply
+               this.showImg = this.photo.length>0? true : false;
+          }
+          console.log(this.showImg)
+     },
      methods:{
           onSubmitPost(){
                let post ={}
-               if(this.postId===''){
-                    post.postId = Math.ceil(Math.random()*3000+1)
-               }
-               if(this.postId!==''){
-                    post.postId = this.postId
-               }
 
                post.title = this.postTitle
                post.writer = this.$store.state.user.user.userInfo.nickname;
@@ -73,8 +94,22 @@ export default {
                post.reply = this.reply
 
 
+               if(this.postId===''){
+                    post.postId = Math.ceil(Math.random()*3000+1)
+                    this.$store.dispatch("posts/post/writePost", post)
+                    return
+               }
+               if(this.postId!==''){
+                    post.postId = this.postId
+                    this.$store.dispatch('posts/post/modifyPost',post)
+                    this.onShowPostForm()
+                    return
+               }
 
-               this.$store.dispatch("posts/post/writePost", post)
+
+
+
+
 
                //비워주기
                this.postTitle = ''
