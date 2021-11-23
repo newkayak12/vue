@@ -1,9 +1,15 @@
 <template>
      <div>
-          <v-card style="margin: 10px ">
-               <nuxt-link  :to="link">
+          <v-card style="margin: 10px; text-align: center; display: flex; justify-content: space-between">
+               <nuxt-link  :to="link" >
+                   <v-list-item-avatar color="indigo" >
+                        <span class="white--text headline" >
+                             {{follow.nickname[0]}}
+                        </span>
+                   </v-list-item-avatar>
                     {{follow.nickname}}
                </nuxt-link>
+               <slot name="onUnfollow"></slot>
           </v-card>
      </div>
 </template>
@@ -18,7 +24,7 @@ export default {
      },
      computed:{
           link(){
-               return "#"
+               return "/profile/"+this.follow.nickname
           }
      }
 }

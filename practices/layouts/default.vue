@@ -17,7 +17,7 @@
                               <nuxt-link to="/posts">SNS</nuxt-link>
                          </li>
                          <li style="list-style: none; ">
-                              <nuxt-link to="/profile" v-show="userInfo">프로필</nuxt-link>
+                              <nuxt-link :to="`/profile/`+link" v-show="userInfo">프로필</nuxt-link>
                          </li>
                     </ul>
                </div>
@@ -27,7 +27,7 @@
                     <login-form style="width: 80%;" v-if="signup"/>
                     <Signup v-else />
                </v-col>
-               <v-col cols="12" lg="9" style="width: 100%; padding-top: 20px">
+               <v-col cols="12" lg="9" style="width: 100%; padding-top: 20px;">
                    <nuxt/>
                </v-col>
           </v-row>
@@ -53,6 +53,12 @@ export default {
           },
           userInfo(){
                return this.$store.state.user.user.userInfo
+          },
+          link(){
+               if(this.$store.state.user.user.userInfo!==null){
+                    return this.$store.state.user.user.userInfo.nickname
+               }
+                    return "#"
           }
 
      }

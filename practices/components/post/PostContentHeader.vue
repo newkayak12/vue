@@ -7,7 +7,7 @@
                </div>
           </v-card-title>
           <v-card-subtitle  style="box-shadow: 0.5px 0.5px  gray; width: 100%">
-               <span v-if="postsPiece.writer !== this.$store.state.user.user.userInfo.nickname">
+               <span v-if="this.$store.state.user.user.userInfo!==null? postsPiece.writer !== this.$store.state.user.user.userInfo.nickname:true">
                     <v-btn style="background: #da1c54; color: white; width: 75%; font-size: 12px;" @click="onUnfollowing" v-if="areYouInMyFollowList">언팔로우</v-btn>
                     <v-btn style="background: royalblue; color: white; width: 75%; font-size: 12px;" @click="onAddFollowing" v-else>팔로우</v-btn>
                </span>
@@ -54,21 +54,29 @@ export default {
                return this.isRt? "display:flex; justify-content :space-between;":''
           },
           areYouInMyFollowList(){
-               let followList = this.$store.state.user.user.userInfo.following
-               let youReName = this.postsPiece.writer
+               if(this.$store.state.user.user.userInfo!==null) {
+                    let followList = this.$store.state.user.user.userInfo.following
+                    let youReName = this.postsPiece.writer
 
-               let result = followList.find((ele)=>{
-                    if(ele.nickname.toLowerCase()===youReName.toLowerCase()){
-                         return true
-                    }
-               })
-               return result
+                    let result = followList.find((ele) => {
+                         if (ele.nickname.toLowerCase() === youReName.toLowerCase()) {
+                              return true
+                         }
+                    })
+                    return result
+               }
+
+               return false;
           }
 
 
      },
      methods:{
           onAddFollowing(){
+               if(this.$store.state.user.user.userInfo===null){
+                    alert("로그인이 필요한 서비스입니다.")
+                    return
+               }
                if(confirm('팔로우 하시겠습니까?')){
                     this.$store.dispatch('user/user/addFollowing', this.postsPiece.writer)
                } else {

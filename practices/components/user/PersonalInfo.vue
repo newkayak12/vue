@@ -14,12 +14,12 @@
                     팔로워 수 : {{userInfo.follower.length}}
                </span>
                <span style="border: 1px solid #b4abab; margin-left: 5px; margin-right: 5px; height: 30px;"/>
-               <span style="color: black; padding: 5px; font-size: 13px">
-                    <v-btn style="font-size: 10px; width: 20%; height: 100%" text @click="onLogout">
+               <span style="color: black; padding: 0px 7px 7px 7px; font-size: 13px">
+                    <nuxt-link class="v-btn v-btn--text theme--light" tag="button" style="font-size: 10px; width: 140%; height: 140%;" text @click.native="onLogout" to="/">
                          <v-icon>
                                mdi-logout
                          </v-icon>
-                    </v-btn>
+                    </nuxt-link>
                </span>
           </div>
 

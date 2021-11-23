@@ -41,7 +41,7 @@ export default {
           async onWriteComment(){
               let user =  this.$store.state.user.user.userInfo;
               let level = this.level;
-              let comment = this.commentContent;
+              let comment = this.commentContent.trim();
               let date = new Date();
               let boardId = this.boardId;
               let refId = parseInt(level)===1? -1:this.refId

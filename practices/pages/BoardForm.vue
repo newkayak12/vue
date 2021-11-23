@@ -182,8 +182,8 @@ export default {
 
                     let boardOne = {
                          boardId: this.boardId===''? Math.floor(Math.random()*100000+30): this.boardId,
-                         boardTitle:this.boardTitle,
-                         boardContent:this.boardContent,
+                         boardTitle:this.boardTitle.trim(),
+                         boardContent:this.boardContent.trim(),
                          boardWriter:this.boardWriter,
                          writtenDate:new Date(),
                          photo:temp,

@@ -24,14 +24,14 @@
                     <v-card-title >나를 팔로우한 사람들</v-card-title>
                     <FollowList v-for="er in follower" :key="er.nickname" :follow="er"/>
                     <div style="margin: 10px" v-if="this.$store.state.user.user.userInfo.following.length>3">
-                         <v-btn style="width: 100%; background: royalblue; color: white">더보기</v-btn>
+                         <v-btn style="width: 100%; background: royalblue; color: white"@click="moreFollower">더보기</v-btn>
                     </div>
                </v-card>
                <v-card  style="padding: 10px; margin:20px 10px 10px 10px">
                     <v-card-title >내가 팔로우한 사람들</v-card-title>
                     <FollowList v-for="ing in following" :key="ing.nickname" :follow="ing"/>
                     <div style="margin: 10px"  v-if="this.$store.state.user.user.userInfo.follower.length>3">
-                         <v-btn style="width: 100%; background: royalblue; color: white">더보기</v-btn>
+                         <v-btn style="width: 100%; background: royalblue; color: white" @click="moreFollowing">더보기</v-btn>
                     </div>
                </v-card>
           </v-container>
@@ -119,6 +119,12 @@ export default {
                     this.passwordCheckBoolean = true;
 
 
+          },
+          moreFollower(){
+               alert("loadFollowers")
+          },
+          moreFollowing(){
+               alert("loadFollowings")
           }
 
      }

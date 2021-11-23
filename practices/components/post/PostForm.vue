@@ -73,16 +73,15 @@ export default {
                this.reply = this.postsPiece.reply
                this.showImg = this.photo.length>0? true : false;
           }
-          console.log(this.showImg)
      },
      methods:{
           onSubmitPost(){
                let post ={}
 
-               post.title = this.postTitle
+               post.title = this.postTitle.trim()
                post.writer = this.$store.state.user.user.userInfo.nickname;
                post.writtenDate = this.postWrittenDate
-               post.content = this.postContent
+               post.content = this.postContent.trim()
                post.iLiked = false;
                post.rt = null;
                let photoCopy = this.photo.slice()
