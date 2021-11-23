@@ -35,19 +35,25 @@
                     </div>
                </v-card>
           </v-container>
+               <Modal class="modal" :style="widthCalc" v-if="modalShow" :closeModal="closeModal"/>
      </div>
 </template>
 
 <script>
 import PersonalInfo from "@/components/user/PersonalInfo";
 import FollowList from "@/components/user/social/FollowList";
+import Modal from "@/components/modal/Modal"
 export default {
      components:{
           PersonalInfo,
-          FollowList
+          FollowList,
+          Modal
+
      },
      data(){
           return {
+
+               modalShow:false,
                email: this.email,
                password : this.password,
                emailCheckBoolean : '',
@@ -68,6 +74,9 @@ export default {
           },
           following(){
                return this.$store.state.user.user.userInfo.following.slice(0,3)
+          },
+          widthCalc(){
+               return `height: ${document.documentElement.scrollHeight}px`;
           }
 
      },
@@ -121,11 +130,16 @@ export default {
 
           },
           moreFollower(){
-               alert("loadFollowers")
+
+               this.modalShow=true;
           },
           moreFollowing(){
-               alert("loadFollowings")
+               this.modalShow=true;
+          },
+          closeModal(){
+               this.modalShow=false;
           }
+
 
      }
 
@@ -133,6 +147,17 @@ export default {
 </script>
 
 <style scoped>
+
+     .modal{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100vw;
+
+          z-index: 900;
+     }
+
+
      input{
           background: white;
           border: 1px black solid;

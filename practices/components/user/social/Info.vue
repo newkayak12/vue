@@ -1,7 +1,38 @@
 <template>
           <div>
-               <div v-if="targetInfo!=null">
-                    <div>
+               <div v-if="targetInfo!=null"  >
+                    <div style="display: flex; flex-direction: row; justify-content: center; width: 100%; margin:20px 0px 20px 0px" >
+                         <table>
+                              <tr>
+                                   <th>
+                                        <v-list-item-avatar color="indigo">
+                                             <span class="white--text headline">
+                                                  {{targetInfo.nickname[0]}}
+                                             </span>
+                                        </v-list-item-avatar>
+                                   </th>
+                                   <td>
+                                        {{ targetInfo.nickname }}
+                                   </td>
+                              </tr>
+                              <tr>
+                                   <th>
+                                        생년월일
+                                   </th>
+                                   <td>
+                                        {{ targetInfo.birthDay||'비공개' }}
+                                   </td>
+                              </tr>
+                              <tr>
+                                   <th>
+                                        성별
+                                   </th>
+                                   <td>
+                                        {{ targetInfo.gender||'비공개' }}
+                                   </td>
+                              </tr>
+
+                         </table>
 
                     </div>
                     <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;" >
@@ -79,6 +110,21 @@ export default {
 </script>
 
 <style scoped>
+table{
+     border-collapse: collapse;
+     width: 100%;
+     border-bottom: 1px gray solid;
+
+}
+table th{
+     width: 20%;
+     text-align: center;
+     padding: 10px
+}
+table td{
+     text-align: center;
+     padding: 10px
+}
 .follow{
      border-radius: 3%;
      background-color: #3251ad;
