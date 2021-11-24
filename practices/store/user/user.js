@@ -61,6 +61,66 @@ export const mutations = {
                     {
                         email : 'jisik5@gmail.com',
                         nickname: 'jisik5'
+                    },
+                    {
+                        email : 'jisik6@gmail.com',
+                        nickname: 'jisik6'
+                    },
+                    {
+                        email : 'jisik7@gmail.com',
+                        nickname: 'jisik7'
+                    },
+                    {
+                        email : 'jisik8@gmail.com',
+                        nickname: 'jisik8'
+                    },
+                    {
+                        email : 'jisik9@gmail.com',
+                        nickname: 'jisik9'
+                    },
+                    {
+                        email : 'jisik10@gmail.com',
+                        nickname: 'jisik10'
+                    },
+                    {
+                        email : 'jisik11@gmail.com',
+                        nickname: 'jisik11'
+                    },
+                    {
+                        email : 'jisik12@gmail.com',
+                        nickname: 'jisik12'
+                    },
+                    {
+                        email : 'jisik13@gmail.com',
+                        nickname: 'jisik13'
+                    },
+                    {
+                        email : 'jisik14@gmail.com',
+                        nickname: 'jisik14'
+                    },
+                    {
+                        email : 'jisik15@gmail.com',
+                        nickname: 'jisik15'
+                    },
+                    {
+                        email : 'jisik16@gmail.com',
+                        nickname: 'jisik16'
+                    },
+                    {
+                        email : 'jisik17@gmail.com',
+                        nickname: 'jisik17'
+                    },
+                    {
+                        email : 'jisik18@gmail.com',
+                        nickname: 'jisik18'
+                    },
+                    {
+                        email : 'jisik19@gmail.com',
+                        nickname: 'jisik19'
+                    },
+                    {
+                        email : 'jisik20@gmail.com',
+                        nickname: 'jisik20'
                     }
                 ],
                 follower:[

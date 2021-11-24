@@ -1,7 +1,7 @@
 <template>
      <div>
           <v-card style="margin: 10px; text-align: center; display: flex; justify-content: space-between">
-               <nuxt-link  :to="link" >
+               <nuxt-link  :to="link" @click.native="closeModalMethod" >
                    <v-list-item-avatar color="indigo" >
                         <span class="white--text headline" >
                              {{follow.nickname[0]}}
@@ -20,12 +20,27 @@ export default {
           follow:{
                type:Object,
                required:true
+          },
+          closeModal: {
+               type:Function,
+               required: false
+
           }
      },
      computed:{
           link(){
                return "/profile/"+this.follow.nickname
           }
+     },
+     methods:{
+          closeModalMethod(){
+
+               return typeof this.closeModal==='undefined'? '':this.closeModal()
+          }
+
+     },
+     fetch(){
+          console.log(this.closeModal)
      }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-     <div style="background-color: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; ">
+     <div style="background-color: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center;  width: 100vw;">
                <v-card :style="widthHeight"  >
                     <div style=" width:100%; height: 100%;  display: flex; flex-direction: column; justify-content: space-between">
                          <div class="modalHeader" >
@@ -19,7 +19,7 @@
                          </div>
 
                          <div class="modalBody">
-                              <FollowList v-for="followOne in follow" :key="followOne.nickname" :follow="followOne" />
+                                   <FollowList v-for="followOne in follow"  :follow="followOne" :closeModal="closeModal" />
                          </div>
 
 
@@ -64,7 +64,7 @@ export default {
      computed:{
           widthHeight(){
 
-               return `width: ${document.documentElement.clientWidth*0.7}px; height: ${document.documentElement.clientHeight*0.7}px;`
+               return `width: ${document.documentElement.clientWidth*0.7-100}px; height: ${document.documentElement.clientHeight*0.7}px;`
           }
      }
 }
@@ -86,15 +86,18 @@ export default {
           margin: 0;
           padding: 20px;
           overflow-y: auto;
-          display: grid;
-          grid-gap: 5px;
 
+          display: grid;
+          grid-gap: 15px;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows:  repeat(4,1fr);
+          justify-items: center;
+          align-items: center;
      }
+
      .modalBody div{
-          width: 20%;
+          width: 80%;
           display: inline-block;
-          grid-column: auto;
-          grid-row: auto;
 
      }
 </style>

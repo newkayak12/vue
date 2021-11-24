@@ -132,16 +132,19 @@ export default {
 
           },
           moreFollower(){
+               document.getElementsByTagName("html")[0].style.overflowY='hidden'
                this.followFullList = this.$store.state.user.user.userInfo.follower
                this.followFlag = 'follower'
                this.modalShow=true;
           },
           moreFollowing(){
+               document.getElementsByTagName("html")[0].style.overflowY='hidden'
                this.followFullList = this.$store.state.user.user.userInfo.following
                this.followFlag = 'following'
                this.modalShow=true;
           },
           closeModal(){
+               document.getElementsByTagName("html")[0].style.overflowY=''
                this.modalShow=false;
           }
 
