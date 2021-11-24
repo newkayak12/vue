@@ -35,7 +35,7 @@
                     </div>
                </v-card>
           </v-container>
-               <Modal class="modal" :style="widthCalc" v-if="modalShow" :closeModal="closeModal"/>
+               <Modal class="modal" :style="widthCalc" v-if="modalShow" :closeModal="closeModal" :follow="this.followFullList" :followFlag="followFlag"/>
      </div>
 </template>
 
@@ -59,6 +59,8 @@ export default {
                emailCheckBoolean : '',
                passwordCheckBoolean : '',
                resultMsg:'',
+               followFullList:[],
+               followFlag:''
           }
 
      },
@@ -130,10 +132,13 @@ export default {
 
           },
           moreFollower(){
-
+               this.followFullList = this.$store.state.user.user.userInfo.follower
+               this.followFlag = 'follower'
                this.modalShow=true;
           },
           moreFollowing(){
+               this.followFullList = this.$store.state.user.user.userInfo.following
+               this.followFlag = 'following'
                this.modalShow=true;
           },
           closeModal(){
