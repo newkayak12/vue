@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": " webpack-dev-server --port 1234 --config webpack.config.js --live-reload --hot",
+    "dev": " webpack-dev-server --port 4321 --config webpack.config.js --live-reload --hot",
     "test": "jest",
     "build": "webpack --mode production"
   },

@@ -4,15 +4,12 @@ import VueRouter from 'vue-router'
 import mainPage from '@/pages/main.vue'
 import vue1 from '@/pages/vue1/index'
 import vue2 from '@/pages/vue2/index'
+import vue3 from '@/pages/vue3/index'
 import annyon from "@/components/annyon";
 import hello from "@/components/hello";
 import hi from "@/components/hi";
 import Test1 from "@/components/test/Test1";
 import Test2 from "@/components/test/Test2";
-import rootTest from "@/components/root/rootTest";
-import eventBusTest from "@/components/eventbus/eventBusTest";
-import mixin1 from "@/components/mixin/mixin1";
-import mixin2 from "@/components/mixin/mixin2";
 
 Vue.use(VueRouter)
 const router = new VueRouter({
@@ -34,7 +31,8 @@ const router = new VueRouter({
 
                     ]
                 },
-                {path:'/vue2/', component:vue2}
+                {path:'/vue2/', component:vue2},
+                {path:'/vue3/', component:vue3}
             ]
         }
     ]
