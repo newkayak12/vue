@@ -4,7 +4,7 @@
 
                <div style="margin-left: 5VW">
                     <nuxt-link to="/" >
-                         <img :src="require(`@/assets/download.jpg`)" alt="LOGO" width="150px" >
+                         <img :src="require(`@/assets/download.png`)" alt="LOGO" width="150px" >
                     </nuxt-link>
                </div>
 
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-const img = require('../assets/download.jpg')
 import LoginForm from "~/components/user/LoginForm";
 import Signup from "~/components/user/Signup";
 export default {

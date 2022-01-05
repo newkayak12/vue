@@ -1,17 +1,17 @@
 <template>
-     <div>
-          <v-card style="margin: 10px; text-align: center; display: flex; justify-content: space-between">
-               <nuxt-link  :to="link" @click.native="closeModalMethod" >
-                   <v-list-item-avatar color="indigo" >
+     <nuxt-link :to="link" @click.native="closeModalMethod" >
+          <v-card style="margin: 10px; ">
+                   <v-list-item-avatar color="indigo" style="display:inline-block; padding-top:5px" >
                         <span class="white--text headline" >
                              {{follow.nickname[0]}}
                         </span>
                    </v-list-item-avatar>
-                    {{follow.nickname}}
-               </nuxt-link>
+                   <div  style="display:inline-block">
+                         {{follow.nickname}}
+                    </div>
                <slot name="onUnfollow"></slot>
           </v-card>
-     </div>
+     </nuxt-link>
 </template>
 
 <script>
