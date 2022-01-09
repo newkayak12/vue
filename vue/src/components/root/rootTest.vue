@@ -23,6 +23,7 @@ export default {
           changeRoot(val){
                console.log(this)
                this.$parent.$data.bow=val
+                // this.$root.$data.bow = val
                //이게 진짜 최최최최최상위 부모를 찾네
                //
           }
